@@ -29,5 +29,5 @@ for n = 1:num_sample
     rawMotion{1,n} = temp(:,motion_flag);
 end
 
-save Data\rawEEG_03 rawEEG;
-save Data\rawMotion_03 rawMotion;
+save E:\EEGExoskeleton\EEGProcessor2\rawEEG_03 rawEEG;
+save E:\EEGExoskeleton\EEGProcessor2\rawMotion_03 rawMotion;

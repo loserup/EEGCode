@@ -17,9 +17,9 @@ import numpy as np
 id_subject = 3 # 受试者的编号
 
 if id_subject < 10:
-    mat_data = sio.loadmat('rawEEG_0' + str(id_subject) + '.mat')
+    mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor2\\rawEEG_0' + str(id_subject) + '.mat')
 else:
-    mat_data = sio.loadmat('rawEEG_' + str(id_subject) + '.mat')
+    mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor2\\rawEEG_' + str(id_subject) + '.mat')
 
 data = mat_data['rawEEG']
 
@@ -58,7 +58,7 @@ for i in range(num_trial):
     data[0][i] = data[0][i][0:32, label_index_1:label_index_2]
 
 if id_subject < 10:
-    sio.savemat('labeledEEG_0'+str(id_subject)+'.mat', {'labeledEEG' : data})
+    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\labeledEEG_0'+str(id_subject)+'.mat', {'labeledEEG' : data})
 else:
-    sio.savemat('labeledEEG_'+str(id_subject)+'.mat', {'labeledEEG' : data})
+    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\labeledEEG_'+str(id_subject)+'.mat', {'labeledEEG' : data})
         
