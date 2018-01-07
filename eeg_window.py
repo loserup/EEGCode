@@ -10,6 +10,7 @@ Created on Fri Dec  1 21:25:28 2017
 
 % 根据步态信号建立划窗
 % 划窗截取EEG信号
+% 生成指定受试对象的有意图和无意图区域的EEG窗
 """
 
 import scipy.io as sio
@@ -105,7 +106,7 @@ def bandpass(data):
     
     return filtered_data 
 
-
+out_count = 0 # 输出文件批数
 for i in range(num_trial):
     if len(gait_data[i]) and (i != 1):
         # 当步态数据不是空集时（有效时）
@@ -118,7 +119,7 @@ for i in range(num_trial):
         peakind_sorted = np.array(sorted(peakind_sorted))
         
         num_axis = len(gait_data[i][0])
-        #Window_plotor(num_axis, data[i][0], peakind_sorted); plt.title(str(i+1) + 'th trial\'s peak points') # 测试绘图，观察跨越极大值点位置是否找对
+        #Window_plotor(num_axis, gait_data[i][0], peakind_sorted); plt.title(str(i+1) + 'th trial\'s peak points') # 测试绘图，观察跨越极大值点位置是否找对
         
         valleyind_sorted = np.array(find_valley_point(gait_data[i][0], peakind_sorted)) # 跨越前的极小值点
         #Window_plotor(num_axis, gait_data[i][0], valleyind_sorted); plt.title(str(i+1) + 'th trial\'s valley points') # 测试绘图，观察跨越前极小值点位置是否找对
@@ -126,19 +127,21 @@ for i in range(num_trial):
         # 取无跨越意图EEG窗，标记为0   
         win_index = peakind_sorted + bias_0 # 窗起始索引
         win_index = win_index * 512 / fs_gait
+        
 
         for k in range(work_trial):
             out_eeg =  eeg_data[0][i][:,int(win_index[k]):(int(win_index[k])+win_width)]
             out_eeg = bandpass(out_eeg)
             out_eeg = [out_eeg, 0]
+            
             if id_subject < 10:
                 sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_0'+str(id_subject)+\
-                            '_wineeg\\label0_Subject_0'+str(id_subject)+'_trial'+str(i+1)+'_'+str(k+1)+'.mat',\
-                            {'label0_Subject_0'+str(id_subject)+'_trial'+str(i+1)+'_'+str(k+1):out_eeg})
+                            '_wineeg\\label0_Subject_0'+str(id_subject)+'_'+str(out_count*work_trial+(k+1))+'.mat'\
+                            , {'label0_Subject_0'+str(id_subject)+'_'+str(out_count*work_trial+(k+1)):out_eeg})
             else:
                 sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_'+str(id_subject)+\
-                            '_wineeg\\label0_Subject_'+str(id_subject)+'_trial'+str(i+1)+'_'+str(k+1)+'.mat',\
-                            {'label0_Subject_'+str(id_subject)+'_trial'+str(i+1)+'_'+str(k+1):out_eeg})
+                            '_wineeg\\label0_Subject_'+str(id_subject)+'_'+str(out_count*work_trial+(k+1))+'.mat',\
+                            {'label0_Subject_'+str(id_subject)+'_'+str(out_count*work_trial+(k+1)):out_eeg})
                 
         # 取有跨越意图EEG窗，标记为1
         win_index = valleyind_sorted + bias_1
@@ -150,11 +153,13 @@ for i in range(num_trial):
             out_eeg = [out_eeg, 1]
             if id_subject < 10:
                 sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_0'+str(id_subject)+\
-                            '_wineeg\\label1_Subject_0'+str(id_subject)+'_trial'+str(i+1)+'_'+str(k+1)+'.mat',\
-                            {'label1_Subject_0'+str(id_subject)+'_trial'+str(i+1)+'_'+str(k+1):out_eeg})
+                            '_wineeg\\label1_Subject_0'+str(id_subject)+'_'+str(out_count*work_trial+(k+1))+'.mat',\
+                            {'label1_Subject_0'+str(id_subject)+'_'+str(out_count*work_trial+(k+1)):out_eeg})
             else:
                 sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_'+str(id_subject)+\
-                            '_wineeg\\label1_Subject_'+str(id_subject)+'_trial'+str(i+1)+'_'+str(k+1)+'.mat',\
-                            {'label1_Subject_'+str(id_subject)+'_trial'+str(i+1)+'_'+str(k+1):out_eeg})
+                            '_wineeg\\label1_Subject_'+str(id_subject)+'_'+str(out_count*work_trial+(k+1))+'.mat',\
+                            {'label1_Subject_'+str(id_subject)+'_'+str(out_count*work_trial+(k+1)):out_eeg})
+                
+        out_count += 1
     else:
         continue

@@ -16,6 +16,7 @@ import scipy.io as sio
 import numpy as np
 import scipy.signal as sis
 
+id_subject = 3 # 【受试者的编号】
 
 if id_subject < 10:
     eeg_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor2\\rawEEG_0' + str(id_subject) + '.mat')

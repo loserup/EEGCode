@@ -2,37 +2,51 @@
 """
 Created on Tue Dec 12 11:07:25 2017
 
-@author: Long
+@author: SingleLong
+
+% 说明：
+
+% 第四步
+
+% 通过CSP求区别有无意图的投影矩阵
 """
 
 import scipy.io as sio
 import numpy as np
 import scipy.linalg as la # 线性代数库
+import os
 
-eeg = sio.loadmat('EEG_win1.mat')
-eeg_1 = eeg['EEG_win1'] # 障碍物高度3
-eeg = sio.loadmat('EEG_win2.mat')
-eeg_2 = eeg['EEG_win2'] # 障碍物高度2
-eeg = sio.loadmat('EEG_win3.mat')
-eeg_3 = eeg['EEG_win3'] # 障碍物高度1
-eeg = sio.loadmat('EEG_win4.mat')
-eeg_4 = eeg['EEG_win4'] # 障碍物高度1
-eeg = sio.loadmat('EEG_win5.mat')
-eeg_5 = eeg['EEG_win5'] # 障碍物高度2
-eeg = sio.loadmat('EEG_win6.mat')
-eeg_6 = eeg['EEG_win6'] # 障碍物高度3
-eeg = sio.loadmat('EEG_win7.mat')
-eeg_7 = eeg['EEG_win7'] # 障碍物高度2
-eeg = sio.loadmat('EEG_win8.mat')
-eeg_8 = eeg['EEG_win8'] # 障碍物高度3
-eeg = sio.loadmat('EEG_win9.mat')
-eeg_9 = eeg['EEG_win9'] # 障碍物高度1
+id_subject = 3 # 【受试者的编号】
 
-hight_1 = (eeg_3, eeg_4, eeg_9)
-hight_2 = (eeg_2, eeg_5, eeg_7)
-hight_3 = (eeg_1, eeg_6, eeg_8)
+fileNum = 0
+def visitDir(path):
+    global fileNum
+    for lists in os.listdir(path):
+        sub_path = os.path.join(path, lists)
+        print(sub_path)
+        if os.path.isfile(sub_path):
+            fileNum = fileNum+1 # 统计文件数量
+    return fileNum
+if id_subject < 10:
+    num_file = visitDir('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_0'+str(id_subject)+'_wineeg') # 获取受试对象EEG窗的数量
+else:
+    num_file = visitDir('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_'+str(id_subject)+'_wineeg')
 
-task = (hight_1, hight_2)
+eegwin_0 = [] # 存放标记为0的EEG窗
+eegwin_1 = [] # 存放标记为1的EEG窗
+for i in range(int(num_file/2)):
+    if id_subject < 10:
+        label0_mat = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_0'+str(id_subject)+'_wineeg\\label0_Subject_0'+str(id_subject)+'_'+str(i+1)+'.mat')
+        label1_mat = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_0'+str(id_subject)+'_wineeg\\label1_Subject_0'+str(id_subject)+'_'+str(i+1)+'.mat')
+        eegwin_0.append(label0_mat['label0_Subject_0'+str(id_subject)+'_'+str(i+1)][0][0])
+        eegwin_1.append(label1_mat['label1_Subject_0'+str(id_subject)+'_'+str(i+1)][0][0])
+    else:
+        label0_mat = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_'+str(id_subject)+'_wineeg\\label0_Subject_'+str(id_subject)+'_'+str(i+1)+'.mat')
+        label1_mat = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_'+str(id_subject)+'_wineeg\\label1_Subject_'+str(id_subject)+'_'+str(i+1)+'.mat')
+        eegwin_0.append(label0_mat['label0_Subject_'+str(id_subject)+'_'+str(i+1)][0][0])
+        eegwin_1.append(label1_mat['label1_Subject_'+str(id_subject)+'_'+str(i+1)][0][0])
+        
+task = (eegwin_0, eegwin_1)
 
 # 获取EEG窗的标准化空间协方差矩阵
 def covarianceMatrix(A):
@@ -79,3 +93,18 @@ for x in iterator:
     
     filters += (W,)
     # 二分类时两个滤波器矩阵相同
+
+num_pair = 6 # 【从CSP投影矩阵filters里取得特征对数】
+output = np.zeros([num_pair*2,np.shape(filters[0])[0]]) # 提取特征的投影矩阵
+output[0:num_pair,:] = filters[0][0:num_pair,:] # 取投影矩阵前几行
+output[num_pair:,:] = filters[0][np.shape(filters[0])[1]-num_pair:,:] # 对应取投影矩阵后几行
+
+if id_subject < 10:
+    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_0'+str(id_subject)+'_CSP\\Subject_0'+str(id_subject)+'_CSP.mat', {'Subject_0'+str(id_subject)+'_CSP':output})
+    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_0'+str(id_subject)+'_CSP\\Subject_0'+str(id_subject)+'_label0_win.mat', {'Subject_0'+str(id_subject)+'_label0_win':eegwin_0})
+    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_0'+str(id_subject)+'_CSP\\Subject_0'+str(id_subject)+'_label1_win.mat', {'Subject_0'+str(id_subject)+'_label1_win':eegwin_1})
+else:
+    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_'+str(id_subject)+'_CSP\\Subject_'+str(id_subject)+'_CSP.mat', {'Subject_'+str(id_subject)+'_CSP':output})
+    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_'+str(id_subject)+'_CSP\\Subject_'+str(id_subject)+'_label0_win.mat', {'Subject_'+str(id_subject)+'_label0_win':eegwin_0})
+    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_'+str(id_subject)+'_CSP\\Subject_'+str(id_subject)+'_label1_win.mat', {'Subject_'+str(id_subject)+'_label1_win':eegwin_1})
+    
