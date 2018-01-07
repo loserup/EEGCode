@@ -8,26 +8,49 @@
 
 % 最后生成的mat文件为元组，每一个成员对应受试对象一次试验的数据 
 
-num_sample = 15; % 样本文件数
+num_sample = 20; % 样本文件数
 motion_flag = 11; % 列数对应：右髋-8；右膝-11；左髋-17；左膝20
-id_subject = 3; % 受试对象ID号
+id_subject = 1; % 受试对象ID号
 
 rawEEG = cell(1,num_sample);
 rawMotion = cell(1,num_sample);
 
-for n = 1:num_sample
-    if n < 10
-        motion_filename = ['E:\EEGExoskeleton\Dataset\Subject_0' num2str(id_subject) '\txt_Gait\' num2str(0) num2str(n) 'Char00_biped.txt']; % 读取步态文本文件的文件名
-        eeg_filename = ['E:\EEGExoskeleton\Dataset\Subject_0' num2str(id_subject) '\raw_EEG\' num2str(0) num2str(n) '.bdf']; % 读取EEG文件的文件名
-    else
-        motion_filename = ['E:\EEGExoskeleton\Dataset\Subject_0' num2str(id_subject) '\txt_Gait\' num2str(n) 'Char00_biped.txt'];
-        eeg_filename = ['E:\EEGExoskeleton\Dataset\Subject_0' num2str(id_subject) '\raw_EEG\' num2str(n) '.bdf'];
+if id_subject < 10
+    for n = 1:num_sample
+        if n < 10
+            motion_filename = ['E:\EEGExoskeleton\Dataset\Subject_0' num2str(id_subject) '\txt_Gait\0' num2str(n) 'Char00_biped.txt']; % 读取步态文本文件的文件名
+            eeg_filename = ['E:\EEGExoskeleton\Dataset\Subject_0' num2str(id_subject) '\raw_EEG\0' num2str(n) '.bdf']; % 读取EEG文件的文件名
+        else
+            motion_filename = ['E:\EEGExoskeleton\Dataset\Subject_0' num2str(id_subject) '\txt_Gait\' num2str(n) 'Char00_biped.txt'];
+            eeg_filename = ['E:\EEGExoskeleton\Dataset\Subject_0' num2str(id_subject) '\raw_EEG\' num2str(n) '.bdf'];
+        end
+        rawEEG{1,n} = eeg_read_bdf(eeg_filename,'all','n');
+        temp = load(motion_filename);
+        rawMotion{1,n} = temp(:,motion_flag);
     end
-    
-    rawEEG{1,n} = eeg_read_bdf(eeg_filename,'all','n'); 
-    temp = load(motion_filename);
-    rawMotion{1,n} = temp(:,motion_flag);
+else
+    for n = 1:num_sample
+        if n < 10
+            motion_filename = ['E:\EEGExoskeleton\Dataset\Subject_' num2str(id_subject) '\txt_Gait\0' num2str(n) 'Char00_biped.txt']; % 读取步态文本文件的文件名
+            eeg_filename = ['E:\EEGExoskeleton\Dataset\Subject_' num2str(id_subject) '\raw_EEG\0' num2str(n) '.bdf']; % 读取EEG文件的文件名
+        else
+            motion_filename = ['E:\EEGExoskeleton\Dataset\Subject_' num2str(id_subject) '\txt_Gait\' num2str(n) 'Char00_biped.txt'];
+            eeg_filename = ['E:\EEGExoskeleton\Dataset\Subject_' num2str(id_subject) '\raw_EEG\' num2str(n) '.bdf'];
+        end
+        rawEEG{1,n} = eeg_read_bdf(eeg_filename,'all','n');
+        temp = load(motion_filename);
+        rawMotion{1,n} = temp(:,motion_flag);
+    end
 end
 
-save E:\EEGExoskeleton\EEGProcessor2\rawEEG_03 rawEEG;
-save E:\EEGExoskeleton\EEGProcessor2\rawMotion_03 rawMotion;
+if id_subject < 10
+    save_eeg_filename = ['E:\EEGExoskeleton\EEGProcessor2\rawEEG_0' num2str(id_subject) '.mat'];
+    save_motion_filename = ['E:\EEGExoskeleton\EEGProcessor2\rawMotion_0' num2str(id_subject) '.mat'];
+    save(save_eeg_filename,'rawEEG');
+    save(save_motion_filename,'rawMotion');
+else
+    save_eeg_filename = ['E:\EEGExoskeleton\EEGProcessor2\rawEEG_' num2str(id_subject) '.mat'];
+    save_motion_filename = ['E:\EEGExoskeleton\EEGProcessor2\rawMotion_' num2str(id_subject) '.mat'];
+    save(save_eeg_filename,'rawEEG');
+    save(save_motion_filename,'rawMotion');
+end
