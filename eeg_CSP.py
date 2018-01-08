@@ -9,6 +9,7 @@ Created on Tue Dec 12 11:07:25 2017
 % 第四步
 
 % 通过CSP求区别有无意图的投影矩阵
+% 并通过CSP投影矩阵提取EEG窗方差特征
 """
 
 import scipy.io as sio
@@ -16,17 +17,18 @@ import numpy as np
 import scipy.linalg as la # 线性代数库
 
 id_subject = 3 # 【受试者的编号】
+num_pair = 6 # 【从CSP投影矩阵里取得特征对数】
 
 if id_subject < 10:
-    input_eegwin_dict = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_0'+\
-                                    str(id_subject)+'_feature\\Subject_0'+\
-                                    str(id_subject)+'_wineeg.mat')
-    input_eegwin = input_eegwin_dict['Subject_0'+str(id_subject)+'_wineeg']
+    input_eegwin_dict = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0'+\
+                                    str(id_subject)+'_Data\\Subject_0'+\
+                                    str(id_subject)+'_WinEEG.mat')
 else:
-    input_eegwin_dict = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_'+\
-                                    str(id_subject)+'_feature\\Subject_'+\
-                                    str(id_subject)+'_wineeg.mat')
-    input_eegwin = input_eegwin_dict['Subject_'+str(id_subject)+'_wineeg']
+    input_eegwin_dict = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_'+\
+                                    str(id_subject)+'_Data\\Subject_'+\
+                                    str(id_subject)+'_WinEEG.mat')
+
+input_eegwin = input_eegwin_dict['WinEEG']
 
 eegwin_0 = [] # 存放标记为0的EEG窗
 eegwin_1 = [] # 存放标记为1的EEG窗
@@ -58,32 +60,55 @@ C_1 = C_1 / len(task[1]) # 获得标记为1的EEG窗的标准化协方差对称�
 
 C = C_0 + C_1 # 不同类别的复合空间协方差矩阵,这是一个对称矩阵
 E,U = la.eig(C) # 获取复合空间协方差矩阵的特征值E和特征向量U,这里C可以分解为C=np.dot(U,np.dot(np.diag(E),U.T))
+#E = E.real # E取实部；取实部后不能实现np.diag(E_0)+np.diag(E_1)=I
+
+order = np.argsort(E) # 升序排序
+order = order[::-1] # 翻转以使特征值降序排序
+E = E[order] 
+U = U[:,order]
 
 P = np.dot(np.sqrt(la.inv(np.diag(E))),np.transpose(U)) # 获取白化变换矩阵
 
 # 获取白化变换后的协方差矩阵
-S_0 = np.dot(P,np.dot(C_0, P.T)) 
-S_1 = np.dot(P,np.dot(C_1, P.T))
+S_0 = np.dot(P,np.dot(C_0, np.transpose(P))) 
+S_1 = np.dot(P,np.dot(C_1, np.transpose(P)))
 
 E_0,U_0 = la.eig(S_0)
-E_1,U_1 = la.eig(S_1)
 # 至此有np.diag(E_0)+np.diag(E_1)=I以及U_0=U_1
 
+# 这里特征值也要按降序排序
+order = np.argsort(E_0)
+order = order[::-1]
+E_0 = E_0[order]
+U_0 = U_0[:,order]
+
+#E_1,U_1 = la.eig(S_1);E_1 = E_1[order];U_1 = U_1[:,order] #测试是否满足np.diag(E_0)+np.diag(E_1)=I
+
 # 求得CSP投影矩阵W
-W = ((np.dot(U_0.T,P)).T)
+W = np.dot(np.transpose(U_0),P)
 
+csp = np.zeros([num_pair*2,np.shape(W)[0]]) # 提取特征的投影矩阵
+csp[0:num_pair,:] = W[0:num_pair,:] # 取投影矩阵前几行
+csp[num_pair:,:] = W[np.shape(W)[1]-num_pair:,:] # 对应取投影矩阵后几行
 
-num_pair = 4 # 【从CSP投影矩阵filters里取得特征对数】
-output = np.zeros([num_pair*2,np.shape(W)[0]]) # 提取特征的投影矩阵
-output[0:num_pair,:] = W[0:num_pair,:] # 取投影矩阵前几行
-output[num_pair:,:] = W[np.shape(W)[1]-num_pair:,:] # 对应取投影矩阵后几行
-
+# 利用投影矩阵提取EEG窗特征
+features = []
+for i in range(len(eegwin_0)):
+    Z = np.dot(csp, eegwin_0[i])
+    varances = list(np.log(np.var(Z, axis=1))) # axis=1即求每行的方差
+    varances.append(0)
+    features.append(varances)
+    
+    Z = np.dot(csp, eegwin_1[i])
+    varances = list(np.log(np.var(Z, axis=1)))
+    varances.append(1)
+    features.append(varances)
+    
 if id_subject < 10:
-    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_0'+str(id_subject)+'_CSP\\Subject_0'+str(id_subject)+'_CSP.mat', {'Subject_0'+str(id_subject)+'_CSP':output})
-    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_0'+str(id_subject)+'_CSP\\Subject_0'+str(id_subject)+'_label0_win.mat', {'Subject_0'+str(id_subject)+'_label0_win':eegwin_0})
-    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_0'+str(id_subject)+'_CSP\\Subject_0'+str(id_subject)+'_label1_win.mat', {'Subject_0'+str(id_subject)+'_label1_win':eegwin_1})
+    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0'+str(id_subject)+\
+                '_Data\\Subject_0'+str(id_subject)+'_features.mat',\
+                {'features' : features})
 else:
-    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_'+str(id_subject)+'_CSP\\Subject_'+str(id_subject)+'_CSP.mat', {'Subject_'+str(id_subject)+'_CSP':output})
-    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_'+str(id_subject)+'_CSP\\Subject_'+str(id_subject)+'_label0_win.mat', {'Subject_'+str(id_subject)+'_label0_win':eegwin_0})
-    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_'+str(id_subject)+'_CSP\\Subject_'+str(id_subject)+'_label1_win.mat', {'Subject_'+str(id_subject)+'_label1_win':eegwin_1})
-
+    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_'+str(id_subject)+\
+                '_Data\\Subject_'+str(id_subject)+'_features.mat',\
+                {'features' : features})

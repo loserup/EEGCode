@@ -23,14 +23,22 @@ id_subject = 3 # 【受试者的编号】
 work_trial = 18 # 【设置有效的极值点数】即跨越时的极值点
 
 if id_subject < 10:
-    gait_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor2\\filteredMotion_0' + str(id_subject) + '.mat')
-    eeg_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor2\\labeledEEG_0' + str(id_subject) + '.mat')
+    gait_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0' +\
+                                str(id_subject) + '_Data\\Subject_0' +\
+                                str(id_subject) + '_FilteredMotion.mat')
+    eeg_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0' +\
+                               str(id_subject) + '_Data\\Subject_0' +\
+                               str(id_subject) + '_CutedEEG.mat')
 else:
-    gait_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor2\\filteredMotion_' + str(id_subject) + '.mat')
-    eeg_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor2\\labeledEEG_' + str(id_subject) + '.mat')
+    gait_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_' +\
+                                str(id_subject) + '_Data\\Subject_' +\
+                                str(id_subject) + '_FilteredMotion.mat')
+    eeg_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_' +\
+                               str(id_subject) + '_Data\\Subject_' +\
+                               str(id_subject) + '_CutedEEG.mat')
 
-gait_data = gait_mat_data['filteredMotion'][0]
-eeg_data = eeg_mat_data['labeledEEG']
+gait_data = gait_mat_data['FilteredMotion'][0]
+eeg_data = eeg_mat_data['CutedEEG']
 
 num_trial = len(gait_data) # 获取受试者进行试验的次数
 
@@ -109,7 +117,7 @@ def bandpass(data):
 out_count = 0 # 输出文件批数
 output = []
 for i in range(num_trial):
-    if len(gait_data[i]) and (i != 1):
+    if len(gait_data[i]) and (i != 1): # 受试对象3的第二次trial效果不好，故去掉
         # 当步态数据不是空集时（有效时）
         peakind = find_peak_point(gait_data[i][0])
         peak = [gait_data[i][0][j] for j in peakind] # 获取极值点
@@ -151,10 +159,10 @@ for i in range(num_trial):
         continue
     
 if id_subject < 10:
-    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_0'+str(id_subject)+\
-                '_feature\\Subject_0'+str(id_subject)+'_wineeg.mat'\
-                , {'Subject_0'+str(id_subject)+'_wineeg':output})
+    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0'+str(id_subject)+\
+                '_Data\\Subject_0'+str(id_subject)+'_WinEEG.mat',\
+                {'WinEEG':output})
 else:
-    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_0'+str(id_subject)+\
-                '_feature\\Subject_'+str(id_subject)+'_wineeg.mat'\
-                , {'Subject_'+str(id_subject)+'_wineeg':output})
+    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_'+str(id_subject)+\
+                '_Data\\Subject_'+str(id_subject)+'_WinEEG.mat',\
+                {'WinEEG':output})

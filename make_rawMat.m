@@ -8,9 +8,16 @@
 
 % 最后生成的mat文件为元组，每一个成员对应受试对象一次试验的数据 
 
-num_sample = 20; % 样本文件数
+id_subject = 2; % 受试对象ID号
 motion_flag = 11; % 列数对应：右髋-8；右膝-11；左髋-17；左膝20
-id_subject = 1; % 受试对象ID号
+
+if id_subject < 10
+    path = ['E:\EEGExoskeleton\Dataset\Subject_0' num2str(id_subject) '\raw_EEG\*.bdf'];
+else
+    path = ['E:\EEGExoskeleton\Dataset\Subject_' num2str(id_subject) '\raw_EEG\*.bdf'];
+end
+num_sample = length(dir(path)); % 样本文件数
+
 
 rawEEG = cell(1,num_sample);
 rawMotion = cell(1,num_sample);
@@ -44,13 +51,13 @@ else
 end
 
 if id_subject < 10
-    save_eeg_filename = ['E:\EEGExoskeleton\EEGProcessor2\rawEEG_0' num2str(id_subject) '.mat'];
-    save_motion_filename = ['E:\EEGExoskeleton\EEGProcessor2\rawMotion_0' num2str(id_subject) '.mat'];
+    save_eeg_filename = ['E:\EEGExoskeleton\EEGProcessor\Subject_0' num2str(id_subject) '_Data\Subject_0' num2str(id_subject) '_RawEEG.mat'];
+    save_motion_filename = ['E:\EEGExoskeleton\EEGProcessor\Subject_0' num2str(id_subject) '_Data\Subject_0' num2str(id_subject) '_RawMotion.mat'];
     save(save_eeg_filename,'rawEEG');
     save(save_motion_filename,'rawMotion');
 else
-    save_eeg_filename = ['E:\EEGExoskeleton\EEGProcessor2\rawEEG_' num2str(id_subject) '.mat'];
-    save_motion_filename = ['E:\EEGExoskeleton\EEGProcessor2\rawMotion_' num2str(id_subject) '.mat'];
+    save_eeg_filename = ['E:\EEGExoskeleton\EEGProcessor\Subject_' num2str(id_subject) '_Data\Subject_' num2str(id_subject) '_RawEEG.mat'];
+    save_motion_filename = ['E:\EEGExoskeleton\EEGProcessor\Subject_' num2str(id_subject) '_Data\Subject_' num2str(id_subject) '_RawMotion.mat'];
     save(save_eeg_filename,'rawEEG');
     save(save_motion_filename,'rawMotion');
 end
