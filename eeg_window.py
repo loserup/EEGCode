@@ -90,11 +90,11 @@ def find_valley_point(dataset, peakind_sorted):
 
 # 对EEG信号带通滤波
 fs = 512 # 【采样频率512Hz】
-upper = 8 # 【上截止频率】
-lower = 30 # 【下截止频率】
-bias_0 = 100 #【无意图窗偏移量】
-bias_1 = -100 #【有意图窗偏移量】
-win_width = 300 # 【窗宽度】
+upper = 1 # 【上截止频率】
+lower = 4 # 【下截止频率】
+bias_0 = 300 #【无意图窗偏移量】
+bias_1 = -300 #【有意图窗偏移量】
+win_width = 350 # 【窗宽度】
 fs_gait = 121 # 【步态数据采样频率121Hz】
 def bandpass(data):
     Wn = [2 * upper / fs, 2 * lower / fs] # 截止频带0.1-1Hz or 8-30Hz
@@ -107,6 +107,7 @@ def bandpass(data):
     return filtered_data 
 
 out_count = 0 # 输出文件批数
+output = []
 for i in range(num_trial):
     if len(gait_data[i]) and (i != 1):
         # 当步态数据不是空集时（有效时）
@@ -133,15 +134,7 @@ for i in range(num_trial):
             out_eeg =  eeg_data[0][i][:,int(win_index[k]):(int(win_index[k])+win_width)]
             out_eeg = bandpass(out_eeg)
             out_eeg = [out_eeg, 0]
-            
-            if id_subject < 10:
-                sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_0'+str(id_subject)+\
-                            '_wineeg\\label0_Subject_0'+str(id_subject)+'_'+str(out_count*work_trial+(k+1))+'.mat'\
-                            , {'label0_Subject_0'+str(id_subject)+'_'+str(out_count*work_trial+(k+1)):out_eeg})
-            else:
-                sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_'+str(id_subject)+\
-                            '_wineeg\\label0_Subject_'+str(id_subject)+'_'+str(out_count*work_trial+(k+1))+'.mat',\
-                            {'label0_Subject_'+str(id_subject)+'_'+str(out_count*work_trial+(k+1)):out_eeg})
+            output.append(out_eeg)
                 
         # 取有跨越意图EEG窗，标记为1
         win_index = valleyind_sorted + bias_1
@@ -151,15 +144,17 @@ for i in range(num_trial):
             out_eeg =  eeg_data[0][i][:,int(win_index[k]-win_width):int(win_index[k])]
             out_eeg = bandpass(out_eeg)
             out_eeg = [out_eeg, 1]
-            if id_subject < 10:
-                sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_0'+str(id_subject)+\
-                            '_wineeg\\label1_Subject_0'+str(id_subject)+'_'+str(out_count*work_trial+(k+1))+'.mat',\
-                            {'label1_Subject_0'+str(id_subject)+'_'+str(out_count*work_trial+(k+1)):out_eeg})
-            else:
-                sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_'+str(id_subject)+\
-                            '_wineeg\\label1_Subject_'+str(id_subject)+'_'+str(out_count*work_trial+(k+1))+'.mat',\
-                            {'label1_Subject_'+str(id_subject)+'_'+str(out_count*work_trial+(k+1)):out_eeg})
+            output.append(out_eeg)
                 
         out_count += 1
     else:
         continue
+    
+if id_subject < 10:
+    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_0'+str(id_subject)+\
+                '_feature\\Subject_0'+str(id_subject)+'_wineeg.mat'\
+                , {'Subject_0'+str(id_subject)+'_wineeg':output})
+else:
+    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor2\\Subject_0'+str(id_subject)+\
+                '_feature\\Subject_'+str(id_subject)+'_wineeg.mat'\
+                , {'Subject_'+str(id_subject)+'_wineeg':output})

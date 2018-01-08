@@ -26,9 +26,9 @@ else:
     feats_mat = sio.loadmat('E:\EEGExoskeleton\EEGProcessor2\Subject_'+str(id_subject)+\
                 '_feature\\Subject_'+str(id_subject)+'_features.mat')
 feats_all = feats_mat['features']
-    
+
 # 随机打乱特征顺序
-feats, labels = shuffle(feats_all[:,:-1],feats_all[:,-1],random_state=50000)
+feats, labels = shuffle(feats_all[:,:-1],feats_all[:,-1],random_state=6)
 """
 num_train = int(0.8*len(feats)) # 设置80%的数据用来训练
 feats_trian, labels_train = feats[:num_train],labels[:num_train]
