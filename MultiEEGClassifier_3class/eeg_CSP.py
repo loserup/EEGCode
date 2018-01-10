@@ -30,22 +30,19 @@ else:
 
 input_eegwin = input_eegwin_dict['WinEEG']
 
-eegwin_0 = [] # 存放标记为0的EEG窗
+
 eegwin_1 = [] # 存放标记为1的EEG窗
 eegwin_2 = [] # 存放标记为2的EEG窗
 eegwin_3 = [] # 存放标记为3的EEG窗
 for i in range(len(input_eegwin)):
-    if int(input_eegwin[i][1]) == 0:
-        # 若EEG窗标记为0
-        eegwin_0.append(input_eegwin[i][0])
-    elif int(input_eegwin[i][1]) == 1:
+    if int(input_eegwin[i][1]) == 1:
         eegwin_1.append(input_eegwin[i][0])
     elif int(input_eegwin[i][1]) == 2:
         eegwin_2.append(input_eegwin[i][0])
     else:
         eegwin_3.append(input_eegwin[i][0])
         
-task = (eegwin_0, eegwin_1, eegwin_2, eegwin_3)
+task = (eegwin_1, eegwin_2, eegwin_3)
 
 # 获取EEG窗的标准化空间协方差矩阵
 def covarianceMatrix(A):
@@ -110,20 +107,18 @@ for i in range(len(task)):
 
 # 利用投影矩阵提取EEG窗特征
 features = []
-for i in range(len(eegwin_0)):
-    Z = np.dot(csp[0], eegwin_0[i])
-    varances = list(np.log(np.var(Z, axis=1))) # axis=1即求每行的方差
-    varances.append(0)
-    features.append(varances)
 for i in range(len(eegwin_1)):
+    Z = np.dot(csp[0], eegwin_1[i])
     varances = list(np.log(np.var(Z, axis=1)))
     varances.append(1)
     features.append(varances)
 for i in range(len(eegwin_2)):
+    Z = np.dot(csp[1], eegwin_2[i])
     varances = list(np.log(np.var(Z, axis=1)))
     varances.append(2)
     features.append(varances)
 for i in range(len(eegwin_3)):
+    Z = np.dot(csp[2], eegwin_3[i])
     varances = list(np.log(np.var(Z, axis=1)))
     varances.append(3)
     features.append(varances)
