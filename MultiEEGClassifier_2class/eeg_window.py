@@ -102,7 +102,7 @@ fs = 512 # 【采样频率512Hz】
 bias_0 = 300 #【无意图窗偏移量】
 bias_1 = -300 #【有意图窗偏移量】
 win_width = 350 # 【窗宽度】
-fs_gait = 121 # 【步态数据采样频率121Hz】
+fs_gait = 125 # 【步态数据采样频率121Hz】
 def bandpass(data,upper=1,lower=4):
     Wn = [2 * upper / fs, 2 * lower / fs] # 截止频带0.1-1Hz or 8-30Hz
     b,a = sis.butter(4, Wn, 'bandpass')
@@ -152,24 +152,20 @@ for i in range(num_trial):
         
         for k in range(work_trial):
             out_eeg =  eeg_data[0][i][:,int(win_index[k]-win_width):int(win_index[k])]
-            #out_eeg = bandpass(out_eeg)
+            out_eeg = bandpass(out_eeg)
             
-            out_eeg_band1 = bandpass(out_eeg,upper=1,lower=4)
+            out_eeg_band1 = bandpass(out_eeg,upper=4,lower=7)
             out_eeg_band2 = bandpass(out_eeg,upper=8,lower=13)
             out_eeg_band3 = bandpass(out_eeg,upper=13,lower=30)
             # 跨越三种障碍的标签，现在手动打标签
             # 18次跨越的标签排序为2,1,3,3,1,2,2,1,3,3,1,2,2,1,3,3,1,2
             if k % 6 == 1 or k%6 == 4:
                 out_eeg = [np.hstack((out_eeg_band1,out_eeg_band2,out_eeg_band3)),1] # 跨越障碍高1
-                #out_eeg = [out_eeg,1]
-                #continue
             elif k % 6 == 0 or k%6 == 5:
-                #out_eeg = [np.hstack((out_eeg_band1,out_eeg_band2,out_eeg_band3)),2] # 跨越障碍高3
-                #out_eeg = [out_eeg,2]
-                continue
+                out_eeg = [np.hstack((out_eeg_band1,out_eeg_band2,out_eeg_band3)),2] # 跨越障碍高3
             else:
-                out_eeg = [np.hstack((out_eeg_band1,out_eeg_band2,out_eeg_band3)),3] # 跨越障碍高5  
-                #continue
+                #out_eeg = [np.hstack((out_eeg_band1,out_eeg_band2,out_eeg_band3)),3] # 跨越障碍高5
+                continue
             output.append(out_eeg)
                 
         out_count += 1
