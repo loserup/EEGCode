@@ -142,7 +142,7 @@ for i in range(num_trial):
             out_eeg_band1 = bandpass(out_eeg,upper=4,lower=7)
             out_eeg_band2 = bandpass(out_eeg,upper=8,lower=13)
             out_eeg_band3 = bandpass(out_eeg,upper=13,lower=30)
-            out_eeg = [np.hstack((out_eeg_band1,out_eeg_band2,out_eeg_band3)),0]
+            out_eeg = [out_eeg_band1,out_eeg_band2,out_eeg_band3,0]
             output.append(out_eeg)
                 
         # 取有跨越意图EEG窗，标记为1,2,3
@@ -159,13 +159,13 @@ for i in range(num_trial):
             # 跨越三种障碍的标签，现在手动打标签
             # 18次跨越的标签排序为2,1,3,3,1,2,2,1,3,3,1,2,2,1,3,3,1,2
             if k % 6 == 1 or k%6 == 4:
-                out_eeg = [np.hstack((out_eeg_band1,out_eeg_band2,out_eeg_band3)),1] # 跨越障碍高1
+                out_eeg = [out_eeg_band1,out_eeg_band2,out_eeg_band3,1] # 跨越障碍高1
             elif k % 6 == 0 or k%6 == 5:
-                out_eeg = [np.hstack((out_eeg_band1,out_eeg_band2,out_eeg_band3)),2] # 跨越障碍高3
+                out_eeg = [out_eeg_band1,out_eeg_band2,out_eeg_band3,2] # 跨越障碍高3
             else:
-                out_eeg = [np.hstack((out_eeg_band1,out_eeg_band2,out_eeg_band3)),3] # 跨越障碍高5     
+                out_eeg = [out_eeg_band1,out_eeg_band2,out_eeg_band3,3] # 跨越障碍高5     
             output.append(out_eeg)
-                
+                 
         out_count += 1
     else:
         continue
