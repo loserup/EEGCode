@@ -4,3 +4,6 @@
 3、第3步运行eeg_window.py
 4、第4步运行eeg_CSP.py
 5、第5步运行classifier.py
+
+log：
+EEG窗在1-4Hz进行带通滤波时分类器表现的性能最好，接近90%

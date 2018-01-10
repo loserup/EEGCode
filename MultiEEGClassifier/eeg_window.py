@@ -99,13 +99,11 @@ def find_valley_point(dataset, peakind_sorted):
 
 # 对EEG信号带通滤波
 fs = 512 # 【采样频率512Hz】
-upper = 1 # 【上截止频率】
-lower = 4 # 【下截止频率】
 bias_0 = 300 #【无意图窗偏移量】
 bias_1 = -300 #【有意图窗偏移量】
 win_width = 350 # 【窗宽度】
 fs_gait = 121 # 【步态数据采样频率121Hz】
-def bandpass(data):
+def bandpass(data,upper=1,lower=4):
     Wn = [2 * upper / fs, 2 * lower / fs] # 截止频带0.1-1Hz or 8-30Hz
     b,a = sis.butter(4, Wn, 'bandpass')
     
@@ -138,11 +136,13 @@ for i in range(num_trial):
         win_index = peakind_sorted + bias_0 # 窗起始索引
         win_index = win_index * 512 / fs_gait
         
-
+        # 截取4-7,8-13,13-30三个频带的EEG窗
         for k in range(work_trial):
             out_eeg =  eeg_data[0][i][:,int(win_index[k]):(int(win_index[k])+win_width)]
-            out_eeg = bandpass(out_eeg)
-            out_eeg = [out_eeg, 0]
+            out_eeg_band1 = bandpass(out_eeg,upper=4,lower=7)
+            out_eeg_band2 = bandpass(out_eeg,upper=8,lower=13)
+            out_eeg_band3 = bandpass(out_eeg,upper=13,lower=30)
+            out_eeg = [np.hstack((out_eeg_band1,out_eeg_band2,out_eeg_band3)),0]
             output.append(out_eeg)
                 
         # 取有跨越意图EEG窗，标记为1,2,3
@@ -153,15 +153,17 @@ for i in range(num_trial):
             out_eeg =  eeg_data[0][i][:,int(win_index[k]-win_width):int(win_index[k])]
             out_eeg = bandpass(out_eeg)
             
+            out_eeg_band1 = bandpass(out_eeg,upper=4,lower=7)
+            out_eeg_band2 = bandpass(out_eeg,upper=8,lower=13)
+            out_eeg_band3 = bandpass(out_eeg,upper=13,lower=30)
             # 跨越三种障碍的标签，现在手动打标签
             # 18次跨越的标签排序为2,1,3,3,1,2,2,1,3,3,1,2,2,1,3,3,1,2
             if k % 6 == 1 or k%6 == 4:
-                out_eeg = [out_eeg, 1] # 跨越障碍高1
+                out_eeg = [np.hstack((out_eeg_band1,out_eeg_band2,out_eeg_band3)),1] # 跨越障碍高1
             elif k % 6 == 0 or k%6 == 5:
-                out_eeg = [out_eeg, 2] # 跨越障碍高3
+                out_eeg = [np.hstack((out_eeg_band1,out_eeg_band2,out_eeg_band3)),2] # 跨越障碍高3
             else:
-                out_eeg = [out_eeg, 3] # 跨越障碍高5
-            
+                out_eeg = [np.hstack((out_eeg_band1,out_eeg_band2,out_eeg_band3)),3] # 跨越障碍高5     
             output.append(out_eeg)
                 
         out_count += 1

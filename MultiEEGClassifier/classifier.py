@@ -16,6 +16,7 @@ from sklearn.svm import SVC
 import scipy.io as sio
 from sklearn.utils import shuffle
 from sklearn import cross_validation
+import numpy as np
 
 id_subject = 3 # 【受试者的编号】
 
@@ -31,13 +32,13 @@ else:
 feats_all = feats_mat['features']
 
 # 随机打乱特征顺序
-feats, labels = shuffle(feats_all[:,:-1],feats_all[:,-1],random_state=3)
-
-# 建立SVM模型
-params = {'kernel':'rbf','probability':True} # 类别0明显比其他类别数目多，但加了'class_weight':'balanced'平均各类权重准确率反而更低了
-classifier = SVC(**params)
-classifier.fit(feats,labels)
-
-accuracy = cross_validation.cross_val_score(classifier, feats, labels,\
+for i in range(10):
+    feats, labels = shuffle(feats_all[:,:-1],feats_all[:,-1],\
+                            random_state=np.random.randint(0,100))
+    # 建立SVM模型
+    params = {'kernel':'rbf','probability':True} # 类别0明显比其他类别数目多，但加了'class_weight':'balanced'平均各类权重准确率反而更低了
+    classifier = SVC(**params)
+    classifier.fit(feats,labels)
+    accuracy = cross_validation.cross_val_score(classifier, feats, labels,\
                                             scoring='accuracy',cv=3)
-print ('Accuracy of the classifier: '+str(round(100*accuracy.mean(),2))+'%')
+    print ('Accuracy of the classifier: '+str(round(100*accuracy.mean(),2))+'%')
