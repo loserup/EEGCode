@@ -36,7 +36,7 @@ for i in range(10):
     feats, labels = shuffle(feats_all[:,:-1],feats_all[:,-1],\
                             random_state=np.random.randint(0,100))
     # 建立SVM模型
-    params = {'kernel':'rbf','probability':True} # 类别0明显比其他类别数目多，但加了'class_weight':'balanced'平均各类权重准确率反而更低了
+    params = {'kernel':'rbf','probability':True,'class_weight':'balanced'} # 类别0明显比其他类别数目多，但加了'class_weight':'balanced'平均各类权重准确率反而更低了
     classifier = SVC(**params)
     classifier.fit(feats,labels)
     accuracy = cross_validation.cross_val_score(classifier, feats, labels,\

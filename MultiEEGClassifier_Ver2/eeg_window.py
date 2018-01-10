@@ -102,7 +102,7 @@ fs = 512 # 【采样频率512Hz】
 bias_0 = 300 #【无意图窗偏移量】
 bias_1 = -300 #【有意图窗偏移量】
 win_width = 350 # 【窗宽度】
-fs_gait = 121 # 【步态数据采样频率121Hz】
+fs_gait = 125 # 【步态数据采样频率121Hz】
 def bandpass(data,upper=1,lower=4):
     Wn = [2 * upper / fs, 2 * lower / fs] # 截止频带0.1-1Hz or 8-30Hz
     b,a = sis.butter(4, Wn, 'bandpass')

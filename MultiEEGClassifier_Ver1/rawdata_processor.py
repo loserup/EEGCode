@@ -39,7 +39,7 @@ gait_data = gait_mat_data['rawMotion']
 num_trial = np.shape(eeg_data)[1] # 获取受试者进行试验的次数
 
 # 对动作信号【低通滤波】
-fs = 121 # 采样频率121Hz
+fs = 125 # 采样频率121Hz
 Wn = 0.9 # 截止频率0.9Hz
 def lowpass(data, num_sample):
     b,a = sis.butter(4, 2*Wn/fs, 'lowpass')

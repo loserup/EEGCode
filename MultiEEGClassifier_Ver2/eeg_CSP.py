@@ -116,37 +116,36 @@ for band in num_band:
     
         filters[band].append(W)
 
-"""
+
 csp = [] # 提取特征的投影矩阵
-for i in range(len(task)):
-    temp = np.zeros([num_pair*2,np.shape(W)[0]]) 
-    temp[0:num_pair,:] = filters[i][0:num_pair,:] # 取投影矩阵前几行
-    temp[num_pair:,:] = filters[i][np.shape(W)[1]-num_pair:,:] # 对应取投影矩阵后几行
-    csp.append(temp)
+for band in num_band:
+    csp.append([])
+    for label in num_label:
+        temp = np.zeros([num_pair*2,np.shape(filters)[-1]]) 
+        temp[0:num_pair,:] = filters[band][label][0:num_pair,:] # 取投影矩阵前几行
+        temp[num_pair:,:] = filters[band][label][np.shape(filters)[-1]-num_pair:,:] # 对应取投影矩阵后几行
+        csp[band].append(temp)
+
 
 # 利用投影矩阵提取EEG窗特征
-features = []
-for i in range(len(eegwin_0)):
-    Z = np.dot(csp[0], eegwin_0[i])
-    varances = list(np.log(np.var(Z, axis=1))) # axis=1即求每行的方差
-    varances.append(0)
-    features.append(varances)
-for i in range(len(eegwin_1)):
-    Z = np.dot(csp[1], eegwin_1[i])
-    varances = list(np.log(np.var(Z, axis=1)))
-    varances.append(1)
-    features.append(varances)
-for i in range(len(eegwin_2)):
-    Z = np.dot(csp[2], eegwin_1[i])
-    varances = list(np.log(np.var(Z, axis=1)))
-    varances.append(2)
-    features.append(varances)
-for i in range(len(eegwin_3)):
-    Z = np.dot(csp[3], eegwin_1[i])
-    varances = list(np.log(np.var(Z, axis=1)))
-    varances.append(3)
-    features.append(varances)
+band_feats = [] # 每个频带的特征值拼接
+for label in num_label:
+    band_feats.append([])
+    varances = []
+    for band in num_band:
+        varances.append([])
+        for i in range(len(eeg_win[label][band])):
+            Z = np.dot(csp[band][label], eeg_win[label][band][i])
+            varances[band].append(list(np.log(np.var(Z, axis=1)))) # axis=1即求每行的方差得特征值
+    band_feats[label] = [np.hstack((varances[0],varances[1],varances[2]))]
     
+features = []
+for label in num_label:
+    for i in range(len(band_feats[label][0])):
+        temp = list(band_feats[label][0][i])
+        temp.append(label)
+        features.append(temp)
+
 if id_subject < 10:
     sio.savemat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0'+str(id_subject)+\
                 '_Data\\Subject_0'+str(id_subject)+'_features_4class.mat',\
@@ -155,4 +154,3 @@ else:
     sio.savemat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_'+str(id_subject)+\
                 '_Data\\Subject_'+str(id_subject)+'_features_4class.mat',\
                 {'features' : features})
-"""
