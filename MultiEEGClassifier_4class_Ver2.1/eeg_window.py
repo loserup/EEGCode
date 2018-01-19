@@ -11,6 +11,7 @@ Created on Fri Dec  1 21:25:28 2017
 % 根据步态信号建立划窗
 % 划窗截取EEG信号
 % 生成指定受试对象的有意图和无意图区域的EEG窗
+% 标签类别：无意图窗-0，跨越障碍高1-1，跨越障碍高3-2，跨越障碍高5-3
 """
 
 import scipy.io as sio
@@ -101,8 +102,8 @@ fs = 512 # 【采样频率512Hz】
 bias_0 = 300 #【无意图窗偏移量】
 bias_1 = -300 #【有意图窗偏移量】
 win_width = 350 # 【窗宽度】
-fs_gait = 121 # 【步态数据采样频率121Hz】
-def bandpass(data,upper,lower):
+fs_gait = 125 # 【步态数据采样频率121Hz】
+def bandpass(data,upper=1,lower=4):
     Wn = [2 * upper / fs, 2 * lower / fs] # 截止频带0.1-1Hz or 8-30Hz
     b,a = sis.butter(4, Wn, 'bandpass')
     
@@ -135,42 +136,47 @@ for i in range(num_trial):
         win_index = peakind_sorted + bias_0 # 窗起始索引
         win_index = win_index * 512 / fs_gait
         
-
+        # 截取4-7,8-13,13-30三个频带的EEG窗
         for k in range(work_trial):
             out_eeg =  eeg_data[0][i][:,int(win_index[k]):(int(win_index[k])+win_width)]
-            
             out_eeg_band0 = bandpass(out_eeg,upper=0.3,lower=3)
             out_eeg_band1 = bandpass(out_eeg,upper=4,lower=7)
             out_eeg_band2 = bandpass(out_eeg,upper=8,lower=13)
             out_eeg_band3 = bandpass(out_eeg,upper=13,lower=30)
-            
-            out_eeg = [np.hstack((out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3)),0]
+            out_eeg = [out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3,0]
             output.append(out_eeg)
                 
-        # 取有跨越意图EEG窗，标记为1
+        # 取有跨越意图EEG窗，标记为1,2,3
         win_index = valleyind_sorted + bias_1
         win_index = win_index * 512 / fs_gait
         
         for k in range(work_trial):
             out_eeg =  eeg_data[0][i][:,int(win_index[k]-win_width):int(win_index[k])]
+            out_eeg = bandpass(out_eeg)
             
             out_eeg_band0 = bandpass(out_eeg,upper=0.3,lower=3)
             out_eeg_band1 = bandpass(out_eeg,upper=4,lower=7)
             out_eeg_band2 = bandpass(out_eeg,upper=8,lower=13)
             out_eeg_band3 = bandpass(out_eeg,upper=13,lower=30)
-            
-            out_eeg = [np.hstack((out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3)),1]
+            # 跨越三种障碍的标签，现在手动打标签
+            # 18次跨越的标签排序为2,1,3,3,1,2,2,1,3,3,1,2,2,1,3,3,1,2
+            if k % 6 == 1 or k%6 == 4:
+                out_eeg = [out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3,1] # 跨越障碍高1
+            elif k % 6 == 0 or k%6 == 5:
+                out_eeg = [out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3,2] # 跨越障碍高3
+            else:
+                out_eeg = [out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3,3] # 跨越障碍高5     
             output.append(out_eeg)
-                
+                 
         out_count += 1
     else:
         continue
     
 if id_subject < 10:
     sio.savemat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0'+str(id_subject)+\
-                '_Data\\Subject_0'+str(id_subject)+'_WinEEG.mat',\
+                '_Data\\Subject_0'+str(id_subject)+'_WinEEG_4class.mat',\
                 {'WinEEG':output})
 else:
     sio.savemat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_'+str(id_subject)+\
-                '_Data\\Subject_'+str(id_subject)+'_WinEEG.mat',\
+                '_Data\\Subject_'+str(id_subject)+'_WinEEG_4class.mat',\
                 {'WinEEG':output})
