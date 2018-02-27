@@ -11,6 +11,26 @@ Created on Fri Dec  1 21:25:28 2017
 % 根据步态信号建立划窗
 % 划窗截取EEG信号
 % 生成指定受试对象的有意图和无意图区域的EEG窗
+
+% 专门针对第二个受试对象的划窗函数
+受试对象2共进行了16次trail
+第1次：往返3次
+第2次：往返3次
+第3次：往返3次；数据不好处理，去掉
+第4次：往返3次
+第5次：往返3次
+第6次：往返3次
+第7次：往返3次
+第8次：往返3次
+第9次：打标失败，去掉
+第10次：往返3次；数据不好处理，去掉
+第11次：往返3次
+第12次：往返3次
+第13次：往返4次，大概是无意识多走，考虑去掉
+第14次：往返3次；数据不好处理，去掉
+第15次：往返3次
+第16次：往返3次；数据不好处理，去掉
+备注：经测试得知未告知受试对象刻意用右腿跨过障碍，左右腿随机跨
 """
 
 import scipy.io as sio
@@ -19,7 +39,7 @@ import scipy.signal as sis
 import matplotlib.pyplot as plt
 
 
-id_subject = 3 # 【受试者的编号】
+id_subject = 2 # 【受试者的编号】
 work_trial = 18 # 【设置有效的极值点数】即跨越时的极值点
 
 if id_subject < 10:
@@ -115,7 +135,7 @@ def bandpass(data,upper,lower):
 out_count = 0 # 输出文件批数
 output = []
 for i in range(num_trial):
-    if len(gait_data[i]) and i!=1: # 受试对象3的第二次trial效果不好，故去掉
+    if len(gait_data[i]) and i!=2 and i!=9 and i!=12 and i!=13 and i!=15: # 受试对象2的第13次trial效果不好，故去掉
         # 当步态数据不是空集时（有效时）
         
         # 取右膝跨越极值点索引

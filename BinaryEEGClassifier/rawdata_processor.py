@@ -16,7 +16,7 @@ import scipy.io as sio
 import numpy as np
 import scipy.signal as sis
 
-id_subject = 3 # 【受试者的编号】
+id_subject = 2 # 【受试者的编号】
 
 if id_subject < 10:
     eeg_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0' +\
@@ -88,10 +88,17 @@ for i in range(num_trial):
         # 无效数据为没有打标或者只打了一次标
         gait_data[0][i] = []
     else:
+        gait_temp = gait_data[0][i].T
+        num_sample = len(gait_temp[0])
         gait_end_index = round((label_index_2 - label_index_1) * fs / 512) # 第二次打标对应步态数据的位置
-        gait_temp = (gait_data[0][i].T)[0][:gait_end_index]
-        num_sample = len(gait_temp)
-        gait_data[0][i] = lowpass(gait_temp, num_sample)
+        
+        r_pass = lowpass(gait_temp[0],num_sample)[:gait_end_index] # 右膝数据低通滤波
+        l_pass = lowpass(gait_temp[1],num_sample)[:gait_end_index] # 左膝数据低通滤波
+
+        gait_data[0][i] = (gait_data[0][i].T)[:,:gait_end_index]
+        gait_data[0][i][0] = r_pass
+        gait_data[0][i][1] = l_pass
+
 
 if id_subject < 10:
     sio.savemat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0'+str(id_subject)+\
