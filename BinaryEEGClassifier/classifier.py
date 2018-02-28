@@ -18,7 +18,7 @@ from sklearn.utils import shuffle
 from sklearn import cross_validation
 import numpy as np
 
-id_subject = 1 # 【受试者的编号】
+id_subject = 3 # 【受试者的编号】
 
 if id_subject < 10:
     feats_mat = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0'+\
@@ -30,9 +30,10 @@ else:
                             str(id_subject)+'_features.mat')
 
 feats_all = feats_mat['features']
-
+accuracy_sum = 0
+count = 10.0 # 随机计算准确率的次数
 # 随机打乱特征顺序
-for i in range(10):
+for i in range(int(count)):
     feats, labels = shuffle(feats_all[:,:-1],feats_all[:,-1],\
                             random_state=np.random.randint(0,100))
     # 建立SVM模型
@@ -41,4 +42,8 @@ for i in range(10):
     classifier.fit(feats,labels)
     accuracy = cross_validation.cross_val_score(classifier, feats, labels,\
                                             scoring='accuracy',cv=3)
+    accuracy_sum += accuracy
     print ('Accuracy of the classifier: '+str(round(100*accuracy.mean(),2))+'%')
+    
+accuracy_avg = accuracy_sum / count
+print ('\nAverage accuracy is ' + str(round(100*accuracy_sum.mean()/count,2))+'%')

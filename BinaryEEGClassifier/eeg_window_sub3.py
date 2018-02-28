@@ -30,6 +30,7 @@ Created on Fri Dec  1 21:25:28 2017
 第14次：往返3次
 第15次：往返3次
 备注：受试对象被告知用右腿跨越障碍
+最后有效trail有12组，共往返36次，跨越216次，共432个窗
 """
 
 import scipy.io as sio
@@ -119,7 +120,7 @@ def find_valley_point(dataset, peakind_sorted):
 fs = 512 # 【采样频率512Hz】
 bias_0 = 300 #【无意图窗偏移量】
 bias_1 = -300 #【有意图窗偏移量】
-win_width = 350 # 【窗宽度】
+win_width = 360 # 【窗宽度】
 fs_gait = 121 # 【步态数据采样频率121Hz】
 def bandpass(data,upper,lower):
     Wn = [2 * upper / fs, 2 * lower / fs] # 截止频带0.1-1Hz or 8-30Hz

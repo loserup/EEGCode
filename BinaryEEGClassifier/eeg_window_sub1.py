@@ -35,6 +35,7 @@ Created on Fri Dec  1 21:25:28 2017
 第19次：往返3次
 第20次：往返3次；数据不好处理，去掉
 备注：经测试，受试对象基本为右腿跨越，偶有左腿跨越
+最后有效trail有15组，共往返27次，跨越162次，共324个窗
 """
 
 import scipy.io as sio
@@ -166,8 +167,8 @@ for i in range(num_trial):
         l_valleyind_sorted = np.array(find_valley_point(gait_data[i][1], l_peakind_sorted)) # 左膝跨越前的极小值点
         num_axis = len(gait_data[i][0])
        
-        #Window_plotor(num_axis, gait_data[i][0], r_peakind_sorted); plt.title(str(i+1) + 'th trial\'s peak points') # 测试绘图，观察跨越极大值点位置是否找对
-        #Window_plotor(num_axis, gait_data[i][0], r_valleyind_sorted); plt.title(str(i+1) + 'th trial\'s valley points') # 测试绘图，观察跨越前极小值点位置是否找对
+        Window_plotor(num_axis, gait_data[i][0], r_peakind_sorted); plt.title(str(i+1) + 'th trial\'s peak points') # 测试绘图，观察跨越极大值点位置是否找对
+        Window_plotor(num_axis, gait_data[i][0], r_valleyind_sorted); plt.title(str(i+1) + 'th trial\'s valley points') # 测试绘图，观察跨越前极小值点位置是否找对
 
         # 取无跨越意图EEG窗，标记为0   
         rp_win_index = r_peakind_sorted + bias_0 # 窗起始索引
@@ -245,8 +246,8 @@ for i in range(num_trial):
         l_valleyind_sorted = np.array(find_valley_point(gait_data[i][1], l_peakind_sorted)) # 左膝跨越前的极小值点
         num_axis = len(gait_data[i][0])
        
-        #Window_plotor(num_axis, gait_data[i][0], r_peakind_sorted); plt.title(str(i+1) + 'th trial\'s peak points') # 测试绘图，观察跨越极大值点位置是否找对
-        #Window_plotor(num_axis, gait_data[i][0], r_valleyind_sorted); plt.title(str(i+1) + 'th trial\'s valley points') # 测试绘图，观察跨越前极小值点位置是否找对
+        Window_plotor(num_axis, gait_data[i][0], r_peakind_sorted); plt.title(str(i+1) + 'th trial\'s peak points') # 测试绘图，观察跨越极大值点位置是否找对
+        Window_plotor(num_axis, gait_data[i][0], r_valleyind_sorted); plt.title(str(i+1) + 'th trial\'s valley points') # 测试绘图，观察跨越前极小值点位置是否找对
 
         # 取无跨越意图EEG窗，标记为0   
         rp_win_index = r_peakind_sorted + bias_0 # 窗起始索引
@@ -324,8 +325,8 @@ for i in range(num_trial):
         l_valleyind_sorted = np.array(find_valley_point(gait_data[i][1], l_peakind_sorted)) # 左膝跨越前的极小值点
         num_axis = len(gait_data[i][0])
        
-        #Window_plotor(num_axis, gait_data[i][0], r_peakind_sorted); plt.title(str(i+1) + 'th trial\'s peak points') # 测试绘图，观察跨越极大值点位置是否找对
-        #Window_plotor(num_axis, gait_data[i][0], r_valleyind_sorted); plt.title(str(i+1) + 'th trial\'s valley points') # 测试绘图，观察跨越前极小值点位置是否找对
+        Window_plotor(num_axis, gait_data[i][0], r_peakind_sorted); plt.title(str(i+1) + 'th trial\'s peak points') # 测试绘图，观察跨越极大值点位置是否找对
+        Window_plotor(num_axis, gait_data[i][0], r_valleyind_sorted); plt.title(str(i+1) + 'th trial\'s valley points') # 测试绘图，观察跨越前极小值点位置是否找对
 
         # 取无跨越意图EEG窗，标记为0   
         rp_win_index = r_peakind_sorted + bias_0 # 窗起始索引
