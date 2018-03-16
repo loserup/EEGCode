@@ -57,8 +57,8 @@ else:
                                str(id_subject) + '_Data\\Subject_' +\
                                str(id_subject) + '_CutedEEG.mat')
 
-gait_data = gait_mat_data['FilteredMotion'][0]
-eeg_data = eeg_mat_data['CutedEEG']
+gait_data = gait_mat_data['FilteredMotion'][0] # 每个元素是受试者走的一次trail；每个trail记录双膝角度轨迹，依次是右膝和左膝
+eeg_data = eeg_mat_data['CutedEEG'] # eeg_data[0][i]表示第i次trial的EEG，共32行（频道）
 
 num_trial = len(gait_data) # 获取受试者进行试验的次数
 
@@ -120,7 +120,7 @@ def find_valley_point(dataset, peakind_sorted):
 fs = 512 # 【采样频率512Hz】
 bias_0 = 300 #【无意图窗偏移量】
 bias_1 = -300 #【有意图窗偏移量】
-win_width = 360 # 【窗宽度】
+win_width = 384 # 【窗宽度】384对应750ms窗长度
 fs_gait = 121 # 【步态数据采样频率121Hz】
 def bandpass(data,upper,lower):
     Wn = [2 * upper / fs, 2 * lower / fs] # 截止频带0.1-1Hz or 8-30Hz
@@ -184,7 +184,7 @@ for i in range(num_trial):
                 out_eeg_band1 = bandpass(out_eeg,upper=4,lower=7)
                 out_eeg_band2 = bandpass(out_eeg,upper=8,lower=13)
                 out_eeg_band3 = bandpass(out_eeg,upper=13,lower=30)
-                out_eeg = [np.hstack((out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3)),0]
+                out_eeg = [np.hstack((out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3)),-1] # 将四种带通滤波后的EEG窗拼接起来合成一个更长的窗
                 output.append(out_eeg)
                 # 有跨越意图窗
                 out_eeg =  eeg_data[0][i][:,int(rv_win_index[k]-win_width):int(rv_win_index[k])]
@@ -202,7 +202,7 @@ for i in range(num_trial):
                 out_eeg_band1 = bandpass(out_eeg,upper=4,lower=7)
                 out_eeg_band2 = bandpass(out_eeg,upper=8,lower=13)
                 out_eeg_band3 = bandpass(out_eeg,upper=13,lower=30)
-                out_eeg = [np.hstack((out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3)),0]
+                out_eeg = [np.hstack((out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3)),-1]
                 output.append(out_eeg)
                 # 有跨越意图窗
                 out_eeg =  eeg_data[0][i][:,int(lv_win_index[k]-win_width):int(lv_win_index[k])]

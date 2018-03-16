@@ -16,7 +16,7 @@ import scipy.io as sio
 import numpy as np
 import scipy.signal as sis
 
-id_subject = 2 # 【受试者的编号】
+id_subject = 3 # 【受试者的编号】
 
 if id_subject < 10:
     eeg_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0' +\
@@ -40,7 +40,7 @@ num_trial = np.shape(eeg_data)[1] # 获取受试者进行试验的次数
 
 # 对动作信号【低通滤波】
 fs = 121 # 采样频率121Hz
-Wn = 0.9 # 截止频率0.9Hz
+Wn = 1 # 截止频率1Hz
 def lowpass(data, num_sample):
     b,a = sis.butter(4, 2*Wn/fs, 'lowpass')
     

@@ -30,10 +30,10 @@ else:
 
 input_eegwin = input_eegwin_dict['WinEEG']
 
-eegwin_0 = [] # 存放标记为0的EEG窗
+eegwin_0 = [] # 存放标记为-1的EEG窗
 eegwin_1 = [] # 存放标记为1的EEG窗
 for i in range(len(input_eegwin)):
-    if int(input_eegwin[i][1]) == 0:
+    if int(input_eegwin[i][1]) == -1:
         # 若EEG窗标记为0
         eegwin_0.append(input_eegwin[i][0])
     elif int(input_eegwin[i][1]) == 1:
@@ -96,7 +96,7 @@ features = []
 for i in range(len(eegwin_0)):
     Z = np.dot(csp, eegwin_0[i])
     varances = list(np.log(np.var(Z, axis=1))) # axis=1即求每行的方差
-    varances.append(0)
+    varances.append(-1)
     features.append(varances)
     
     Z = np.dot(csp, eegwin_1[i])
