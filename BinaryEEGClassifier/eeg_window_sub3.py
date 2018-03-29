@@ -37,7 +37,7 @@ import scipy.io as sio
 import numpy as np
 import scipy.signal as sis
 import matplotlib.pyplot as plt
-
+import matplotlib.patches as patches
 
 id_subject = 3 # 【受试者的编号】
 work_trial = 18 # 【设置有效的极值点数】即跨越时的极值点
@@ -63,12 +63,27 @@ eeg_data = eeg_mat_data['CutedEEG'] # eeg_data[0][i]表示第i次trial的EEG，�
 num_trial = len(gait_data) # 获取受试者进行试验的次数
 
 # 绘图-测试用
-def Window_plotor(num_axis, data, peakind_sorted):
+def Window_plotor_peak(num_axis, data, index_sorted, bias,win_width):
+    # 绘制峰值点以及相应划窗
     data_axis = [i for i in range(num_axis)]
     plt.figure(figsize=[15,4])
+    ax = plt.gca() # 创建子图ax，用来画窗框
     plt.plot(data_axis, data)
-    for i in peakind_sorted:
+    for i in index_sorted:
         plt.scatter(i, data[i])
+        rect = patches.Rectangle((i+bias,data[i]),win_width,-40,linewidth=1,edgecolor='r',facecolor='none')
+        ax.add_patch(rect)
+
+def Window_plotor_valley(num_axis, data, index_sorted, bias,win_width):
+    # 绘制谷值点以及相应划窗
+    data_axis = [i for i in range(num_axis)]
+    plt.figure(figsize=[15,4])
+    ax = plt.gca() # 创建子图ax，用来画窗框
+    plt.plot(data_axis, data)
+    for i in index_sorted:
+        plt.scatter(i, data[i])
+        rect = patches.Rectangle((i+bias,data[i]),-win_width,40,linewidth=1,edgecolor='r',facecolor='none')
+        ax.add_patch(rect)
 
 # 找步态数据中的极大值
 def find_peak_point(dataset):
@@ -118,9 +133,7 @@ def find_valley_point(dataset, peakind_sorted):
 
 # 对EEG信号带通滤波
 fs = 512 # 【采样频率512Hz】
-bias_0 = 300 #【无意图窗偏移量】
-bias_1 = -300 #【有意图窗偏移量】
-win_width = 384 # 【窗宽度】384对应750ms窗长度
+win_width = 128 # 【窗宽度】384对应750ms窗长度
 fs_gait = 121 # 【步态数据采样频率121Hz】
 def bandpass(data,upper,lower):
     Wn = [2 * upper / fs, 2 * lower / fs] # 截止频带0.1-1Hz or 8-30Hz
@@ -134,6 +147,8 @@ def bandpass(data,upper,lower):
 
 out_count = 0 # 输出文件批数
 output = []
+peak_bias = 0 # 【设置从膝关节角度最大处的偏移值，作为划无意图窗的起点】
+valley_bias = 0 # 【设置从膝关节角度最大处的偏移值，作为划无意图窗的起点】
 for i in range(num_trial):
     if len(gait_data[i]) and i!=1: # 受试对象3的第二次trial效果不好，故去掉
         # 当步态数据不是空集时（有效时）
@@ -160,19 +175,22 @@ for i in range(num_trial):
         l_valleyind_sorted = np.array(find_valley_point(gait_data[i][1], l_peakind_sorted)) # 左膝跨越前的极小值点
         num_axis = len(gait_data[i][0])
        
-        Window_plotor(num_axis, gait_data[i][0], r_peakind_sorted); plt.title(str(i+1) + 'th trial\'s peak points') # 测试绘图，观察跨越极大值点位置是否找对
-        Window_plotor(num_axis, gait_data[i][0], r_valleyind_sorted); plt.title(str(i+1) + 'th trial\'s valley points') # 测试绘图，观察跨越前极小值点位置是否找对
+        Window_plotor_peak(num_axis, gait_data[i][0], r_peakind_sorted, peak_bias,win_width); plt.title(str(i+1) + 'th trial\'s peak points') # 测试绘图，观察跨越极大值点位置是否找对
+        Window_plotor_valley(num_axis, gait_data[i][0], r_valleyind_sorted, valley_bias,win_width); plt.title(str(i+1) + 'th trial\'s valley points') # 测试绘图，观察跨越前极小值点位置是否找对
 
         # 取无跨越意图EEG窗，标记为0   
-        rp_win_index = r_peakind_sorted + bias_0 # 窗起始索引
+        rp_win_index = r_peakind_sorted + peak_bias # 窗起始索引
         rp_win_index = rp_win_index * 512 / fs_gait
-        lp_win_index = l_peakind_sorted + bias_0 # 窗起始索引
+        lp_win_index = l_peakind_sorted + peak_bias # 窗起始索引
         lp_win_index = lp_win_index * 512 / fs_gait
         # 取有跨越意图EEG窗，标记为1
-        rv_win_index = r_valleyind_sorted + bias_1
+        rv_win_index = r_valleyind_sorted + valley_bias
         rv_win_index = rv_win_index * 512 / fs_gait
-        lv_win_index = l_valleyind_sorted + bias_1
+        lv_win_index = l_valleyind_sorted + valley_bias
         lv_win_index = lv_win_index * 512 / fs_gait
+        
+        Window_plotor_peak(num_axis, gait_data[i][0], r_peakind_sorted, peak_bias, win_width); plt.title(str(i+1) + 'th trial\'s peak points') # 测试绘图，观察跨越极大值点位置是否找对
+        Window_plotor_valley(num_axis, gait_data[i][0], r_valleyind_sorted, valley_bias, win_width); plt.title(str(i+1) + 'th trial\'s valley points') # 测试绘图，观察跨越前极小值点位置是否找对
         
         for k in range(work_trial):
             if r_peakind_sorted[k] < l_peakind_sorted[k]:
