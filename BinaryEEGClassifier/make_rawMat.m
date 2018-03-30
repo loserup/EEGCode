@@ -9,7 +9,7 @@
 
 % 最后生成的mat文件为元组，每一个成员对应受试对象一次试验的数据 
 
-id_subject = 1; % 受试对象ID号
+id_subject = 4; % 受试对象ID号
 %motion_flag = 11; 
 
 if id_subject < 10
