@@ -70,7 +70,7 @@ U = U[:,order]
 P = np.dot(np.sqrt(la.inv(np.diag(E))),np.transpose(U)) # 获取白化变换矩阵
 
 # 获取白化变换后的协方差矩阵
-S_0 = np.dot(P,np.dot(C_0, np.transpose(P))) 
+S_0 = np.dot(P,np.dot(C_0, np.transpose(P)))
 S_1 = np.dot(P,np.dot(C_1, np.transpose(P)))
 
 E_0,U_0 = la.eig(S_0)

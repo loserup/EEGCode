@@ -65,7 +65,7 @@ print ('\nAverage accuracy is ' + str(round(100*accuracy_sum.mean()/count,2))+'%
 
 # 对EEG信号带通滤波
 fs = 512 # 【采样频率512Hz】
-win_width = 384 # 【窗宽度】384对应750ms窗长度
+win_width = 128 # 【窗宽度】384对应750ms窗长度
 def bandpass(data,upper,lower):
     Wn = [2 * upper / fs, 2 * lower / fs] # 截止频带0.1-1Hz or 8-30Hz
     b,a = sis.butter(4, Wn, 'bandpass')
@@ -98,7 +98,7 @@ def covarianceMatrix(A):
 	Ca = np.dot(A,np.transpose(A))/np.trace(np.dot(A,np.transpose(A)))
 	return Ca
 
-### CSP算法
+### CSP算法，训练投影矩阵csp，以便在伪在线中从EEG窗提取出特征
 filters = ()
 C_0 = covarianceMatrix(task[0][0])
 for i in range(1,len(task[0])):
@@ -145,8 +145,9 @@ csp[num_pair:,:] = W[np.shape(W)[1]-num_pair:,:] # 对应取投影矩阵后几�
 
 No_trail = 3 # 选择第No_trail+1次的trail数据进行测试 
 output = []
+  
 for i in range(len(eeg_data[0][0][0])):
-    if i < 384: # 初始阶段没有完整的750ms窗
+    if i < 128: # 初始阶段没有完整的750ms窗，384对应750ms窗长度
         continue 
     elif i % 26 != 0: # 每隔50ms取一次窗
         continue
@@ -160,6 +161,7 @@ for i in range(len(eeg_data[0][0][0])):
         test_feat = (np.log(np.var(np.dot(csp, test_eeg), axis=1))).reshape(1,num_pair*2) # classifier.predict需要和fit时相同的数据结构，所以要reshape
         output.append(int(classifier.predict(test_feat)))
 
+"""
 # 对伪在线分类结果进行简单滤波
 # 当连续为跨越意图（1）的个数不超过阈值thres时，全部变成0
 count = 0
@@ -194,6 +196,7 @@ for i in range(len(output)):
             count = 0
             continue
 output[-1] = -1
+"""
 
 # 绘制测试结果，观察有/无跨越意图是否分界明显
 import matplotlib.pyplot as plt
