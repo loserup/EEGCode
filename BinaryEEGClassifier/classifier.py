@@ -18,9 +18,11 @@ from sklearn.utils import shuffle
 from sklearn import cross_validation
 import numpy as np
 import scipy.signal as sis
+import matplotlib.pyplot as plt
+import copy
 
 
-id_subject = 4 # 【受试者的编号】
+id_subject = 1 # 【受试者的编号】
 if id_subject < 10:
     feats_mat = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0'+\
                             str(id_subject)+'_Data\\Subject_0'+\
@@ -156,94 +158,121 @@ csp = np.zeros([num_pair*2,np.shape(W)[0]]) # 提取特征的投影矩阵
 csp[0:num_pair,:] = W[0:num_pair,:] # 取投影矩阵前几行
 csp[num_pair:,:] = W[np.shape(W)[1]-num_pair:,:] # 对应取投影矩阵后几行
 
-No_trail = 10 # 选择第No_trail+1次的trail数据进行测试 
-output_0 = []
-  
-for i in range(len(eeg_data[0][No_trail][0])):
-    if i < win_width: # 初始阶段没有完整的750ms窗，384对应750ms窗长度
-        continue 
-    elif i % 26 != 0: # 每隔50ms取一次窗
-        continue
-    else:
-        test_eeg = eeg_data[0][No_trail][:,(i-win_width):i]
-        out_eeg_band0 = bandpass(test_eeg,upper=0.3,lower=3)
-        out_eeg_band1 = bandpass(test_eeg,upper=4,lower=7)
-        out_eeg_band2 = bandpass(test_eeg,upper=8,lower=13)
-        out_eeg_band3 = bandpass(test_eeg,upper=13,lower=30)
-        test_eeg = np.hstack((out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3))
-        test_feat = (np.log(np.var(np.dot(csp, test_eeg), axis=1))).reshape(1,num_pair*2) # classifier.predict需要和fit时相同的数据结构，所以要reshape
-        output_0.append(int(classifier.predict(test_feat)))
 
-output_1 = []
-WIN = 20 # 伪在线向前取WIN个窗的标签
-THRED = 18  # WIN个窗中标签个数超过阈值THRED则输出跨越命令
-count = 0
-for i in np.arange(WIN,len(output_0)):
-    for j in np.arange(i-WIN,i):
-        if output_0[j] == 1:
-            count += 1
-        else:
+###以下是伪在线测试
+def output(No_trail,WIN,THRED,thres,thres_inver):
+    """output : 依次输出指定受试对象的伪在线命令，滤波伪在线命令，二次滤波伪在线命令
+    以及步态图像并保存图像文件.
+
+    Parameters:
+    -----------
+    - No_trail: 指定数据来源的试验（trail）号
+    - WIN: 伪在线向前取WIN个窗的标签
+    - THRED: WIN个窗中标签个数超过阈值THRED则输出跨越命令
+    - thres: 当连续为跨越意图（1）的个数不超过阈值thres时，全部变成-1
+    - thres_inver: 反向滤波阈值：将连续跨越意图间的短-1段补成1
+    """
+    output_0,output_1,output_2 = [],[],[]
+    
+    for i in range(len(eeg_data[0][No_trail][0])):
+        if i < win_width: # 初始阶段没有完整的750ms窗，384对应750ms窗长度
+            continue 
+        elif i % 26 != 0: # 每隔50ms取一次窗
             continue
-    if count > THRED:
-        output_1.append(1)
-        count = 0
-    else:
-        output_1.append(-1)
-        count = 0
+        else:
+            test_eeg = eeg_data[0][No_trail][:,(i-win_width):i]
+            out_eeg_band0 = bandpass(test_eeg,upper=0.3,lower=3)
+            out_eeg_band1 = bandpass(test_eeg,upper=4,lower=7)
+            out_eeg_band2 = bandpass(test_eeg,upper=8,lower=13)
+            out_eeg_band3 = bandpass(test_eeg,upper=13,lower=30)
+            test_eeg = np.hstack((out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3))
+            test_feat = (np.log(np.var(np.dot(csp, test_eeg), axis=1))).reshape(1,num_pair*2) # classifier.predict需要和fit时相同的数据结构，所以要reshape
+            output_0.append(int(classifier.predict(test_feat)))
+            
+    count = 0
+            
+    for i in np.arange(WIN,len(output_0)):
+        for j in np.arange(i-WIN,i):
+            if output_0[j] == 1:
+                count += 1
+            else:
+                continue
+        if count > THRED:
+            output_1.append(1)
+            count = 0
+        else:
+            output_1.append(-1)
+            count = 0
         
+    # 对伪在线分类结果进行简单滤波
 
-# 对伪在线分类结果进行简单滤波
-# 当连续为跨越意图（1）的个数不超过阈值thres时，全部变成-1
-import copy
-count = 0
-thres = 5
-output_2 = copy.deepcopy(output_1)
-for i in range(len(output_2)):
-    if output_2[i] == 1:
-        if i == len(output_2)-1:
-            for j in range(count):
-                output_2[i-j-1] = -1
+    count = 0
+
+    output_2 = copy.deepcopy(output_1)
+    for i in range(len(output_2)):
+        if output_2[i] == 1:
+            if i == len(output_2)-1:
+                for j in range(count):
+                    output_2[i-j-1] = -1
+            else:
+                count = count + 1
         else:
+            if count < thres:
+                for j in range(count):
+                    output_2[i-j-1] = -1
+                count = 0
+            else:
+                count = 0
+                continue
+    # 反向滤波：将连续跨越意图间的短-1段补成1
+    count = 0
+        
+    for i in range(len(output_2)):
+        if output_2[i] == -1:
             count = count + 1
-    else:
-        if count < thres:
-            for j in range(count):
-                output_2[i-j-1] = -1
-            count = 0
         else:
-            count = 0
-            continue
-# 反向滤波：将连续跨越意图间的短-1段补成1
-count = 0
-thres_inver = 15
-for i in range(len(output_2)):
-    if output_2[i] == -1:
-        count = count + 1
-    else:
-        if count < thres_inver:
-            for j in range(count):
-                output_2[i-j-1] = 1
-            count = 0
-        else:
-            count = 0
-            continue
-output_2[-1] = -1
+            if count < thres_inver:
+                for j in range(count):
+                    output_2[i-j-1] = 1
+                count = 0
+            else:
+                count = 0
+                continue
+    output_2[-1] = -1
+    
+    return output_0,output_1,output_2
 
 
-# 绘制测试结果，观察有/无跨越意图是否分界明显
-import matplotlib.pyplot as plt
-axis = [i for i in range(len(output_0))]
-plt.figure(figsize=[15,2])
-plt.plot(axis, output_0)
+# 参数设置
+WIN = 20 # 伪在线向前取WIN个窗的标签
+THRED = 18 # WIN个窗中标签个数超过阈值THRED则输出跨越命令
+thres = 5 # 当连续为跨越意图（1）的个数不超过阈值thres时，全部变成-1
+thres_inver = 15 # 反向滤波阈值：将连续跨越意图间的短-1段补成1
 
-axis = [i for i in range(len(output_1))]
-plt.figure(figsize=[15,2])
-plt.plot(axis, output_1)
-
-axis = [i for i in range(len(output_2))]
-plt.figure(figsize=[15,2])
-plt.plot(axis, output_2)
-
-axis = [i for i in range(len(gait_data[No_trail][0]))]
-plt.figure(figsize=[15,2])
-plt.plot(axis, gait_data[No_trail][0])
+for i in range(len(eeg_data[0])):
+    if id_subject == 1:
+        # 如果受试对象号为1，且去除以下指定的无效试验号数
+        if i != 0 and i != 5 and i != 13 and i != 15 and i != 17 and i != 19:
+            output_0,output_1,output_2 = output(i,WIN,THRED,thres,thres_inver)
+            # 绘制测试结果，观察有/无跨越意图是否分界明显
+            plt.figure(figsize=[15,8]) 
+            axis = [j for j in range(len(output_0))]
+            plt.subplot(411)
+            plt.plot(axis, output_0)
+            plt.title(str(i) + 'th trial\'s output')
+        
+            axis = [j for j in range(len(output_1))]
+            plt.subplot(412)
+            plt.plot(axis, output_1)
+        
+            axis = [j for j in range(len(output_2))]
+            plt.subplot(413)
+            plt.plot(axis, output_2)
+        
+            axis = [j for j in range(len(gait_data[i][0]))]
+            plt.subplot(414)
+            plt.plot(axis, gait_data[i][0])
+        
+            plt.savefig("E:\EEGExoskeleton\EEGProcessor\Images\Subject"+\
+                        str(id_subject)+"_trail"+str(i)+"_"+\
+                        str(THRED)+"_"+str(WIN)+".png")
