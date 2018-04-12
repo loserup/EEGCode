@@ -57,6 +57,7 @@ accuracy_sum = 0
 max_accuracy = 0
 count = 10.0 # 随机计算准确率的次数
 # 随机打乱特征顺序
+print('\n')
 for i in range(int(count)):
     feats, labels = shuffle(feats_all[:,:-1],feats_all[:,-1],\
                             random_state=np.random.randint(0,100))
@@ -64,20 +65,33 @@ for i in range(int(count)):
     params = {'kernel':'rbf','probability':True, 'class_weight':'balanced'} # 类别0明显比其他类别数目多，但加了'class_weight':'balanced'平均各类权重准确率反而更低了
     classifier_cur = SVC(**params)
     classifier_cur.fit(feats,labels) # 训练SVM分类器
+    
     accuracy = cross_validation.cross_val_score(classifier_cur, feats, labels,\
-                                            scoring='accuracy',cv=3)
-    if max_accuracy < round(100*accuracy.mean(),2):
+                                            scoring='accuracy',cv=3) # cv=5指五折交叉验证
+    f1 = cross_validation.cross_val_score(classifier_cur, feats, labels, \
+                                          scoring='f1_weighted', cv=3)
+    precision = cross_validation.cross_val_score(classifier_cur,feats,labels, \
+                                          scoring='precision_weighted', cv=3)
+    recall = cross_validation.cross_val_score(classifier_cur, feats, labels, \
+                                          scoring='recall_weighted', cv=3)
+     
+    if max_accuracy < round(100*accuracy.mean(),2): 
         # 选取准确率最高的分类器做之后的分类工作
         classifier = classifier_cur
-        max_accuracy = round(100*accuracy.mean(),2)
+        max_accuracy = round(100*accuracy.mean(),2) # arrayA.mean()指数。组arrayA中所有元素的平均值
         
     accuracy_sum += accuracy
-    print ('Accuracy of the classifier: '+str(round(100*accuracy.mean(),2))+'%')
+    print('Accuracy of the classifier: '+str(round(100*accuracy.mean(),2))+'%')
+    print('F1 of the classifier: '+str(round(100*f1.mean(),2))+'%')
+    print('Precision of the classifier: '+str(round(100*precision.mean(),2))+'%')
+    print('Recall of the classifier: '+str(round(100*recall.mean(),2))+'%')
+    print('\n')
         
 accuracy_avg = accuracy_sum / count
 print ('\nAverage accuracy is ' + str(round(100*accuracy_sum.mean()/count,2))+'%\n')
 
 
+"""
 # 对EEG信号带通滤波
 fs = 512 # 【采样频率512Hz】
 win_width = 384 # 【窗宽度】384对应750ms窗长度
@@ -158,7 +172,7 @@ csp = np.zeros([num_pair*2,np.shape(W)[0]]) # 提取特征的投影矩阵
 csp[0:num_pair,:] = W[0:num_pair,:] # 取投影矩阵前几行
 csp[num_pair:,:] = W[np.shape(W)[1]-num_pair:,:] # 对应取投影矩阵后几行
 
-
+"""
 ###以下是伪在线测试
 def output(No_trail,WIN,THRED,thres,thres_inver):
     """output : 依次输出指定受试对象的伪在线命令，滤波伪在线命令，二次滤波伪在线命令
@@ -191,24 +205,41 @@ def output(No_trail,WIN,THRED,thres,thres_inver):
             
     count = 0
             
+    # 一次滤波：伪在线向前取WIN个窗的标签，
+    # WIN个窗中标签个数超过阈值THRED则输出跨越命令
     for i in np.arange(WIN,len(output_0)):
         for j in np.arange(i-WIN,i):
             if output_0[j] == 1:
                 count += 1
             else:
                 continue
-        if count > THRED:
+        if count >= THRED:
             output_1.append(1)
             count = 0
         else:
             output_1.append(-1)
             count = 0
         
-    # 对伪在线分类结果进行简单滤波
-
+    # 二次滤波
+    # 反向滤波：当连续为无跨越意图（-1）的个数不超过阈值thres_inter时，全部变成1
+    count = 0
+    output_2 = copy.deepcopy(output_1)    
+    for i in range(len(output_2)):
+        if output_2[i] == -1:
+            count = count + 1
+        else:
+            if count < thres_inver:
+                for j in range(count):
+                    output_2[i-j-1] = 1
+                count = 0
+            else:
+                count = 0
+                continue
+    output_2[-1] = -1
+    
+    # 正向滤波：当连续为跨越意图（1）的个数不超过阈值thres时，全部变成-1
     count = 0
 
-    output_2 = copy.deepcopy(output_1)
     for i in range(len(output_2)):
         if output_2[i] == 1:
             if i == len(output_2)-1:
@@ -224,28 +255,14 @@ def output(No_trail,WIN,THRED,thres,thres_inver):
             else:
                 count = 0
                 continue
-    # 反向滤波：将连续跨越意图间的短-1段补成1
-    count = 0
-        
-    for i in range(len(output_2)):
-        if output_2[i] == -1:
-            count = count + 1
-        else:
-            if count < thres_inver:
-                for j in range(count):
-                    output_2[i-j-1] = 1
-                count = 0
-            else:
-                count = 0
-                continue
-    output_2[-1] = -1
+
     
     return output_0,output_1,output_2
 
-
+"""
 # 参数设置
-WIN = 20 # 伪在线向前取WIN个窗的标签
-THRED = 18 # WIN个窗中标签个数超过阈值THRED则输出跨越命令
+WIN = 10 # 伪在线向前取WIN个窗的标签
+THRED = 9 # WIN个窗中标签个数超过阈值THRED则输出跨越命令
 thres = 5 # 当连续为跨越意图（1）的个数不超过阈值thres时，全部变成-1
 thres_inver = 15 # 反向滤波阈值：将连续跨越意图间的短-1段补成1
 
@@ -259,7 +276,8 @@ for i in range(len(eeg_data[0])):
             axis = [j for j in range(len(output_0))]
             plt.subplot(411)
             plt.plot(axis, output_0)
-            plt.title(str(i) + 'th trial\'s output')
+            plt.title(str(i) + 'th trial\'s output_'+str(THRED)+\
+                      "_"+str(WIN)+"_"+str(thres)+"_"+str(thres_inver))
         
             axis = [j for j in range(len(output_1))]
             plt.subplot(412)
@@ -273,6 +291,9 @@ for i in range(len(eeg_data[0])):
             plt.subplot(414)
             plt.plot(axis, gait_data[i][0])
         
-            plt.savefig("E:\EEGExoskeleton\EEGProcessor\Images\Subject"+\
+            plt.savefig("E:\EEGExoskeleton\EEGProcessor\Images_Subject"+\
+                        str(id_subject)+"\Subject"+\
                         str(id_subject)+"_trail"+str(i)+"_"+\
-                        str(THRED)+"_"+str(WIN)+".png")
+                        str(THRED)+"_"+str(WIN)+"_"+str(thres)+"_"+\
+                        str(thres_inver)+".png")
+"""
