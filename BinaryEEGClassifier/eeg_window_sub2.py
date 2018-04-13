@@ -26,7 +26,7 @@ Created on Fri Dec  1 21:25:28 2017
 第10次：往返3次；数据不好处理，去掉
 第11次：往返3次
 第12次：往返3次
-第13次：往返4次，大概是无意识多走，考虑去掉
+第13次：往返4次，大概是无意识多走，去掉
 第14次：往返3次；数据不好处理，去掉
 第15次：往返3次
 第16次：往返3次；数据不好处理，去掉
@@ -185,7 +185,7 @@ for i in range(num_trial):
                 out_eeg_band1 = bandpass(out_eeg,upper=4,lower=7)
                 out_eeg_band2 = bandpass(out_eeg,upper=8,lower=13)
                 out_eeg_band3 = bandpass(out_eeg,upper=13,lower=30)
-                out_eeg = [np.hstack((out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3)),0]
+                out_eeg = [np.hstack((out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3)),-1]
                 output.append(out_eeg)
                 # 有跨越意图窗
                 out_eeg =  eeg_data[0][i][:,int(rv_win_index[k]-win_width):int(rv_win_index[k])]
@@ -203,7 +203,7 @@ for i in range(num_trial):
                 out_eeg_band1 = bandpass(out_eeg,upper=4,lower=7)
                 out_eeg_band2 = bandpass(out_eeg,upper=8,lower=13)
                 out_eeg_band3 = bandpass(out_eeg,upper=13,lower=30)
-                out_eeg = [np.hstack((out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3)),0]
+                out_eeg = [np.hstack((out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3)),-1]
                 output.append(out_eeg)
                 # 有跨越意图窗
                 out_eeg =  eeg_data[0][i][:,int(lv_win_index[k]-win_width):int(lv_win_index[k])]

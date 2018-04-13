@@ -108,7 +108,13 @@ if id_subject < 10:
     sio.savemat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0'+str(id_subject)+\
                 '_Data\\Subject_0'+str(id_subject)+'_features.mat',\
                 {'features' : features})
+    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0'+str(id_subject)+\
+                '_Data\\Subject_0'+str(id_subject)+'_csp.mat',\
+                {'csp' : csp})
 else:
     sio.savemat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_'+str(id_subject)+\
                 '_Data\\Subject_'+str(id_subject)+'_features.mat',\
                 {'features' : features})
+    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_'+str(id_subject)+\
+                '_Data\\Subject_'+str(id_subject)+'_csp.mat',\
+                {'csp' : csp})
