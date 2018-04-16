@@ -63,7 +63,7 @@ eeg_data = eeg_mat_data['CutedEEG'] # eeg_data[0][i]表示第i次trial的EEG，�
 num_trial = len(gait_data) # 获取受试者进行试验的次数
 
 # 绘图-测试用
-def Window_plotor_peak(num_axis, data, index_sorted, bias,win_width):
+def Window_plotor_peak(num_axis, data, index_sorted, bias, stop_win_index, win_width):
     # 绘制峰值点以及相应划窗
     data_axis = [i for i in range(num_axis)]
     plt.figure(figsize=[15,4])
@@ -73,8 +73,12 @@ def Window_plotor_peak(num_axis, data, index_sorted, bias,win_width):
         plt.scatter(i, data[i])
         rect = patches.Rectangle((i+bias,data[i]),win_width,-40,linewidth=1,edgecolor='r',facecolor='none')
         ax.add_patch(rect)
+    for i in stop_win_index:
+        plt.scatter(i, data[i])
+        rect = patches.Rectangle((i,data[i]),win_width,20,linewidth=1,edgecolor='r',facecolor='none')
+        ax.add_patch(rect)
 
-def Window_plotor_valley(num_axis, data, index_sorted, bias,win_width):
+def Window_plotor_valley(num_axis, data, index_sorted, bias, win_width):
     # 绘制谷值点以及相应划窗
     data_axis = [i for i in range(num_axis)]
     plt.figure(figsize=[15,4])
@@ -84,6 +88,7 @@ def Window_plotor_valley(num_axis, data, index_sorted, bias,win_width):
         plt.scatter(i, data[i])
         rect = patches.Rectangle((i+bias,data[i]),-win_width,40,linewidth=1,edgecolor='r',facecolor='none')
         ax.add_patch(rect)
+    
 
 # 找步态数据中的极大值
 def find_peak_point(dataset):
@@ -145,10 +150,40 @@ def bandpass(data,upper,lower):
     
     return filtered_data 
 
+def stopwin(index, STOP_BIAS):
+    """stopwin : 从每三段跨越的第三次跨越最大角度索引找停顿处的索引并返回.
+
+    Parameters:
+    -----------
+    - index: 跨越时最大角度的索引列表 
+    - STOP_BIAS: 停顿处索引与第三次跨越最大角度索引的偏移距离
+    """
+    stop_win_index = []
+    for i in range(len(index)):
+        if (i+1)%3 == 0:
+            stop_win_index.append(index[i] + STOP_BIAS)
+    return np.array(stop_win_index)
+
+def hstackwin(out_eeg, label):
+    """hstackwin : 把四种频段的EEG低通滤波窗合成一个长窗.
+
+    Parameters:
+    -----------
+    - out_eeg: 需要低通滤波的目标EEG窗
+    - label: 目标窗的类别标签
+    """
+    out_eeg_band0 = bandpass(out_eeg,upper=0.3,lower=3)
+    out_eeg_band1 = bandpass(out_eeg,upper=4,lower=7)
+    out_eeg_band2 = bandpass(out_eeg,upper=8,lower=13)
+    out_eeg_band3 = bandpass(out_eeg,upper=13,lower=30)
+    output = [np.hstack((out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3)), label]
+    return output
+            
 out_count = 0 # 输出文件批数
 output = []
 peak_bias = 40 # 【设置从膝关节角度最大处的偏移值，作为划无意图窗的起点】
 valley_bias = 0 # 【设置从膝关节角度最大处的偏移值，作为划无意图窗的起点】
+stop_bias = 450 # 【设置停顿处从膝关节角度最大处的偏移值，作为划无意图窗的起点】
 gait_win_width = fs_gait / fs * win_width # 在步态数据里将划窗可视化，应该把EEG窗的宽度转换到步态窗的宽度
 for i in range(num_trial):
     if len(gait_data[i]) and i!=1: # 受试对象3的第二次trial效果不好，故去掉
@@ -176,58 +211,60 @@ for i in range(num_trial):
         l_valleyind_sorted = np.array(find_valley_point(gait_data[i][1], l_peakind_sorted)) # 左膝跨越前的极小值点
         num_axis = len(gait_data[i][0])
 
-        # 取无跨越意图EEG窗，标记为0   
+        # 取无跨越意图EEG窗，标记为-1   
         rp_win_index = r_peakind_sorted + peak_bias # 步态窗起始索引
-        rp_win_index = rp_win_index * 512 / fs_gait # 转换为EEG信号窗的起始索引
         lp_win_index = l_peakind_sorted + peak_bias 
-        lp_win_index = lp_win_index * 512 / fs_gait
+        
         # 取有跨越意图EEG窗，标记为1
-        rv_win_index = r_valleyind_sorted + valley_bias
-        rv_win_index = rv_win_index * 512 / fs_gait
+        rv_win_index = r_valleyind_sorted + valley_bias     
         lv_win_index = l_valleyind_sorted + valley_bias
-        lv_win_index = lv_win_index * 512 / fs_gait
         
-        Window_plotor_peak(num_axis, gait_data[i][0], r_peakind_sorted, peak_bias, gait_win_width); plt.title(str(i+1) + 'th trial\'s peak points') # 测试绘图，观察跨越极大值点位置是否找对
-        Window_plotor_valley(num_axis, gait_data[i][0], r_valleyind_sorted, valley_bias, gait_win_width); plt.title(str(i+1) + 'th trial\'s valley points') # 测试绘图，观察跨越前极小值点位置是否找对
+        # 取得每三次跨越完停顿的地方的索引
+        rstop_win_index_sorted = stopwin(rp_win_index, stop_bias)
+        lstop_win_index_sorted = stopwin(lp_win_index, stop_bias)
         
+        # 以上步态索引转换为EEG信号窗的起始索引
+        rp_win_index = rp_win_index * fs / fs_gait 
+        lp_win_index = lp_win_index * fs / fs_gait
+        rv_win_index = rv_win_index * fs / fs_gait
+        lv_win_index = lv_win_index * fs / fs_gait
+        rstop_win_index = rstop_win_index_sorted * fs / fs_gait
+        lstop_win_index = lstop_win_index_sorted * fs / fs_gait
+        
+        # 测试绘图，观察跨越极大值点位置是否找对
+        Window_plotor_peak(num_axis,gait_data[i][0],r_peakind_sorted,peak_bias,\
+                           rstop_win_index_sorted,gait_win_width)
+        plt.title(str(i+1) + 'th trial\'s peak points') 
+        
+        # 测试绘图，观察跨越前极小值点位置是否找对
+        Window_plotor_valley(num_axis, gait_data[i][0], r_valleyind_sorted, \
+                             valley_bias, gait_win_width) 
+        plt.title(str(i+1) + 'th trial\'s valley points') 
+
         for k in range(work_trial):
             if r_peakind_sorted[k] < l_peakind_sorted[k]:
                 # 先跨右腿
                 #print('r') # 测试用，观察跨越用的腿是否一致
                 # 无跨越意图窗
                 out_eeg = eeg_data[0][i][:,int(rp_win_index[k]):(int(rp_win_index[k])+win_width)]
-                out_eeg_band0 = bandpass(out_eeg,upper=0.3,lower=3)
-                out_eeg_band1 = bandpass(out_eeg,upper=4,lower=7)
-                out_eeg_band2 = bandpass(out_eeg,upper=8,lower=13)
-                out_eeg_band3 = bandpass(out_eeg,upper=13,lower=30)
-                out_eeg = [np.hstack((out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3)),-1] # 将四种带通滤波后的EEG窗拼接起来合成一个更长的窗
-                output.append(out_eeg)
+                output.append(hstackwin(out_eeg,-1))
+                if (k+1)%3 == 0:
+                    out_eeg = eeg_data[0][i][:,int(rstop_win_index[int(k/3)]):(int(rstop_win_index[int(k/3)])+win_width)]
+                    output.append(hstackwin(out_eeg,-1))
                 # 有跨越意图窗
                 out_eeg =  eeg_data[0][i][:,int(rv_win_index[k]-win_width):int(rv_win_index[k])]
-                out_eeg_band0 = bandpass(out_eeg,upper=0.3,lower=3)
-                out_eeg_band1 = bandpass(out_eeg,upper=4,lower=7)
-                out_eeg_band2 = bandpass(out_eeg,upper=8,lower=13)
-                out_eeg_band3 = bandpass(out_eeg,upper=13,lower=30)
-                out_eeg = [np.hstack((out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3)),1]
-                output.append(out_eeg)
+                output.append(hstackwin(out_eeg,1))
             else:
                 #print('l') # 测试用，观察跨越用的腿是否一致
                 # 无跨越意图窗
                 out_eeg = eeg_data[0][i][:,int(lp_win_index[k]):(int(lp_win_index[k])+win_width)]
-                out_eeg_band0 = bandpass(out_eeg,upper=0.3,lower=3)
-                out_eeg_band1 = bandpass(out_eeg,upper=4,lower=7)
-                out_eeg_band2 = bandpass(out_eeg,upper=8,lower=13)
-                out_eeg_band3 = bandpass(out_eeg,upper=13,lower=30)
-                out_eeg = [np.hstack((out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3)),-1]
-                output.append(out_eeg)
+                output.append(hstackwin(out_eeg,-1))
+                if (k+1)%3 == 0:
+                    out_eeg = eeg_data[0][i][:,int(lstop_win_index[int(k/3)]):(int(lstop_win_index[int(k/3)])+win_width)]
+                    output.append(hstackwin(out_eeg,-1))
                 # 有跨越意图窗
                 out_eeg =  eeg_data[0][i][:,int(lv_win_index[k]-win_width):int(lv_win_index[k])]
-                out_eeg_band0 = bandpass(out_eeg,upper=0.3,lower=3)
-                out_eeg_band1 = bandpass(out_eeg,upper=4,lower=7)
-                out_eeg_band2 = bandpass(out_eeg,upper=8,lower=13)
-                out_eeg_band3 = bandpass(out_eeg,upper=13,lower=30)
-                out_eeg = [np.hstack((out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3)),1]
-                output.append(out_eeg)
+                output.append(hstackwin(out_eeg,1))
                      
         out_count += 1
     else:

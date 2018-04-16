@@ -98,7 +98,8 @@ for i in range(len(eegwin_0)):
     varances = list(np.log(np.var(Z, axis=1))) # axis=1即求每行的方差
     varances.append(-1)
     features.append(varances)
-    
+
+for i in range(len(eegwin_1)):  
     Z = np.dot(csp, eegwin_1[i])
     varances = list(np.log(np.var(Z, axis=1)))
     varances.append(1)

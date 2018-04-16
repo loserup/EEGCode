@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 import copy
 
 
-id_subject = 1 # 【受试者的编号】
+id_subject = 3 # 【受试者的编号】
 if id_subject < 10:
     feats_mat = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0'+\
                             str(id_subject)+'_Data\\Subject_0'+\
@@ -93,7 +93,6 @@ for i in range(int(count)):
         
 #accuracy_avg = accuracy_sum / count
 #print ('\nAverage Accuracy: ' + str(round(100*accuracy_sum.mean()/count,2))+'%\n')
-
 
 
 # 对EEG信号带通滤波
@@ -196,8 +195,8 @@ def output(No_trail,WIN,THRED,thres,thres_inver):
 
 
 # 参数设置
-WIN = 50 # 伪在线向前取WIN个窗的标签
-THRED = 45 # WIN个窗中标签个数超过阈值THRED则输出跨越命令
+WIN = 20 # 伪在线向前取WIN个窗的标签
+THRED = 18 # WIN个窗中标签个数超过阈值THRED则输出跨越命令
 thres = 5 # 当连续为跨越意图（1）的个数不超过阈值thres时，全部变成-1
 thres_inver = 15 # 反向滤波阈值：将连续跨越意图间的短-1段补成1
 
@@ -211,7 +210,7 @@ for i in range(len(eeg_data[0])):
             axis = [j for j in range(len(output_0))]
             plt.subplot(411)
             plt.plot(axis, output_0)
-            plt.title(str(i) + 'th trial\'s output_'+str(THRED)+\
+            plt.title(str(i+1) + 'th trial\'s output_'+str(THRED)+\
                       "_"+str(WIN)+"_"+str(thres)+"_"+str(thres_inver))
         
             axis = [j for j in range(len(output_1))]
@@ -228,6 +227,96 @@ for i in range(len(eeg_data[0])):
         
             plt.savefig("E:\EEGExoskeleton\EEGProcessor\Images_Subject"+\
                         str(id_subject)+"\Subject"+\
-                        str(id_subject)+"_trail"+str(i)+"_"+\
+                        str(id_subject)+"_trail"+str(i+1)+"_"+\
+                        str(THRED)+"_"+str(WIN)+"_"+str(thres)+"_"+\
+                        str(thres_inver)+".png")
+    
+    if id_subject == 2:
+        # 如果受试对象号为2，且去除以下指定的无效试验号数
+        if i!=2 and i!=8 and i!=9 and i!=12 and i!=13 and i!=15:
+            output_0,output_1,output_2 = output(i,WIN,THRED,thres,thres_inver)
+            # 绘制测试结果，观察有/无跨越意图是否分界明显
+            plt.figure(figsize=[15,8]) 
+            axis = [j for j in range(len(output_0))]
+            plt.subplot(411)
+            plt.plot(axis, output_0)
+            plt.title(str(i+1) + 'th trial\'s output_'+str(THRED)+\
+                      "_"+str(WIN)+"_"+str(thres)+"_"+str(thres_inver))
+        
+            axis = [j for j in range(len(output_1))]
+            plt.subplot(412)
+            plt.plot(axis, output_1)
+        
+            axis = [j for j in range(len(output_2))]
+            plt.subplot(413)
+            plt.plot(axis, output_2)
+        
+            axis = [j for j in range(len(gait_data[i][0]))]
+            plt.subplot(414)
+            plt.plot(axis, gait_data[i][0])
+        
+            plt.savefig("E:\EEGExoskeleton\EEGProcessor\Images_Subject"+\
+                        str(id_subject)+"\Subject"+\
+                        str(id_subject)+"_trail"+str(i+1)+"_"+\
+                        str(THRED)+"_"+str(WIN)+"_"+str(thres)+"_"+\
+                        str(thres_inver)+".png")
+        
+    if id_subject == 3:
+        # 如果受试对象号为3，且去除以下指定的无效试验号数
+        if i!=1 and i!=5 and i!=9:
+            output_0,output_1,output_2 = output(i,WIN,THRED,thres,thres_inver)
+            # 绘制测试结果，观察有/无跨越意图是否分界明显
+            plt.figure(figsize=[15,8]) 
+            axis = [j for j in range(len(output_0))]
+            plt.subplot(411)
+            plt.plot(axis, output_0)
+            plt.title(str(i+1) + 'th trial\'s output_'+str(THRED)+\
+                      "_"+str(WIN)+"_"+str(thres)+"_"+str(thres_inver))
+        
+            axis = [j for j in range(len(output_1))]
+            plt.subplot(412)
+            plt.plot(axis, output_1)
+        
+            axis = [j for j in range(len(output_2))]
+            plt.subplot(413)
+            plt.plot(axis, output_2)
+        
+            axis = [j for j in range(len(gait_data[i][0]))]
+            plt.subplot(414)
+            plt.plot(axis, gait_data[i][0])
+        
+            plt.savefig("E:\EEGExoskeleton\EEGProcessor\Images_Subject"+\
+                        str(id_subject)+"\Subject"+\
+                        str(id_subject)+"_trail"+str(i+1)+"_"+\
+                        str(THRED)+"_"+str(WIN)+"_"+str(thres)+"_"+\
+                        str(thres_inver)+".png")
+            
+    if id_subject == 4:
+        # 如果受试对象号为4，且去除以下指定的无效试验号数
+        if i!=2 and i!=8 and i!=12 and i!=13 and i!=14:
+            output_0,output_1,output_2 = output(i,WIN,THRED,thres,thres_inver)
+            # 绘制测试结果，观察有/无跨越意图是否分界明显
+            plt.figure(figsize=[15,8]) 
+            axis = [j for j in range(len(output_0))]
+            plt.subplot(411)
+            plt.plot(axis, output_0)
+            plt.title(str(i+1) + 'th trial\'s output_'+str(THRED)+\
+                      "_"+str(WIN)+"_"+str(thres)+"_"+str(thres_inver))
+        
+            axis = [j for j in range(len(output_1))]
+            plt.subplot(412)
+            plt.plot(axis, output_1)
+        
+            axis = [j for j in range(len(output_2))]
+            plt.subplot(413)
+            plt.plot(axis, output_2)
+        
+            axis = [j for j in range(len(gait_data[i][0]))]
+            plt.subplot(414)
+            plt.plot(axis, gait_data[i][0])
+        
+            plt.savefig("E:\EEGExoskeleton\EEGProcessor\Images_Subject"+\
+                        str(id_subject)+"\Subject"+\
+                        str(id_subject)+"_trail"+str(i+1)+"_"+\
                         str(THRED)+"_"+str(WIN)+"_"+str(thres)+"_"+\
                         str(thres_inver)+".png")

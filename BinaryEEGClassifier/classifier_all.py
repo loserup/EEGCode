@@ -22,13 +22,13 @@ import scipy.signal as sis
 import matplotlib.pyplot as plt
 import copy
 
-id_subject_test = 4 # 【用作测试的受试者的编号】
+id_subject_test = 2 # 【用作测试的受试者的编号】
 
 id_subject_train = [1,2,3,4]
 id_subject_train.remove(id_subject_test) # 用作训练集的受试者的编号
 
-### 提取用作训练集的EEG特征
-feats_train_all = []
+### 提取用作训练集的EEG特征 ####################################################
+feats_train_all = [] # 带标签的训练集
 for i in id_subject_train:
     feats_mat = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0'+\
                             str(i)+'_Data\\Subject_0'+\
@@ -37,12 +37,12 @@ for i in id_subject_train:
         feats_train_all.append(feats_mat[j])
 feats_train_all = np.array(feats_train_all)
 
-### 提取用作测试集的EEG特征
+### 提取用作测试集的EEG特征，带标签
 feats_test_all = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0'+\
                          str(id_subject_test)+'_Data\\Subject_0'+\
                          str(id_subject_test)+'_features.mat')['features']
 
-### 训练分类器
+### 训练分类器 #################################################################
 #accuracy_sum = 0
 count = 10.0 # 随机计算准确率的次数
 max_accuracy = 0
@@ -54,12 +54,16 @@ for i in range(int(count)):
     feats_test, labels_test = shuffle(feats_test_all[:,:-1],feats_test_all[:,-1],\
                                       random_state=np.random.randint(0,100))
     # 建立SVM模型
-    params = {'kernel':'rbf','probability':True, 'class_weight':'balanced'} # 类别0明显比其他类别数目多，但加了'class_weight':'balanced'平均各类权重准确率反而更低了
+    # 类别0明显比其他类别数目多，但加了'class_weight':'balanced'平均各类权重准确率反而更低了
+    params = {'kernel':'rbf','probability':True, 'class_weight':'balanced', 'C':1} 
     classifier_cur = SVC(**params)
     classifier_cur.fit(feats_train,labels_train) # 训练SVM分类器
     
+    accuracy = classifier_cur.score(feats_test, labels_test)
+
     accuracy = cross_validation.cross_val_score(classifier_cur,\
                feats_test, labels_test, cv=3) # cv=5指五折交叉验证
+
     """
     f1 = cross_validation.cross_val_score(classifier_cur, feats, labels, \
                                           scoring='f1_weighted', cv=3)
@@ -88,7 +92,7 @@ for i in range(int(count)):
 #print ('\nAverage Accuracy: ' + str(round(100*accuracy_sum.mean()/count,2))+'%\n')
 
 
-### 对EEG信号带通滤波
+### 对EEG信号带通滤波 ##########################################################
 fs = 512 # 【采样频率512Hz】
 win_width = 384 # 【窗宽度】384对应750ms窗长度
 def bandpass(data,upper,lower):
@@ -102,7 +106,7 @@ def bandpass(data,upper,lower):
     return filtered_data 
 
 
-###以下是伪在线测试
+### 以下是伪在线测试 ###########################################################
 # 读取测试对象的EEG信号
 eeg_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0' +\
                        str(id_subject_test) + '_Data\\Subject_0' +\
