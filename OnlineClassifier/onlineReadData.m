@@ -11,13 +11,13 @@ csp_filename = ['E:\EEGExoskeleton\EEGProcessor\Subject_0' num2str(no_sub) '_Dat
 csp = load(csp_filename);
 csp = csp.csp; % 获取指定受试对象的CSP投影矩阵
 interval = 26; % 窗分类间隔：每采样26个点后进行一次取窗分类 % 384点为750ms，26个点为50ms
+back = 20; % 回溯点数
+thre = 18; % 命令决策阈值 % 在回溯点数中有意图窗个数超过该阈值则输出有意图命令
 
 % 输出数据初始化
 global run; run = true; % 是否进行循环
 data_history = []; % 保留EEG历史信息，时间越长，数据量越大，以后需要添加清空远古历史的功能
 count = 0; % 采样点的计数器
-count_win = 0; % 取窗的计数器
-count
 out_store = []; % 记录输出指令
 % time = []; % 记录循环所需时间
 
@@ -26,7 +26,7 @@ out_store = []; % 记录输出指令
 % configure % the folowing 4 values should match with your setings in Actiview and your network settings
 % Decimation选择“1/4”;
 port = 778;                % the port that is configured in Actiview , delault = 8888
-port2 = 783;
+port2 = 4484;
 ipadress = 'localhost';    % the ip adress of the pc that is running Actiview
 Channels = 32;             % set to the same value as in Actiview "Channels sent by TCP"
 Samples = 4;               % set to the same value as in Actiview "TCP samples/channel" % Samples = fs/Channels/4
@@ -38,12 +38,12 @@ tcpipClient = tcpip(ipadress, port, 'NetworkRole', 'client');
 set(tcpipClient,'InputBufferSize',words*9); % input buffersize is 3 times the tcp block size % 1 word = 3 bytes
 set(tcpipClient,'Timeout',5);
 % open tcp connection % 与外骨骼上位机的通信Socket
-tcpipClient2 = tcpip(ipadress, port2, 'NetworkRole', 'client');
+tcpipClient2 = tcpip('172.20.10.132', port2, 'NetworkRole', 'client');
 set(tcpipClient2,'InputBufferSize',words*9); % input buffersize is 3 times the tcp block size % 1 word = 3 bytes
 set(tcpipClient2,'Timeout',5);
 try
     fopen(tcpipClient);
-%     fopen(tcpipClient2);
+    fopen(tcpipClient2);
 catch
     disp('Actiview is unreachable please check if Actiview is running on the specified ip address and port number');
     run = false;
@@ -59,7 +59,7 @@ while run
         disp('Is Actiview running with the same settings as this example?');
         break
     end
-    
+       
     % reorder bytes from tcp stream into 32bit unsigned words
     % normaldata = rawData(3,:)*(256^3) + rawData(2,:)*(256^2) + rawData(1,:)*256 + 0;
     % 2018-4-27-既然TCP传输数据比Labview保存数据多256倍，就把上式除以256得到下式 (但是会得到错误的正负符号)
@@ -81,8 +81,19 @@ while run
         output = [bandpass(data,0.3,3) bandpass(data,4,7) bandpass(data,8,13) bandpass(data,13,30)];
         feat = (log(var(csp*output,0,2)))'; % CSP提取EEG窗的特征
         pyObj = py.onlineClassifier.OnlineClassifier(no_sub, feat); % 声明onlineClassifier脚本的OnlineClassifier类，并传递no_sub和feat给其实例
-        out_store = [out_store str2num(char(pyObj.outputCmd()))]; % Python原始输入数据带属性，先转string再转数字去掉属性
-        count_win = count_win + 1;
+        out_store = [out_store str2double(char(pyObj.outputCmd()))] % Python原始输入数据带属性，先转string再转数字去掉属性
+        out_length = length(out_store);
+        
+        % 回溯20个窗标签，有意图窗超过thre个则输出有意图指令
+        if out_length > 20
+            back_win = out_store(:,out_length-back+1:out_length);
+            if sum(back_win(:)==1) > thre
+                fwrite(tcpipClient2,'1');
+            else
+                fwrite(tcpipClient2,'-1');
+            end
+        end        
+        
 %        time = [time toc];
     end
     
