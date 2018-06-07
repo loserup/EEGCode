@@ -17,42 +17,40 @@ import scipy.io as sio
 from sklearn.utils import shuffle
 from sklearn import cross_validation
 import numpy as np
-import scipy.signal as sis
-import matplotlib.pyplot as plt
-import copy
+#import scipy.signal as sis
+#import matplotlib.pyplot as plt
+#import copy
 
 
-id_subject = 4 # 【受试者的编号】
-if id_subject < 10:
-    feats_mat = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0'+\
-                            str(id_subject)+'_Data\\Subject_0'+\
-                            str(id_subject)+'_features.mat')
-    eeg_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0' +\
-                               str(id_subject) + '_Data\\Subject_0' +\
-                               str(id_subject) + '_CutedEEG.mat')
-    gait_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0' +\
-                                str(id_subject) + '_Data\\Subject_0' +\
-                                str(id_subject) + '_FilteredMotion.mat')
-    csp = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0' +\
-                                str(id_subject) + '_Data\\Subject_0' +\
-                                str(id_subject) + '_csp.mat')['csp']
-else:
-    feats_mat = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_'+\
-                            str(id_subject)+'_Data\\Subject_'+\
-                            str(id_subject)+'_features.mat')
-    eeg_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_' +\
-                               str(id_subject) + '_Data\\Subject_' +\
-                               str(id_subject) + '_CutedEEG.mat')
-    gait_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_' +\
-                                str(id_subject) + '_Data\\Subject_' +\
-                                str(id_subject) + '_FilteredMotion.mat')
-    csp = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_' +\
-                                str(id_subject) + '_Data\\Subject_' +\
-                                str(id_subject) + '_csp.mat')['csp']
+#id_subject = 1 # 【受试者的编号】
+#if id_subject < 10:
+#    feats_mat = sio.loadmat('features.mat')
+#    eeg_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0' +\
+#                               str(id_subject) + '_Data\\Subject_0' +\
+#                               str(id_subject) + '_CutedEEG.mat')
+#    gait_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0' +\
+#                                str(id_subject) + '_Data\\Subject_0' +\
+#                                str(id_subject) + '_FilteredMotion.mat')
+#    csp = sio.loadmat('csp.mat')['csp']
+#else:
+#    feats_mat = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_'+\
+#                            str(id_subject)+'_Data\\Subject_'+\
+#                            str(id_subject)+'_features.mat')
+#    eeg_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_' +\
+#                               str(id_subject) + '_Data\\Subject_' +\
+#                               str(id_subject) + '_CutedEEG.mat')
+#    gait_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_' +\
+#                                str(id_subject) + '_Data\\Subject_' +\
+#                                str(id_subject) + '_FilteredMotion.mat')
+#    csp = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_' +\
+#                                str(id_subject) + '_Data\\Subject_' +\
+#                                str(id_subject) + '_csp.mat')['csp']
 
-eeg_data = eeg_mat_data['CutedEEG']
-gait_data = gait_mat_data['FilteredMotion'][0] # 每个元素是受试者走的一次trail；每个trail记录双膝角度轨迹，依次是右膝和左膝
-feats_all = feats_mat['features']
+
+
+eeg_data = sio.loadmat('CutedEEG.mat')['CutedEEG']
+#gait_data = gait_mat_data['FilteredMotion'][0] # 每个元素是受试者走的一次trail；每个trail记录双膝角度轨迹，依次是右膝和左膝
+feats_all = sio.loadmat('features.mat')['features']
 max_accuracy = 0
 count = 10.0 # 随机计算准确率的次数
 
@@ -93,11 +91,10 @@ for i in range(int(count)):
         max_accuracy = accuracy.mean() # arrayA.mean()指数。组arrayA中所有元素的平均值
         
     # 评分估计的平均得分和95%置信区间
-    print('Accuracy: %0.4f (± %0.4f)' % (accuracy.mean(),accuracy.std()))
-
-    print('F1: %0.4f (± %0.4f)' % (f1.mean(),f1.std()))
-    print('Precision: %0.4f (± %0.4f)' % (precision.mean(),precision.std()))
-    print('Recall: %0.4f (± %0.4f)' % (recall.mean(),recall.std()))
+    print('Accuracy: %0.4f (± %0.4f)' % (accuracy.mean(),accuracy.std()**2))
+    print('F1: %0.4f (± %0.4f)' % (f1.mean(),f1.std()**2))
+    print('Precision: %0.4f (± %0.4f)' % (precision.mean(),precision.std()**2))
+    print('Recall: %0.4f (± %0.4f)' % (recall.mean(),recall.std()**2))
 
     print('\n')
         
@@ -106,44 +103,10 @@ ave_f1 = np.array(ave_f1)
 ave_precision = np.array(ave_precision)
 ave_recall = np.array(ave_recall)
 
-print ('\nAverage Accuracy: %0.4f (± %0.4f)' % (ave_accuracy.mean(),ave_accuracy.std()))
-print ('Average F1: %0.4f (± %0.4f)' % (ave_f1.mean(),ave_f1.std()))
-print ('Average Precision: %0.4f (± %0.4f)' % (ave_precision.mean(),ave_precision.std()))
-print ('Average Recall: %0.4f (± %0.4f)\n' % (ave_recall.mean(),ave_recall.std()))
-
-
-# 混淆矩阵
-
-from sklearn.metrics import confusion_matrix
-
-# Show confusion matrix
-def plot_confusion_matrix(confusion_mat):
-    plt.imshow(confusion_mat, interpolation='nearest', cmap=plt.cm.gray_r)
-#    plt.title('Confusion matrix')
-    plt.colorbar()
-    tick_marks = np.arange(2)
-    plt.xticks(tick_marks, tick_marks)
-    plt.yticks(tick_marks, tick_marks)
-    plt.ylabel('True label',FontSize=18)
-    plt.xlabel('Predicted label',FontSize=18)
-    plt.savefig("E:\EEGExoskeleton\EEGProcessor\Images_Subject"+\
-                str(id_subject)+"\Subject"+\
-                str(id_subject)+"_confumatrix.eps")
-    plt.show()
-    
-    
-pred = []
-for i in range(len(feats)):
-    pred.append(classifier.predict(feats[i].reshape(1,8)))
-true = list(labels)
-
-confusion_mat = confusion_matrix(true, pred)
-plot_confusion_matrix(confusion_mat)
-
-count = 0
-for i in range(len(labels)):
-    if int(labels[i]) == 1:
-        count = count + 1
+print ('\nAverage Accuracy: %0.4f (± %0.4f)' % (ave_accuracy.mean(),ave_accuracy.std()**2))
+print ('Average F1: %0.4f (± %0.4f)' % (ave_f1.mean(),ave_f1.std()**2))
+print ('Average Precision: %0.4f (± %0.4f)' % (ave_precision.mean(),ave_precision.std()**2))
+print ('Average Recall: %0.4f (± %0.4f)\n' % (ave_recall.mean(),ave_recall.std()**2))
 
 
 
@@ -164,6 +127,7 @@ for i in range(len(labels)):
 #def output(No_trail,WIN,THRED,thres,thres_inver):
 #    """output : 依次输出指定受试对象的伪在线命令，滤波伪在线命令，二次滤波伪在线命令
 #    以及步态图像并保存图像文件.
+#
 #    Parameters:
 #    -----------
 #    - No_trail: 指定数据来源的试验（trail）号
@@ -247,7 +211,7 @@ for i in range(len(labels)):
 #
 ## 参数设置
 #WIN = 20 # 伪在线向前取WIN个窗的标签
-#THRED = 18 # WIN个窗中标签个数超过阈值THRED则输出跨越命令
+#THRED = 15 # WIN个窗中标签个数超过阈值THRED则输出跨越命令
 #thres = 5 # 当连续为跨越意图（1）的个数不超过阈值thres时，全部变成-1
 #thres_inver = 15 # 反向滤波阈值：将连续跨越意图间的短-1段补成1
 #
@@ -261,33 +225,26 @@ for i in range(len(labels)):
 #            axis = [j for j in range(len(output_0))]
 #            plt.subplot(411)
 #            plt.plot(axis, output_0)
-##            plt.title(str(i) + 'th trial\'s output_'+str(THRED)+\
-##                      "_"+str(WIN)+"_"+str(thres)+"_"+str(thres_inver))
-#            plt.tick_params(labelsize=13)
+#            plt.title(str(i+1) + 'th trial\'s output_'+str(THRED)+\
+#                      "_"+str(WIN)+"_"+str(thres)+"_"+str(thres_inver))
 #        
 #            axis = [j for j in range(len(output_1))]
 #            plt.subplot(412)
 #            plt.plot(axis, output_1)
-#            plt.tick_params(labelsize=13)
-#            plt.ylabel('Command',FontSize=25)
 #        
 #            axis = [j for j in range(len(output_2))]
 #            plt.subplot(413)
 #            plt.plot(axis, output_2)
-#            plt.tick_params(labelsize=13)
 #        
 #            axis = [j for j in range(len(gait_data[i][0]))]
 #            plt.subplot(414)
 #            plt.plot(axis, gait_data[i][0])
-#            plt.tick_params(labelsize=13)
-#            plt.xlabel('Time',FontSize=22)
-#            plt.ylabel('Knee Joint Angle',FontSize=15)
 #        
 #            plt.savefig("E:\EEGExoskeleton\EEGProcessor\Images_Subject"+\
 #                        str(id_subject)+"\Subject"+\
-#                        str(id_subject)+"_trail"+str(i)+"_"+\
+#                        str(id_subject)+"_trail"+str(i+1)+"_"+\
 #                        str(THRED)+"_"+str(WIN)+"_"+str(thres)+"_"+\
-#                        str(thres_inver)+".eps")
+#                        str(thres_inver)+".png")
 #    
 #    if id_subject == 2:
 #        # 如果受试对象号为2，且去除以下指定的无效试验号数
@@ -298,7 +255,7 @@ for i in range(len(labels)):
 #            axis = [j for j in range(len(output_0))]
 #            plt.subplot(411)
 #            plt.plot(axis, output_0)
-#            plt.title(str(i) + 'th trial\'s output_'+str(THRED)+\
+#            plt.title(str(i+1) + 'th trial\'s output_'+str(THRED)+\
 #                      "_"+str(WIN)+"_"+str(thres)+"_"+str(thres_inver))
 #        
 #            axis = [j for j in range(len(output_1))]
@@ -315,9 +272,9 @@ for i in range(len(labels)):
 #        
 #            plt.savefig("E:\EEGExoskeleton\EEGProcessor\Images_Subject"+\
 #                        str(id_subject)+"\Subject"+\
-#                        str(id_subject)+"_trail"+str(i)+"_"+\
+#                        str(id_subject)+"_trail"+str(i+1)+"_"+\
 #                        str(THRED)+"_"+str(WIN)+"_"+str(thres)+"_"+\
-#                        str(thres_inver)+".eps")
+#                        str(thres_inver)+".png")
 #        
 #    if id_subject == 3:
 #        # 如果受试对象号为3，且去除以下指定的无效试验号数
@@ -328,7 +285,7 @@ for i in range(len(labels)):
 #            axis = [j for j in range(len(output_0))]
 #            plt.subplot(411)
 #            plt.plot(axis, output_0)
-#            plt.title(str(i) + 'th trial\'s output_'+str(THRED)+\
+#            plt.title(str(i+1) + 'th trial\'s output_'+str(THRED)+\
 #                      "_"+str(WIN)+"_"+str(thres)+"_"+str(thres_inver))
 #        
 #            axis = [j for j in range(len(output_1))]
@@ -345,9 +302,9 @@ for i in range(len(labels)):
 #        
 #            plt.savefig("E:\EEGExoskeleton\EEGProcessor\Images_Subject"+\
 #                        str(id_subject)+"\Subject"+\
-#                        str(id_subject)+"_trail"+str(i)+"_"+\
+#                        str(id_subject)+"_trail"+str(i+1)+"_"+\
 #                        str(THRED)+"_"+str(WIN)+"_"+str(thres)+"_"+\
-#                        str(thres_inver)+".eps")
+#                        str(thres_inver)+".png")
 #            
 #    if id_subject == 4:
 #        # 如果受试对象号为4，且去除以下指定的无效试验号数
@@ -358,30 +315,23 @@ for i in range(len(labels)):
 #            axis = [j for j in range(len(output_0))]
 #            plt.subplot(411)
 #            plt.plot(axis, output_0)
-##            plt.title(str(i) + 'th trial\'s output_'+str(THRED)+\
-##                      "_"+str(WIN)+"_"+str(thres)+"_"+str(thres_inver))
-#            plt.tick_params(labelsize=13)
+#            plt.title(str(i+1) + 'th trial\'s output_'+str(THRED)+\
+#                      "_"+str(WIN)+"_"+str(thres)+"_"+str(thres_inver))
 #        
 #            axis = [j for j in range(len(output_1))]
 #            plt.subplot(412)
 #            plt.plot(axis, output_1)
-#            plt.tick_params(labelsize=13)
-#            plt.ylabel('Command',FontSize=25)
 #        
 #            axis = [j for j in range(len(output_2))]
 #            plt.subplot(413)
 #            plt.plot(axis, output_2)
-#            plt.tick_params(labelsize=13)
 #        
 #            axis = [j for j in range(len(gait_data[i][0]))]
 #            plt.subplot(414)
 #            plt.plot(axis, gait_data[i][0])
-#            plt.tick_params(labelsize=13)
-#            plt.xlabel('Time',FontSize=22)
-#            plt.ylabel('Knee Joint Angle',FontSize=15)
 #        
 #            plt.savefig("E:\EEGExoskeleton\EEGProcessor\Images_Subject"+\
 #                        str(id_subject)+"\Subject"+\
-#                        str(id_subject)+"_trail"+str(i)+"_"+\
+#                        str(id_subject)+"_trail"+str(i+1)+"_"+\
 #                        str(THRED)+"_"+str(WIN)+"_"+str(thres)+"_"+\
-#                        str(thres_inver)+".eps")
+#                        str(thres_inver)+".png")

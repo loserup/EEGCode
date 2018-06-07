@@ -16,7 +16,7 @@ import scipy.io as sio
 import numpy as np
 import scipy.linalg as la # 线性代数库
 
-num_pair = 6 # 【从CSP投影矩阵里取得特征对数】
+num_pair = 4 # 【从CSP投影矩阵里取得特征对数】
 
 
 input_eegwin = sio.loadmat('WinEEG.mat')['WinEEG']
@@ -87,12 +87,14 @@ features = []
 for i in range(len(eegwin_0)):
     Z = np.dot(csp, eegwin_0[i])
     varances = list(np.log(np.var(Z, axis=1))) # axis=1即求每行的方差
+    varances = [np.log(x/sum(varances)) for x in varances]
     varances.append(-1)
     features.append(varances)
 
 for i in range(len(eegwin_1)):  
     Z = np.dot(csp, eegwin_1[i])
-    varances = list(np.log(np.var(Z, axis=1)))
+    varances = list(np.var(Z, axis=1))
+    varances = [np.log(x/sum(varances)) for x in varances]
     varances.append(1)
     features.append(varances)
     

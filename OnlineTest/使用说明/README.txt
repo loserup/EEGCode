@@ -10,3 +10,8 @@
 在线测试
 1、运行ActiView703-Lores.exe
 2、运行onlineReadData.m
+
+
+修改Log：
+2018/6/7
+CSP提取特征标准化

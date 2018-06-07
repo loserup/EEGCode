@@ -1,1 +1,0 @@
-onlineReadData.m负责和脑电采集软件Labview通信，接收脑电信号并进行CSP提取特征，再调用onlineClassifier.py对特征进行分类（这里有一个bug，就是每次调用onlineClassifier.py都要重新训练一次SVM分类器，虽然我给的随机种子都一样，每次训练得结果应该都一样，但感觉还是不太行，应该怎么修改呢？）

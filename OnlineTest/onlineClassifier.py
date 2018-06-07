@@ -11,15 +11,14 @@ import numpy as np
 
 class OnlineClassifier():
     
-    def __init__(self, no_sub, feat_input):
+    def __init__(self, feat_input):
         """__init__: OnlineClassifier类的初始化
 
         Parameters:
         -----------     
         - feat_input: MATLAB传来的特征数据
         """        
-        self.feat_input = np.mat(feat_input).reshape(1,12)
-        self.no_sub = int(no_sub)
+        self.feat_input = np.mat(feat_input).reshape(1,8)
         self.feats_all = sio.loadmat('features.mat')['features']
         self.feats, self.labels = \
             shuffle(self.feats_all[:,:-1],self.feats_all[:,-1],\

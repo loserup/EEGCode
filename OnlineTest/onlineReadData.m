@@ -5,10 +5,10 @@ clear all
 clc
 
 % 在线实验参数设置
-no_sub = 1; % 受试对象编号
+% no_sub = 1; % 受试对象编号
 win_len = 384; % 窗长，单位：采样点
-csp_filename = ['E:\EEGExoskeleton\EEGProcessor\Subject_0' num2str(no_sub) '_Data\Subject_0' num2str(no_sub) '_csp.mat'];
-csp = load(csp_filename);
+% csp_filename = ['E:\EEGExoskeleton\EEGProcessor\Subject_0' num2str(no_sub) '_Data\Subject_0' num2str(no_sub) '_csp.mat'];
+csp = load('csp.mat');
 csp = csp.csp; % 获取指定受试对象的CSP投影矩阵
 interval = 26; % 窗分类间隔：每采样26个点后进行一次取窗分类 % 384点为750ms，26个点为50ms
 back = 20; % 回溯点数
@@ -79,8 +79,12 @@ while run
         data = data_history';
         data = data(:,count-win_len+1:count);
         output = [bandpass(data,0.3,3) bandpass(data,4,7) bandpass(data,8,13) bandpass(data,13,30)];
-        feat = (log(var(csp*output,0,2)))'; % CSP提取EEG窗的特征
-        pyObj = py.onlineClassifier.OnlineClassifier(no_sub, feat); % 声明onlineClassifier脚本的OnlineClassifier类，并传递no_sub和feat给其实例
+        
+        % CSP提取EEG窗的特征
+        varance = var(cap*output,0,2);
+        feat = (log(varance/sum(varance)))'; 
+        
+        pyObj = py.onlineClassifier.OnlineClassifier(feat); % 声明onlineClassifier脚本的OnlineClassifier类，并传递feat给其实例
         out_store = [out_store str2double(char(pyObj.outputCmd()))] % Python原始输入数据带属性，先转string再转数字去掉属性
         out_length = length(out_store);
         
@@ -104,7 +108,7 @@ end
 % save('data_history.mat', 'data_history');
 % save('count.mat','count');
 % save('feat.mat','feat');
-save('out_store.mat','out_store');
+% save('out_store.mat','out_store');
 % save('time.mat','time');
 % save('count_win.mat','count_win');
 

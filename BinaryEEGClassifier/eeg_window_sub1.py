@@ -71,7 +71,7 @@ eeg_data = eeg_mat_data['CutedEEG']
 num_trial = len(gait_data) # 获取受试者进行试验的次数
 
 # 绘图-测试用
-def Window_plotor_peak(num_axis, data, index_sorted, bias, stop_win_index, win_width):
+def Window_plotor_peak(num_axis, data, index_sorted, bias, stop_win_index, win_width, trial_id):
     # 绘制峰值点以及相应划窗
     data_axis = [i for i in range(num_axis)]
     plt.figure(figsize=[15,4])
@@ -85,8 +85,17 @@ def Window_plotor_peak(num_axis, data, index_sorted, bias, stop_win_index, win_w
         plt.scatter(i, data[i])
         rect = patches.Rectangle((i,data[i]),win_width,20,linewidth=1,edgecolor='r',facecolor='none')
         ax.add_patch(rect)
+        
+    plt.xlabel('Time',FontSize=22)
+    plt.ylabel('Knee Joint Angle',FontSize=22)
+    plt.tick_params(labelsize=18)
+    plt.ylim(15,80)
+    plt.title(str(trial_id) + 'th trial\'s peak points',FontSize=30) 
+    plt.savefig("E:\EEGExoskeleton\EEGProcessor\Images_Subject"+\
+                str(id_subject)+"\Subject"+\
+                str(id_subject)+"_Peakwin"+str(trial_id)+".eps")
 
-def Window_plotor_valley(num_axis, data, index_sorted, bias, win_width):
+def Window_plotor_valley(num_axis, data, index_sorted, bias, win_width, trial_id):
     # 绘制谷值点以及相应划窗
     data_axis = [i for i in range(num_axis)]
     plt.figure(figsize=[15,4])
@@ -96,6 +105,16 @@ def Window_plotor_valley(num_axis, data, index_sorted, bias, win_width):
         plt.scatter(i, data[i])
         rect = patches.Rectangle((i+bias,data[i]),-win_width,40,linewidth=1,edgecolor='r',facecolor='none')
         ax.add_patch(rect)
+        
+    plt.xlabel('Time',FontSize=22)
+    plt.ylabel('Knee Joint Angle',FontSize=22)
+    plt.tick_params(labelsize=18)
+    plt.ylim(0,90)
+    plt.title(str(trial_id) + 'th trial\'s valley points',FontSize=30) 
+    plt.savefig("E:\EEGExoskeleton\EEGProcessor\Images_Subject"+\
+                str(id_subject)+"\Subject"+\
+                str(id_subject)+"_Valleywin"+str(trial_id)+".eps")
+    
     
 
 # 找步态数据中的极大值
@@ -240,12 +259,12 @@ for i in range(num_trial):
         
         # 测试绘图，观察跨越极大值点位置是否找对
         Window_plotor_peak(num_axis,gait_data[i][0],r_peakind_sorted,peak_bias,\
-                           rstop_win_index_sorted,gait_win_width)
-        plt.title(str(i+1) + 'th trial\'s peak points') 
+                           rstop_win_index_sorted,gait_win_width,i)
+        
         
         # 测试绘图，观察跨越前极小值点位置是否找对
         Window_plotor_valley(num_axis, gait_data[i][0], r_valleyind_sorted, \
-                             valley_bias, gait_win_width) 
+                             valley_bias, gait_win_width,i) 
         plt.title(str(i+1) + 'th trial\'s valley points') 
         
         for k in range(work_trial_1):
@@ -321,12 +340,12 @@ for i in range(num_trial):
         
         # 测试绘图，观察跨越极大值点位置是否找对
         Window_plotor_peak(num_axis,gait_data[i][0],r_peakind_sorted,peak_bias,\
-                           rstop_win_index_sorted,gait_win_width)
+                           rstop_win_index_sorted,gait_win_width,i)
         plt.title(str(i+1) + 'th trial\'s peak points') 
         
         # 测试绘图，观察跨越前极小值点位置是否找对
         Window_plotor_valley(num_axis, gait_data[i][0], r_valleyind_sorted, \
-                             valley_bias, gait_win_width) 
+                             valley_bias, gait_win_width,i) 
         plt.title(str(i+1) + 'th trial\'s valley points') 
         
         for k in range(work_trial_2):
@@ -402,12 +421,12 @@ for i in range(num_trial):
         
         # 测试绘图，观察跨越极大值点位置是否找对
         Window_plotor_peak(num_axis,gait_data[i][0],r_peakind_sorted,peak_bias,\
-                           rstop_win_index_sorted,gait_win_width)
+                           rstop_win_index_sorted,gait_win_width,i)
         plt.title(str(i+1) + 'th trial\'s peak points') 
         
         # 测试绘图，观察跨越前极小值点位置是否找对
         Window_plotor_valley(num_axis, gait_data[i][0], r_valleyind_sorted, \
-                             valley_bias, gait_win_width) 
+                             valley_bias, gait_win_width,i) 
         plt.title(str(i+1) + 'th trial\'s valley points') 
         
         for k in range(work_trial_3):
