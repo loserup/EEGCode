@@ -1,0 +1,20 @@
+C:\Files\Programming\C# .NET\MouseKeyboardLibrary\MouseKeyboardLibrary\obj\Debug\ResolveAssemblyReference.cache
+C:\Files\Programming\C# .NET\MouseKeyboardLibrary\MouseKeyboardLibrary\bin\Debug\MouseKeyboardLibrary.dll
+C:\Files\Programming\C# .NET\MouseKeyboardLibrary\MouseKeyboardLibrary\bin\Debug\MouseKeyboardLibrary.pdb
+C:\Files\Programming\C# .NET\MouseKeyboardLibrary\MouseKeyboardLibrary\obj\Debug\MouseKeyboardLibrary.dll
+C:\Files\Programming\C# .NET\MouseKeyboardLibrary\MouseKeyboardLibrary\obj\Debug\MouseKeyboardLibrary.pdb
+D:\搜狗高速下载\下载\C#键盘鼠标钩子程序\基于全局的C#键盘鼠标钩子程序\MouseKeyboardLib2008\MouseKeyboardLibrary\MouseKeyboardLibrary\bin\Debug\MouseKeyboardLibrary.dll
+D:\搜狗高速下载\下载\C#键盘鼠标钩子程序\基于全局的C#键盘鼠标钩子程序\MouseKeyboardLib2008\MouseKeyboardLibrary\MouseKeyboardLibrary\bin\Debug\MouseKeyboardLibrary.pdb
+D:\搜狗高速下载\下载\C#键盘鼠标钩子程序\基于全局的C#键盘鼠标钩子程序\MouseKeyboardLib2008\MouseKeyboardLibrary\MouseKeyboardLibrary\obj\Debug\ResolveAssemblyReference.cache
+D:\搜狗高速下载\下载\C#键盘鼠标钩子程序\基于全局的C#键盘鼠标钩子程序\MouseKeyboardLib2008\MouseKeyboardLibrary\MouseKeyboardLibrary\obj\Debug\MouseKeyboardLibrary.dll
+D:\搜狗高速下载\下载\C#键盘鼠标钩子程序\基于全局的C#键盘鼠标钩子程序\MouseKeyboardLib2008\MouseKeyboardLibrary\MouseKeyboardLibrary\obj\Debug\MouseKeyboardLibrary.pdb
+G:\iExo\CognitiveEEG\DataCollection\MouseKeyboardLibrary\MouseKeyboardLibrary\bin\Debug\MouseKeyboardLibrary.dll
+G:\iExo\CognitiveEEG\DataCollection\MouseKeyboardLibrary\MouseKeyboardLibrary\bin\Debug\MouseKeyboardLibrary.pdb
+G:\iExo\CognitiveEEG\DataCollection\MouseKeyboardLibrary\MouseKeyboardLibrary\obj\Debug\MouseKeyboardLibrary.csprojResolveAssemblyReference.cache
+G:\iExo\CognitiveEEG\DataCollection\MouseKeyboardLibrary\MouseKeyboardLibrary\obj\Debug\MouseKeyboardLibrary.dll
+G:\iExo\CognitiveEEG\DataCollection\MouseKeyboardLibrary\MouseKeyboardLibrary\obj\Debug\MouseKeyboardLibrary.pdb
+E:\EEGExoskeleton\EEGCode\MouseKeyboardLibrary\MouseKeyboardLibrary\MouseKeyboardLibrary\bin\Debug\MouseKeyboardLibrary.dll
+E:\EEGExoskeleton\EEGCode\MouseKeyboardLibrary\MouseKeyboardLibrary\MouseKeyboardLibrary\bin\Debug\MouseKeyboardLibrary.pdb
+E:\EEGExoskeleton\EEGCode\MouseKeyboardLibrary\MouseKeyboardLibrary\MouseKeyboardLibrary\obj\Debug\MouseKeyboardLibrary.csprojResolveAssemblyReference.cache
+E:\EEGExoskeleton\EEGCode\MouseKeyboardLibrary\MouseKeyboardLibrary\MouseKeyboardLibrary\obj\Debug\MouseKeyboardLibrary.dll
+E:\EEGExoskeleton\EEGCode\MouseKeyboardLibrary\MouseKeyboardLibrary\MouseKeyboardLibrary\obj\Debug\MouseKeyboardLibrary.pdb

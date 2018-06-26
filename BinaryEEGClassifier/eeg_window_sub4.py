@@ -46,17 +46,17 @@ work_trial_5 = 30 # 往返5次的跨越次数
 
 
 if id_subject < 10:
-    gait_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0' +\
+    gait_mat_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0' +\
                                 str(id_subject) + '_Data\\Subject_0' +\
                                 str(id_subject) + '_FilteredMotion.mat')
-    eeg_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0' +\
+    eeg_mat_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0' +\
                                str(id_subject) + '_Data\\Subject_0' +\
                                str(id_subject) + '_CutedEEG.mat')
 else:
-    gait_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_' +\
+    gait_mat_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_' +\
                                 str(id_subject) + '_Data\\Subject_' +\
                                 str(id_subject) + '_FilteredMotion.mat')
-    eeg_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_' +\
+    eeg_mat_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_' +\
                                str(id_subject) + '_Data\\Subject_' +\
                                str(id_subject) + '_CutedEEG.mat')
 
@@ -141,7 +141,7 @@ def find_valley_point(dataset, peakind_sorted):
 
 # 对EEG信号带通滤波
 fs = 512 # 【采样频率512Hz】
-win_width = 384 # 【窗宽度】384对应750ms窗长度
+win_width = 350 # 【窗宽度】384对应750ms窗长度
 fs_gait = 121 # 【步态数据采样频率121Hz】
 def bandpass(data,upper,lower):
     Wn = [2 * upper / fs, 2 * lower / fs] # 截止频带0.1-1Hz or 8-30Hz
@@ -249,24 +249,53 @@ for i in range(num_trial):
                 #print('r') # 测试用，观察跨越用的腿是否一致
                 # 无跨越意图窗
                 out_eeg = eeg_data[0][i][:,int(rp_win_index[k]):(int(rp_win_index[k])+win_width)]
-                output.append(hstackwin(out_eeg,-1))
+#                output.append(hstackwin(out_eeg,-1))
+                
+                # 取未滤波窗
+                out_temp = [out_eeg, -1]
+                output.append(out_temp)
+                
                 if (k+1)%3 == 0:
                     out_eeg = eeg_data[0][i][:,int(rstop_win_index[int(k/3)]):(int(rstop_win_index[int(k/3)])+win_width)]
-                    output.append(hstackwin(out_eeg,-1))
+#                    output.append(hstackwin(out_eeg,-1))
+                    
+                    # 取未滤波窗
+                    out_temp = [out_eeg, -1]
+                    output.append(out_temp)
+                    
                 # 有跨越意图窗
                 out_eeg =  eeg_data[0][i][:,int(rv_win_index[k]-win_width):int(rv_win_index[k])]
-                output.append(hstackwin(out_eeg,1))
+#                output.append(hstackwin(out_eeg,1))
+                
+                # 取未滤波窗
+                out_temp = [out_eeg, 1]
+                output.append(out_temp)
+                
             else:
                 #print('l') # 测试用，观察跨越用的腿是否一致
                 # 无跨越意图窗
                 out_eeg = eeg_data[0][i][:,int(lp_win_index[k]):(int(lp_win_index[k])+win_width)]
-                output.append(hstackwin(out_eeg,-1))
+#                output.append(hstackwin(out_eeg,-1))
+                
+                # 取未滤波窗
+                out_temp = [out_eeg, -1]
+                output.append(out_temp)
+                
                 if (k+1)%3 == 0:
                     out_eeg = eeg_data[0][i][:,int(lstop_win_index[int(k/3)]):(int(lstop_win_index[int(k/3)])+win_width)]
-                    output.append(hstackwin(out_eeg,-1))
+#                    output.append(hstackwin(out_eeg,-1))
+                    
+                    # 取未滤波窗
+                    out_temp = [out_eeg, -1]
+                    output.append(out_temp)
+                    
                 # 有跨越意图窗
                 out_eeg =  eeg_data[0][i][:,int(lv_win_index[k]-win_width):int(lv_win_index[k])]
-                output.append(hstackwin(out_eeg,1))
+#                output.append(hstackwin(out_eeg,1))
+                
+                # 取未滤波窗
+                out_temp = [out_eeg, -1]
+                output.append(out_temp)
                      
         out_count += 1
         
@@ -330,24 +359,53 @@ for i in range(num_trial):
                 #print('r') # 测试用，观察跨越用的腿是否一致
                 # 无跨越意图窗
                 out_eeg = eeg_data[0][i][:,int(rp_win_index[k]):(int(rp_win_index[k])+win_width)]
-                output.append(hstackwin(out_eeg,-1))
+#                output.append(hstackwin(out_eeg,-1))
+                
+                # 取未滤波窗
+                out_temp = [out_eeg, -1]
+                output.append(out_temp)
+                
                 if (k+1)%3 == 0:
                     out_eeg = eeg_data[0][i][:,int(rstop_win_index[int(k/3)]):(int(rstop_win_index[int(k/3)])+win_width)]
-                    output.append(hstackwin(out_eeg,-1))
+#                    output.append(hstackwin(out_eeg,-1))
+                    
+                    # 取未滤波窗
+                    out_temp = [out_eeg, -1]
+                    output.append(out_temp)
+                    
                 # 有跨越意图窗
                 out_eeg =  eeg_data[0][i][:,int(rv_win_index[k]-win_width):int(rv_win_index[k])]
-                output.append(hstackwin(out_eeg,1))
+#                output.append(hstackwin(out_eeg,1))
+                
+                # 取未滤波窗
+                out_temp = [out_eeg, 1]
+                output.append(out_temp)
+                
             else:
                 #print('l') # 测试用，观察跨越用的腿是否一致
                 # 无跨越意图窗
                 out_eeg = eeg_data[0][i][:,int(lp_win_index[k]):(int(lp_win_index[k])+win_width)]
-                output.append(hstackwin(out_eeg,-1))
+#                output.append(hstackwin(out_eeg,-1))
+                
+                # 取未滤波窗
+                out_temp = [out_eeg, -1]
+                output.append(out_temp)
+                
                 if (k+1)%3 == 0:
                     out_eeg = eeg_data[0][i][:,int(lstop_win_index[int(k/3)]):(int(lstop_win_index[int(k/3)])+win_width)]
-                    output.append(hstackwin(out_eeg,-1))
+#                    output.append(hstackwin(out_eeg,-1))
+                    
+                    # 取未滤波窗
+                    out_temp = [out_eeg, -1]
+                    output.append(out_temp)
+                    
                 # 有跨越意图窗
                 out_eeg =  eeg_data[0][i][:,int(lv_win_index[k]-win_width):int(lv_win_index[k])]
-                output.append(hstackwin(out_eeg,1))
+#                output.append(hstackwin(out_eeg,1))
+                
+                # 取未滤波窗
+                out_temp = [out_eeg, -1]
+                output.append(out_temp)
                      
         out_count += 1
         
@@ -411,24 +469,53 @@ for i in range(num_trial):
                 #print('r') # 测试用，观察跨越用的腿是否一致
                 # 无跨越意图窗
                 out_eeg = eeg_data[0][i][:,int(rp_win_index[k]):(int(rp_win_index[k])+win_width)]
-                output.append(hstackwin(out_eeg,-1))
+#                output.append(hstackwin(out_eeg,-1))
+                
+                # 取未滤波窗
+                out_temp = [out_eeg, -1]
+                output.append(out_temp)
+                
                 if (k+1)%3 == 0:
                     out_eeg = eeg_data[0][i][:,int(rstop_win_index[int(k/3)]):(int(rstop_win_index[int(k/3)])+win_width)]
-                    output.append(hstackwin(out_eeg,-1))
+#                    output.append(hstackwin(out_eeg,-1))
+                    
+                    # 取未滤波窗
+                    out_temp = [out_eeg, -1]
+                    output.append(out_temp)
+                    
                 # 有跨越意图窗
                 out_eeg =  eeg_data[0][i][:,int(rv_win_index[k]-win_width):int(rv_win_index[k])]
-                output.append(hstackwin(out_eeg,1))
+#                output.append(hstackwin(out_eeg,1))
+                
+                # 取未滤波窗
+                out_temp = [out_eeg, 1]
+                output.append(out_temp)
+                
             else:
                 #print('l') # 测试用，观察跨越用的腿是否一致
                 # 无跨越意图窗
                 out_eeg = eeg_data[0][i][:,int(lp_win_index[k]):(int(lp_win_index[k])+win_width)]
-                output.append(hstackwin(out_eeg,-1))
+#                output.append(hstackwin(out_eeg,-1))
+                
+                # 取未滤波窗
+                out_temp = [out_eeg, -1]
+                output.append(out_temp)
+                
                 if (k+1)%3 == 0:
                     out_eeg = eeg_data[0][i][:,int(lstop_win_index[int(k/3)]):(int(lstop_win_index[int(k/3)])+win_width)]
-                    output.append(hstackwin(out_eeg,-1))
+#                    output.append(hstackwin(out_eeg,-1))
+                    
+                    # 取未滤波窗
+                    out_temp = [out_eeg, -1]
+                    output.append(out_temp)
+                    
                 # 有跨越意图窗
                 out_eeg =  eeg_data[0][i][:,int(lv_win_index[k]-win_width):int(lv_win_index[k])]
-                output.append(hstackwin(out_eeg,1))
+#                output.append(hstackwin(out_eeg,1))
+                
+                # 取未滤波窗
+                out_temp = [out_eeg, -1]
+                output.append(out_temp)
         
         out_count += 1
 
@@ -436,10 +523,10 @@ for i in range(num_trial):
         continue
     
 if id_subject < 10:
-    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0'+str(id_subject)+\
+    sio.savemat('E:\\EEGExoskeleton\\Data\\Subject_0'+str(id_subject)+\
                 '_Data\\Subject_0'+str(id_subject)+'_WinEEG.mat',\
                 {'WinEEG':output})
 else:
-    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_'+str(id_subject)+\
+    sio.savemat('E:\\EEGExoskeleton\\Data\\Subject_'+str(id_subject)+\
                 '_Data\\Subject_'+str(id_subject)+'_WinEEG.mat',\
                 {'WinEEG':output})
