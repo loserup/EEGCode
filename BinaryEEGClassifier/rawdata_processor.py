@@ -16,20 +16,20 @@ import scipy.io as sio
 import numpy as np
 import scipy.signal as sis
 
-id_subject = 4 # 【受试者的编号】
+id_subject = 5 # 【受试者的编号】
 
 if id_subject < 10:
-    eeg_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0' +\
+    eeg_mat_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0' +\
                                str(id_subject) + '_Data\\Subject_0' +\
                                str(id_subject) + '_RawEEG.mat')
-    gait_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0' +\
+    gait_mat_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0' +\
                                 str(id_subject) + '_Data\\Subject_0' +\
                                 str(id_subject) + '_RawMotion.mat')
 else:
-    eeg_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_' +\
+    eeg_mat_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_' +\
                                str(id_subject) + '_Data\\Subject_' +\
                                str(id_subject) + '_RawEEG.mat')
-    gait_mat_data = sio.loadmat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_' +\
+    gait_mat_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_' +\
                                 str(id_subject) + '_Data\\Subject_' +\
                                 str(id_subject) + '_RawMotion.mat')
 
@@ -101,16 +101,16 @@ for i in range(num_trial):
 
 
 if id_subject < 10:
-    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0'+str(id_subject)+\
+    sio.savemat('E:\\EEGExoskeleton\\Data\\Subject_0'+str(id_subject)+\
                 '_Data\\Subject_0' + str(id_subject) +'_CutedEEG.mat',\
                 {'CutedEEG' : eeg_data})
-    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_0'+str(id_subject)+\
+    sio.savemat('E:\\EEGExoskeleton\\Data\\Subject_0'+str(id_subject)+\
                 '_Data\\Subject_0' + str(id_subject) +'_FilteredMotion.mat',\
                 {'FilteredMotion' : gait_data})
 else:
-    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_'+str(id_subject)+\
+    sio.savemat('E:\\EEGExoskeleton\\Data\\Subject_'+str(id_subject)+\
                 '_Data\\Subject_' + str(id_subject) +'_CutedEEG.mat',\
                 {'CutedEEG' : eeg_data})
-    sio.savemat('E:\\EEGExoskeleton\\EEGProcessor\\Subject_'+str(id_subject)+\
+    sio.savemat('E:\\EEGExoskeleton\\Data\\Subject_'+str(id_subject)+\
                 '_Data\\Subject_' + str(id_subject) +'_FilteredMotion.mat',\
                 {'FilteredMotion' : gait_data})

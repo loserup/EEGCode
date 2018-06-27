@@ -12,26 +12,12 @@ Created on Fri Dec  1 21:25:28 2017
 % 划窗截取EEG信号
 % 生成指定受试对象的有意图和无意图区域的EEG窗
 
-% 专门针对第二个受试对象的划窗函数
-受试对象2共进行了16次trail
-第1次：往返3次
-第2次：往返3次
-第3次：往返3次；数据不好处理，去掉
-第4次：往返3次
-第5次：往返3次
-第6次：往返3次
-第7次：往返3次
-第8次：往返3次
-第9次：打标失败，去掉
-第10次：往返3次；数据不好处理，去掉
-第11次：往返3次
-第12次：往返3次
-第13次：往返4次，大概是无意识多走，去掉
-第14次：往返3次；数据不好处理，去掉
-第15次：往返3次
-第16次：往返3次；数据不好处理，去掉
-备注：经测试得知未告知受试对象刻意用右腿跨过障碍，左右腿随机跨
-最后有效trail有10组，共往返30次，跨越180次，共360+30*2=420个窗
+% 专门针对第五个受试对象的划窗函数
+受试对象3共进行了8次trail
+每次trial一个来回，每个来回6次跨越
+
+备注：受试对象被告知用右腿跨越障碍
+共往返8次，跨越48次，共96+8*2=112个窗
 """
 # In[1]:
 import scipy.io as sio
@@ -39,10 +25,9 @@ import numpy as np
 import scipy.signal as sis
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
-
 # In[2]:
-id_subject = 2 # 【受试者的编号】
-work_trial = 18 # 【设置有效的极值点数】即跨越时的极值点
+id_subject = 5 # 【受试者的编号】
+work_trial = 6 # 【设置有效的极值点数】即跨越时的极值点
 
 if id_subject < 10:
     gait_mat_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0' +\
@@ -59,11 +44,10 @@ else:
                                str(id_subject) + '_Data\\Subject_' +\
                                str(id_subject) + '_CutedEEG.mat')
 
-gait_data = gait_mat_data['FilteredMotion'][0]
-eeg_data = eeg_mat_data['CutedEEG']
+gait_data = gait_mat_data['FilteredMotion'][0] # 每个元素是受试者走的一次trail；每个trail记录双膝角度轨迹，依次是右膝和左膝
+eeg_data = eeg_mat_data['CutedEEG'] # eeg_data[0][i]表示第i次trial的EEG，共32行（频道）
 
 num_trial = len(gait_data) # 获取受试者进行试验的次数
-
 # In[3]:
 # 绘图-测试用
 def Window_plotor_peak(num_axis, data, index_sorted, bias, stop_win_index, win_width):
@@ -74,11 +58,11 @@ def Window_plotor_peak(num_axis, data, index_sorted, bias, stop_win_index, win_w
     plt.plot(data_axis, data)
     for i in index_sorted:
         plt.scatter(i, data[i])
-        rect = patches.Rectangle((i+bias,data[i]),win_width,-30,linewidth=1,edgecolor='r',facecolor='none')
+        rect = patches.Rectangle((i+bias,data[i]),win_width,-40,linewidth=1,edgecolor='r',facecolor='none')
         ax.add_patch(rect)
     for i in stop_win_index:
         plt.scatter(i, data[i])
-        rect = patches.Rectangle((i,data[i]),win_width,15,linewidth=1,edgecolor='r',facecolor='none')
+        rect = patches.Rectangle((i,data[i]),win_width,20,linewidth=1,edgecolor='r',facecolor='none')
         ax.add_patch(rect)
 # In[4]:
 def Window_plotor_valley(num_axis, data, index_sorted, bias, win_width):
@@ -89,7 +73,7 @@ def Window_plotor_valley(num_axis, data, index_sorted, bias, win_width):
     plt.plot(data_axis, data)
     for i in index_sorted:
         plt.scatter(i, data[i])
-        rect = patches.Rectangle((i+bias,data[i]),-win_width,30,linewidth=1,edgecolor='r',facecolor='none')
+        rect = patches.Rectangle((i+bias,data[i]),-win_width,40,linewidth=1,edgecolor='r',facecolor='none')
         ax.add_patch(rect)
     
 # In[5]:
@@ -181,15 +165,15 @@ def hstackwin(out_eeg, label):
     out_eeg_band3 = bandpass(out_eeg,upper=13,lower=30)
     output = [np.hstack((out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3)), label]
     return output
-# In[10]:            
+# In[10]:      
 out_count = 0 # 输出文件批数
 output = []
 peak_bias = 40 # 【设置从膝关节角度最大处的偏移值，作为划无意图窗的起点】
 valley_bias = 0 # 【设置从膝关节角度最大处的偏移值，作为划无意图窗的起点】
-stop_bias = 450 # 【设置停顿处从膝关节角度最大处的偏移值，作为划无意图窗的起点】
+stop_bias = 250 # 【设置停顿处从膝关节角度最大处的偏移值，作为划无意图窗的起点】
 gait_win_width = fs_gait / fs * win_width # 在步态数据里将划窗可视化，应该把EEG窗的宽度转换到步态窗的宽度
 for i in range(num_trial):
-    if len(gait_data[i]) and i!=2 and i!=9 and i!=12 and i!=13 and i!=15: # 受试对象2的第13次trial效果不好，故去掉
+    if len(gait_data[i]):
         # 当步态数据不是空集时（有效时）
         
         # 取右膝跨越极值点索引
@@ -213,7 +197,7 @@ for i in range(num_trial):
         r_valleyind_sorted = np.array(find_valley_point(gait_data[i][0], r_peakind_sorted)) # 右膝跨越前的极小值点
         l_valleyind_sorted = np.array(find_valley_point(gait_data[i][1], l_peakind_sorted)) # 左膝跨越前的极小值点
         num_axis = len(gait_data[i][0])
-       
+
         # 取无跨越意图EEG窗，标记为-1   
         rp_win_index = r_peakind_sorted + peak_bias # 步态窗起始索引
         lp_win_index = l_peakind_sorted + peak_bias 
@@ -301,7 +285,7 @@ for i in range(num_trial):
         out_count += 1
     else:
         continue
-# In[11]:
+# In[11]:  
 if id_subject < 10:
     sio.savemat('E:\\EEGExoskeleton\\Data\\Subject_0'+str(id_subject)+\
                 '_Data\\Subject_0'+str(id_subject)+'_WinEEG.mat',\
