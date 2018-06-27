@@ -4,24 +4,24 @@ Created on Sun Jan  7 21:21:17 2018
 
 @author: Long
 
-% 说明:基于sklearn库的SVM分类器
+% 说明: 训练基于sklearn库的SVM分类器
 
 % 第五步
 
 % 输入数据最后一列为标签，0表示无意图，1表示有意图
 % 数据其余列为特征值
 """
-
-from sklearn.svm import SVC
+# In[]
 import scipy.io as sio
-from sklearn.utils import shuffle
-from sklearn import cross_validation
-import numpy as np
+from sklearn import grid_search
+from sklearn import svm
+from sklearn.externals import joblib
+import time
 #import scipy.signal as sis
 #import matplotlib.pyplot as plt
 #import copy
 
-
+# In[]
 #id_subject = 1 # 【受试者的编号】
 #if id_subject < 10:
 #    feats_mat = sio.loadmat('features.mat')
@@ -46,70 +46,90 @@ import numpy as np
 #                                str(id_subject) + '_Data\\Subject_' +\
 #                                str(id_subject) + '_csp.mat')['csp']
 
-
-
-eeg_data = sio.loadmat('CutedEEG.mat')['CutedEEG']
+# In[]
+#eeg_data = sio.loadmat('CutedEEG.mat')['CutedEEG']
 #gait_data = gait_mat_data['FilteredMotion'][0] # 每个元素是受试者走的一次trail；每个trail记录双膝角度轨迹，依次是右膝和左膝
 feats_all = sio.loadmat('features.mat')['features']
-max_accuracy = 0
-count = 10.0 # 随机计算准确率的次数
 
-num_feats = len(feats_all)
-ave_accuracy, ave_f1, ave_precision, ave_recall = [],[],[],[]
-# 随机打乱特征顺序
-print('\n')
-for i in range(int(count)):
-    feats, labels = shuffle(feats_all[:,:-1],feats_all[:,-1],\
-                            random_state=np.random.randint(0,100))
-    
-#    feats_train = feats[:round(num_feats*0.8),:]
-#    feats_test= feats[round(num_feats*0.8):,:]
-#    labels_train = labels[:round(num_feats*0.8)]
-#    labels_test = labels[round(num_feats*0.8):]
-    # 建立SVM模型
-    params = {'kernel':'rbf','probability':True, 'class_weight':'balanced'} # 类别0明显比其他类别数目多，但加了'class_weight':'balanced'平均各类权重准确率反而更低了
-    classifier_cur = SVC(**params)
-    classifier_cur.fit(feats,labels) # 训练SVM分类器
-    
-    accuracy = cross_validation.cross_val_score(classifier_cur, feats, labels, \
-                                                scoring='accuracy',cv=5) # cv=5指五折交叉验证
-    f1 = cross_validation.cross_val_score(classifier_cur, feats, labels, \
-                                          scoring='f1', cv=5)
-    precision = cross_validation.cross_val_score(classifier_cur,feats,labels, \
-                                          scoring='precision', cv=5)
-    recall = cross_validation.cross_val_score(classifier_cur, feats, labels, \
-                                          scoring='recall', cv=5)
+parameter_grid = [  {'kernel': ['linear'], 'C': [10 ** x for x in range(-1, 4)]},
+                    {'kernel': ['poly'], 'degree': [2, 3]},
+                    {'kernel': ['rbf'], 'gamma': [0.01, 0.001], 'C': [10 ** x for x in range(-1, 4)]},
+                 ]
 
-    ave_accuracy.append(accuracy.mean())
-    ave_f1.append(f1.mean())
-    ave_precision.append(precision.mean())
-    ave_recall.append(recall.mean())
-    
-    if max_accuracy < accuracy.mean(): 
-        # 选取准确率最高的分类器做之后的分类工作
-        classifier = classifier_cur
-        max_accuracy = accuracy.mean() # arrayA.mean()指数。组arrayA中所有元素的平均值
-        
-    # 评分估计的平均得分和95%置信区间
-    print('Accuracy: %0.4f (± %0.4f)' % (accuracy.mean(),accuracy.std()**2))
-    print('F1: %0.4f (± %0.4f)' % (f1.mean(),f1.std()**2))
-    print('Precision: %0.4f (± %0.4f)' % (precision.mean(),precision.std()**2))
-    print('Recall: %0.4f (± %0.4f)' % (recall.mean(),recall.std()**2))
+X = feats_all[:,:-1]
+y = feats_all[:,-1]
 
-    print('\n')
-        
-ave_accuracy = np.array(ave_accuracy)
-ave_f1 = np.array(ave_f1)
-ave_precision = np.array(ave_precision)
-ave_recall = np.array(ave_recall)
+print("\n#### Searching optimal hyperparameters for precision")
+classifier = grid_search.GridSearchCV(svm.SVC(), 
+            parameter_grid, cv=5, scoring='precision_weighted')
+classifier.fit(X, y) # 直接用实时收集到的数据进行训练，不把数据分出测试集了，直接用在线数据进行测试
 
-print ('\nAverage Accuracy: %0.4f (± %0.4f)' % (ave_accuracy.mean(),ave_accuracy.std()**2))
-print ('Average F1: %0.4f (± %0.4f)' % (ave_f1.mean(),ave_f1.std()**2))
-print ('Average Precision: %0.4f (± %0.4f)' % (ave_precision.mean(),ave_precision.std()**2))
-print ('Average Recall: %0.4f (± %0.4f)\n' % (ave_recall.mean(),ave_recall.std()**2))
+print("\nScores across the parameter grid:")
+for params, avg_score, _ in classifier.grid_scores_:
+    print(params, '-->', round(avg_score, 3))
+print("\nHighest scoring parameter set:", classifier.best_params_)
+
+#joblib.dump(classifier, time.strftime('%Y_%m_%d_%H_%M_%S',time.localtime(time.time()))+"_SVM.m") # 按当前时间命名保存训练好的分类器
+joblib.dump(classifier, "SVM.m") # 保存训练好的分类器
+# In[]
+#max_accuracy = 0
+#count = 10.0 # 随机计算准确率的次数
+#num_feats = len(feats_all)
+#ave_accuracy, ave_f1, ave_precision, ave_recall = [],[],[],[]
+## 随机打乱特征顺序
+#print('\n')
+#for i in range(int(count)):
+#    feats, labels = shuffle(feats_all[:,:-1],feats_all[:,-1],\
+#                            random_state=np.random.randint(0,100))
+#    
+##    feats_train = feats[:round(num_feats*0.8),:]
+##    feats_test= feats[round(num_feats*0.8):,:]
+##    labels_train = labels[:round(num_feats*0.8)]
+##    labels_test = labels[round(num_feats*0.8):]
+#    # 建立SVM模型
+#    params = {'kernel':'rbf','probability':True, 'class_weight':'balanced'} # 类别0明显比其他类别数目多，但加了'class_weight':'balanced'平均各类权重准确率反而更低了
+#    classifier_cur = SVC(**params)
+#    classifier_cur.fit(feats,labels) # 训练SVM分类器
+#    
+#    accuracy = cross_validation.cross_val_score(classifier_cur, feats, labels, \
+#                                                scoring='accuracy',cv=5) # cv=5指五折交叉验证
+#    f1 = cross_validation.cross_val_score(classifier_cur, feats, labels, \
+#                                          scoring='f1', cv=5)
+#    precision = cross_validation.cross_val_score(classifier_cur,feats,labels, \
+#                                          scoring='precision', cv=5)
+#    recall = cross_validation.cross_val_score(classifier_cur, feats, labels, \
+#                                          scoring='recall', cv=5)
+#
+#    ave_accuracy.append(accuracy.mean())
+#    ave_f1.append(f1.mean())
+#    ave_precision.append(precision.mean())
+#    ave_recall.append(recall.mean())
+#    
+#    if max_accuracy < accuracy.mean(): 
+#        # 选取准确率最高的分类器做之后的分类工作
+#        classifier = classifier_cur
+#        max_accuracy = accuracy.mean() # arrayA.mean()指数。组arrayA中所有元素的平均值
+#        
+#    # 评分估计的平均得分和95%置信区间
+#    print('Accuracy: %0.4f (± %0.4f)' % (accuracy.mean(),accuracy.std()**2))
+#    print('F1: %0.4f (± %0.4f)' % (f1.mean(),f1.std()**2))
+#    print('Precision: %0.4f (± %0.4f)' % (precision.mean(),precision.std()**2))
+#    print('Recall: %0.4f (± %0.4f)' % (recall.mean(),recall.std()**2))
+#
+#    print('\n')
+#        
+#ave_accuracy = np.array(ave_accuracy)
+#ave_f1 = np.array(ave_f1)
+#ave_precision = np.array(ave_precision)
+#ave_recall = np.array(ave_recall)
+#
+#print ('\nAverage Accuracy: %0.4f (± %0.4f)' % (ave_accuracy.mean(),ave_accuracy.std()**2))
+#print ('Average F1: %0.4f (± %0.4f)' % (ave_f1.mean(),ave_f1.std()**2))
+#print ('Average Precision: %0.4f (± %0.4f)' % (ave_precision.mean(),ave_precision.std()**2))
+#print ('Average Recall: %0.4f (± %0.4f)\n' % (ave_recall.mean(),ave_recall.std()**2))
 
 
-
+# In[]
 ## 对EEG信号带通滤波
 #fs = 512 # 【采样频率512Hz】
 #win_width = 384 # 【窗宽度】384对应750ms窗长度
