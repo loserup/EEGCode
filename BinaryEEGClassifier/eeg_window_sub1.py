@@ -37,13 +37,14 @@ Created on Fri Dec  1 21:25:28 2017
 备注：经测试，受试对象基本为右腿跨越，偶有左腿跨越
 最后有效trail有15组，共往返27次，跨越162次，共324+27*2=378个窗
 """
-
+# In[]
 import scipy.io as sio
 import numpy as np
 import scipy.signal as sis
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
+# In[]
 id_subject = 1 # 【受试者的编号】
 work_trial_1 = 6 # 往返1次的跨越次数
 work_trial_2 = 12 # 往返2次的跨越次数
@@ -70,6 +71,7 @@ eeg_data = eeg_mat_data['CutedEEG']
 
 num_trial = len(gait_data) # 获取受试者进行试验的次数
 
+# In[]
 # 绘图-测试用
 def Window_plotor_peak(num_axis, data, index_sorted, bias, stop_win_index, win_width, trial_id):
     # 绘制峰值点以及相应划窗
@@ -95,6 +97,7 @@ def Window_plotor_peak(num_axis, data, index_sorted, bias, stop_win_index, win_w
                 str(id_subject)+"\Subject"+\
                 str(id_subject)+"_Peakwin"+str(trial_id)+".eps")
 
+# In[]
 def Window_plotor_valley(num_axis, data, index_sorted, bias, win_width, trial_id):
     # 绘制谷值点以及相应划窗
     data_axis = [i for i in range(num_axis)]
@@ -116,7 +119,7 @@ def Window_plotor_valley(num_axis, data, index_sorted, bias, win_width, trial_id
                 str(id_subject)+"_Valleywin"+str(trial_id)+".eps")
     
     
-
+# In[]
 # 找步态数据中的极大值
 def find_peak_point(dataset):
     peakind = [] # 存放极大值的索引
@@ -134,6 +137,7 @@ def find_peak_point(dataset):
             continue
     return peakind
 
+# In[]
 # 找步态数据中跨越障碍极大值点前的极小值
 def find_valley_point(dataset, peakind_sorted):
     valleyind = [] # 存放极小值的索引
@@ -163,6 +167,7 @@ def find_valley_point(dataset, peakind_sorted):
             
     return valleyind_sorted
 
+# In[]
 # 对EEG信号带通滤波
 fs = 512 # 【采样频率512Hz】
 win_width = 350 # 【窗宽度】384对应750ms窗长度
@@ -177,6 +182,7 @@ def bandpass(data,upper,lower):
     
     return filtered_data 
 
+# In[]
 def stopwin(index, STOP_BIAS):
     """stopwin : 从每三段跨越的第三次跨越最大角度索引找停顿处的索引并返回.
 
@@ -191,6 +197,7 @@ def stopwin(index, STOP_BIAS):
             stop_win_index.append(index[i] + STOP_BIAS)
     return np.array(stop_win_index)
 
+# In[]
 def hstackwin(out_eeg, label):
     """hstackwin : 把四种频段的EEG低通滤波窗合成一个长窗.
 
@@ -205,7 +212,8 @@ def hstackwin(out_eeg, label):
     out_eeg_band3 = bandpass(out_eeg,upper=13,lower=30)
     output = [np.hstack((out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3)), label]
     return output
-            
+
+# In[]     
 out_count = 0 # 输出文件批数
 output = []
 peak_bias = 40 # 【设置从膝关节角度最大处的偏移值，作为划无意图窗的起点】
@@ -544,7 +552,8 @@ for i in range(num_trial):
         out_count += 1
     else:
         continue
-    
+
+# In[]
 if id_subject < 10:
     sio.savemat('E:\\EEGExoskeleton\\Data\\Subject_0'+str(id_subject)+\
                 '_Data\\Subject_0'+str(id_subject)+'_WinEEG.mat',\

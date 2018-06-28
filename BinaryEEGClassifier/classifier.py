@@ -244,7 +244,7 @@ def bandpass(data,upper,lower):
     
     return filtered_data 
 
-test_feat_all = []
+test_feat_all = [] # 记录喂给分类器的特征
 ###以下是伪在线测试
 def output(No_trail,WIN,THRED,thres,thres_inver):
     """output : 依次输出指定受试对象的伪在线命令，滤波伪在线命令，二次滤波伪在线命令
