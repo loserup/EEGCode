@@ -16,7 +16,7 @@ import scipy.io as sio
 import numpy as np
 import scipy.linalg as la # 线性代数库
 # In[2]:
-id_subject = 1 # 【受试者的编号】
+id_subject = 4 # 【受试者的编号】
 num_pair = 4 # 【从CSP投影矩阵里取得特征对数】
 
 if id_subject < 10:

@@ -101,6 +101,7 @@ def Window_plotor(num_axis, data, peak_index_sorted, p_bias, \
         for j in range(11):
             rect = patches.Rectangle((i+v_bias-j*5,data[i]),-win_width,40,linewidth=0.1,edgecolor='green',facecolor='none')
             ax.add_patch(rect)
+            
 # In[4]:
 #def Window_plotor_valley(num_axis, data, index_sorted, bias, win_width):
 #    """Window_plotor_peak : 绘制谷值点以及相应划窗
@@ -217,7 +218,7 @@ out_count = 0 # 输出文件批数
 output = []
 peak_bias = 40 # 【设置从膝关节角度最大处的偏移值，作为划无意图窗的起点，应为正值】
 valley_bias = 0 # 【设置从膝关节角度最大处的偏移值，作为划无意图窗的起点，应为负值】
-stop_bias = 450 # 【设置停顿处从膝关节角度最大处的偏移值，作为划无意图窗的起点】
+stop_bias = 350 # 【设置停顿处从膝关节角度最大处的偏移值，作为划无意图窗的起点】
 gait_win_width = fs_gait / fs * win_width # 在步态数据里将划窗可视化，应该把EEG窗的宽度转换到步态窗的宽度
 for i in range(num_trial):
     if len(gait_data[i]) and i!=1: # 受试对象3的第二次trial效果不好，故去掉
