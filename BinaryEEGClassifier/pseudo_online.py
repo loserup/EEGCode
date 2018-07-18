@@ -18,9 +18,10 @@ from sklearn.externals import joblib
 
 # In[2]:
 id_subject = 1 # 【受试者的编号】
+train_style = '_normal' # 【分类器训练类型：_gridsearch和_normal】
 
 if id_subject < 10:
-train_style = '_normal' # 【分类器训练类型：_gridsearch和_normal】
+    classifier = joblib.load("E:\\EEGExoskeleton\\Data\\Models\\Subject_0" + str(id_subject) + train_style + "_SVM.m")
     
     eeg_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0' +\
                                str(id_subject) + '_Data\\Subject_0' +\
@@ -33,6 +34,7 @@ train_style = '_normal' # 【分类器训练类型：_gridsearch和_normal】
                       str(id_subject) + '_csp.mat')['csp']
     
 else:
+    classifier = joblib.load("E:\\EEGExoskeleton\\Data\\Models\\Subject_ " + str(id_subject) + train_style + "_SVM.m")
     
     eeg_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0' +\
                                str(id_subject) + '_Data\\Subject_' +\
@@ -58,11 +60,11 @@ def bandpass(data,upper,lower):
     
     return filtered_data 
 
-
 ###以下是伪在线测试
 def output(No_trail,WIN,THRED,thres,thres_inver):
     """output : 依次输出指定受试对象的伪在线命令，滤波伪在线命令，二次滤波伪在线命令
     以及步态图像并保存图像文件.
+
     Parameters:
     -----------
     - No_trail: 指定数据来源的试验（trail）号
