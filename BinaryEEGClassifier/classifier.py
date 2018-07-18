@@ -23,9 +23,9 @@ from sklearn import grid_search
 from sklearn.metrics import classification_report
 from sklearn import svm
 from sklearn.externals import joblib
-#import warnings
+
 # In[2]:
-id_subject = 4 # 【受试者的编号】
+id_subject = 1 # 【受试者的编号】
 if id_subject < 10:
     feats_mat = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0'+\
                             str(id_subject)+'_Data\\Subject_0'+\
