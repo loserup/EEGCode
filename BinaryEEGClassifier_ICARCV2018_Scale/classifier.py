@@ -1,14 +1,21 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Jul 18 10:22:42 2018
-
-伪在线测试
+Created on Sun Jan  7 21:21:17 2018
 
 @author: Long
+
+% 说明:基于sklearn库的SVM分类器
+
+% 第五步
+
+% 输入数据最后一列为标签，0表示无意图，1表示有意图
+% 数据其余列为特征值
 """
 
-# In[1]:
+from sklearn.svm import SVC
 import scipy.io as sio
+from sklearn.utils import shuffle
+from sklearn import cross_validation
 import numpy as np
 import scipy.signal as sis
 import matplotlib.pyplot as plt
@@ -16,40 +23,85 @@ import copy
 
 from sklearn.externals import joblib
 
-# In[2]:
 id_subject = 1 # 【受试者的编号】
-train_style = '_normal' # 【分类器训练类型：_gridsearch和_normal】
 
 if id_subject < 10:
-    classifier = joblib.load("E:\\EEGExoskeleton\\Data\\Models\\Subject_0" + str(id_subject) + train_style + "_SVM.m")
-    
-    eeg_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0' +\
+    feats_mat = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0'+\
+                            str(id_subject)+'_Data\\Subject_0'+\
+                            str(id_subject)+'_features.mat')
+    eeg_mat_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0' +\
                                str(id_subject) + '_Data\\Subject_0' +\
-                               str(id_subject) + '_CutedEEG.mat')['CutedEEG']
-    gait_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0' +\
+                               str(id_subject) + '_CutedEEG.mat')
+    gait_mat_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0' +\
                                 str(id_subject) + '_Data\\Subject_0' +\
-                                str(id_subject) + '_FilteredMotion.mat')['FilteredMotion'][0]
+                                str(id_subject) + '_FilteredMotion.mat')
     csp = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0' +\
                       str(id_subject) + '_Data\\Subject_0' +\
                       str(id_subject) + '_csp.mat')['csp']
-    
 else:
-    classifier = joblib.load("E:\\EEGExoskeleton\\Data\\Models\\Subject_ " + str(id_subject) + train_style + "_SVM.m")
-    
-    eeg_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0' +\
+    feats_mat = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0'+\
+                            str(id_subject)+'_Data\\Subject_'+\
+                            str(id_subject)+'_features.mat')
+    eeg_mat_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0' +\
                                str(id_subject) + '_Data\\Subject_' +\
-                               str(id_subject) + '_CutedEEG.mat')['CutedEEG']
-    gait_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0' +\
+                               str(id_subject) + '_CutedEEG.mat')
+    gait_mat_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0' +\
                                 str(id_subject) + '_Data\\Subject_' +\
-                                str(id_subject) + '_FilteredMotion.mat')['FilteredMotion'][0]
+                                str(id_subject) + '_FilteredMotion.mat')
     csp = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0' +\
                       str(id_subject) + '_Data\\Subject_' +\
                       str(id_subject) + '_csp.mat')['csp']
 
-# In[4]:
+eeg_data = eeg_mat_data['CutedEEG']
+gait_data = gait_mat_data['FilteredMotion'][0] # 每个元素是受试者走的一次trail；每个trail记录双膝角度轨迹，依次是右膝和左膝
+feats_all = feats_mat['features']
+accuracy_sum = 0
+max_accuracy = 0
+count = 10.0 # 随机计算准确率的次数
+# 随机打乱特征顺序
+print('\n')
+for i in range(int(count)):
+    feats, labels = shuffle(feats_all[:,:-1],feats_all[:,-1],\
+                            random_state=np.random.randint(0,100))
+    # 建立SVM模型
+    params = {'kernel':'rbf','probability':True, 'class_weight':'balanced'} # 类别0明显比其他类别数目多，但加了'class_weight':'balanced'平均各类权重准确率反而更低了
+    classifier_cur = SVC(**params)
+    classifier_cur.fit(feats,labels) # 训练SVM分类器
+    
+    accuracy = cross_validation.cross_val_score(classifier_cur, feats, labels,cv=3) # cv=5指五折交叉验证
+    """
+    f1 = cross_validation.cross_val_score(classifier_cur, feats, labels, \
+                                          scoring='f1_weighted', cv=3)
+    precision = cross_validation.cross_val_score(classifier_cur,feats,labels, \
+                                          scoring='precision_weighted', cv=3)
+    recall = cross_validation.cross_val_score(classifier_cur, feats, labels, \
+                                          scoring='recall_weighted', cv=3)
+    """
+    
+    if max_accuracy < round(100*accuracy.mean(),2): 
+        # 选取准确率最高的分类器做之后的分类工作
+        classifier = classifier_cur
+        max_accuracy = round(100*accuracy.mean(),2) # arrayA.mean()指数。组arrayA中所有元素的平均值
+        
+    #accuracy_sum += accuracy
+    # 评分估计的平均得分和95%置信区间
+    print('Accuracy: %0.4f (± %0.4f)' % (accuracy.mean(),accuracy.std()**2))
+    """
+    print('F1 of the classifier: '+str(round(100*f1.mean(),2))+'%')
+    print('Precision of the classifier: '+str(round(100*precision.mean(),2))+'%')
+    print('Recall of the classifier: '+str(round(100*recall.mean(),2))+'%')
+    """
+    print('\n')
+        
+if id_subject < 10:
+    joblib.dump(classifier, "E:\\EEGExoskeleton\\Data\\Models\\Subject_0"+str(id_subject)+"_normal_SVM.m")
+else:
+    joblib.dump(classifier, "E:\\EEGExoskeleton\\Data\\Models\\Subject_"+str(id_subject)+"_normal_SVM.m")
+
+
 # 对EEG信号带通滤波
 fs = 512 # 【采样频率512Hz】
-win_width = 350 # 【窗宽度】384对应750ms窗长度
+win_width = 384 # 【窗宽度】384对应750ms窗长度
 def bandpass(data,upper,lower):
     Wn = [2 * upper / fs, 2 * lower / fs] # 截止频带0.1-1Hz or 8-30Hz
     b,a = sis.butter(4, Wn, 'bandpass')
@@ -60,11 +112,11 @@ def bandpass(data,upper,lower):
     
     return filtered_data 
 
-test_feat_all = [] # 记录喂给分类器的特征
 ###以下是伪在线测试
 def output(No_trail,WIN,THRED,thres,thres_inver):
     """output : 依次输出指定受试对象的伪在线命令，滤波伪在线命令，二次滤波伪在线命令
     以及步态图像并保存图像文件.
+
     Parameters:
     -----------
     - No_trail: 指定数据来源的试验（trail）号
@@ -87,11 +139,7 @@ def output(No_trail,WIN,THRED,thres,thres_inver):
             out_eeg_band2 = bandpass(test_eeg,upper=8,lower=13)
             out_eeg_band3 = bandpass(test_eeg,upper=13,lower=30)
             test_eeg = np.hstack((out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3))
-            Z = np.dot(csp, test_eeg)
-            varances = list(np.var(Z, axis=1))
-            test_feat = np.array([np.log(x/sum(varances)) for x in varances]) # 标准化
-            test_feat = test_feat.reshape(1,len(csp)) # classifier.predict需要和fit时相同的数据结构，所以要reshape
-            test_feat_all.append(test_feat)
+            test_feat = (np.log(np.var(np.dot(csp, test_eeg), axis=1))).reshape(1,len(csp)) # classifier.predict需要和fit时相同的数据结构，所以要reshape
             output_0.append(int(classifier.predict(test_feat)))
             
     count = 0
@@ -166,33 +214,26 @@ for i in range(len(eeg_data[0])):
             axis = [j for j in range(len(output_0))]
             plt.subplot(411)
             plt.plot(axis, output_0)
-#            plt.title(str(i) + 'th trial\'s output_'+str(THRED)+\
-#                      "_"+str(WIN)+"_"+str(thres)+"_"+str(thres_inver))
-            plt.tick_params(labelsize=13)
+            plt.title(str(i+1) + 'th trial\'s output_'+str(THRED)+\
+                      "_"+str(WIN)+"_"+str(thres)+"_"+str(thres_inver))
         
             axis = [j for j in range(len(output_1))]
             plt.subplot(412)
             plt.plot(axis, output_1)
-            plt.tick_params(labelsize=13)
-            plt.ylabel('Command',FontSize=25)
         
             axis = [j for j in range(len(output_2))]
             plt.subplot(413)
             plt.plot(axis, output_2)
-            plt.tick_params(labelsize=13)
         
             axis = [j for j in range(len(gait_data[i][0]))]
             plt.subplot(414)
             plt.plot(axis, gait_data[i][0])
-            plt.tick_params(labelsize=13)
-            plt.xlabel('Time',FontSize=22)
-            plt.ylabel('Knee Joint Angle',FontSize=15)
         
-#            plt.savefig("E:\EEGExoskeleton\Data\Images_Subject"+\
+#            plt.savefig("E:\EEGExoskeleton\EEGProcessor\Images_Subject"+\
 #                        str(id_subject)+"\Subject"+\
-#                        str(id_subject)+"_trail"+str(i)+"_"+\
+#                        str(id_subject)+"_trail"+str(i+1)+"_"+\
 #                        str(THRED)+"_"+str(WIN)+"_"+str(thres)+"_"+\
-#                        str(thres_inver)+".eps")
+#                        str(thres_inver)+".png")
     
     if id_subject == 2:
         # 如果受试对象号为2，且去除以下指定的无效试验号数
@@ -203,7 +244,7 @@ for i in range(len(eeg_data[0])):
             axis = [j for j in range(len(output_0))]
             plt.subplot(411)
             plt.plot(axis, output_0)
-            plt.title(str(i) + 'th trial\'s output_'+str(THRED)+\
+            plt.title(str(i+1) + 'th trial\'s output_'+str(THRED)+\
                       "_"+str(WIN)+"_"+str(thres)+"_"+str(thres_inver))
         
             axis = [j for j in range(len(output_1))]
@@ -218,11 +259,11 @@ for i in range(len(eeg_data[0])):
             plt.subplot(414)
             plt.plot(axis, gait_data[i][0])
         
-#            plt.savefig("E:\EEGExoskeleton\Data\Images_Subject"+\
+#            plt.savefig("E:\EEGExoskeleton\EEGProcessor\Images_Subject"+\
 #                        str(id_subject)+"\Subject"+\
-#                        str(id_subject)+"_trail"+str(i)+"_"+\
+#                        str(id_subject)+"_trail"+str(i+1)+"_"+\
 #                        str(THRED)+"_"+str(WIN)+"_"+str(thres)+"_"+\
-#                        str(thres_inver)+".eps")
+#                        str(thres_inver)+".png")
         
     if id_subject == 3:
         # 如果受试对象号为3，且去除以下指定的无效试验号数
@@ -233,7 +274,7 @@ for i in range(len(eeg_data[0])):
             axis = [j for j in range(len(output_0))]
             plt.subplot(411)
             plt.plot(axis, output_0)
-            plt.title(str(i) + 'th trial\'s output_'+str(THRED)+\
+            plt.title(str(i+1) + 'th trial\'s output_'+str(THRED)+\
                       "_"+str(WIN)+"_"+str(thres)+"_"+str(thres_inver))
         
             axis = [j for j in range(len(output_1))]
@@ -248,11 +289,11 @@ for i in range(len(eeg_data[0])):
             plt.subplot(414)
             plt.plot(axis, gait_data[i][0])
         
-#            plt.savefig("E:\EEGExoskeleton\Data\Images_Subject"+\
+#            plt.savefig("E:\EEGExoskeleton\EEGProcessor\Images_Subject"+\
 #                        str(id_subject)+"\Subject"+\
-#                        str(id_subject)+"_trail"+str(i)+"_"+\
+#                        str(id_subject)+"_trail"+str(i+1)+"_"+\
 #                        str(THRED)+"_"+str(WIN)+"_"+str(thres)+"_"+\
-#                        str(thres_inver)+".eps")
+#                        str(thres_inver)+".png")
             
     if id_subject == 4:
         # 如果受试对象号为4，且去除以下指定的无效试验号数
@@ -263,30 +304,23 @@ for i in range(len(eeg_data[0])):
             axis = [j for j in range(len(output_0))]
             plt.subplot(411)
             plt.plot(axis, output_0)
-#            plt.title(str(i) + 'th trial\'s output_'+str(THRED)+\
-#                      "_"+str(WIN)+"_"+str(thres)+"_"+str(thres_inver))
-            plt.tick_params(labelsize=13)
+            plt.title(str(i+1) + 'th trial\'s output_'+str(THRED)+\
+                      "_"+str(WIN)+"_"+str(thres)+"_"+str(thres_inver))
         
             axis = [j for j in range(len(output_1))]
             plt.subplot(412)
             plt.plot(axis, output_1)
-            plt.tick_params(labelsize=13)
-            plt.ylabel('Command',FontSize=25)
         
             axis = [j for j in range(len(output_2))]
             plt.subplot(413)
             plt.plot(axis, output_2)
-            plt.tick_params(labelsize=13)
         
             axis = [j for j in range(len(gait_data[i][0]))]
             plt.subplot(414)
             plt.plot(axis, gait_data[i][0])
-            plt.tick_params(labelsize=13)
-            plt.xlabel('Time',FontSize=22)
-            plt.ylabel('Knee Joint Angle',FontSize=15)
         
-#            plt.savefig("E:\EEGExoskeleton\Data\Images_Subject"+\
+#            plt.savefig("E:\EEGExoskeleton\EEGProcessor\Images_Subject"+\
 #                        str(id_subject)+"\Subject"+\
-#                        str(id_subject)+"_trail"+str(i)+"_"+\
+#                        str(id_subject)+"_trail"+str(i+1)+"_"+\
 #                        str(THRED)+"_"+str(WIN)+"_"+str(thres)+"_"+\
-#                        str(thres_inver)+".eps")
+#                        str(thres_inver)+".png")

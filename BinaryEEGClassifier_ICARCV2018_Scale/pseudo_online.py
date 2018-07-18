@@ -18,7 +18,7 @@ from sklearn.externals import joblib
 
 # In[2]:
 id_subject = 1 # 【受试者的编号】
-train_style = '_normal' # 【分类器训练类型：_gridsearch和_normal】
+train_style = '_normal' # 【分类器训练类型： _gridsearch 和 _normal 】
 
 if id_subject < 10:
     classifier = joblib.load("E:\\EEGExoskeleton\\Data\\Models\\Subject_0" + str(id_subject) + train_style + "_SVM.m")
@@ -290,3 +290,6 @@ for i in range(len(eeg_data[0])):
 #                        str(id_subject)+"_trail"+str(i)+"_"+\
 #                        str(THRED)+"_"+str(WIN)+"_"+str(thres)+"_"+\
 #                        str(thres_inver)+".eps")
+
+
+test_feat_all = np.array(test_feat_all).reshape(len(test_feat_all),8)
