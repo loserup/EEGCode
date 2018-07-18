@@ -70,7 +70,7 @@ while run
         data_current(1:Samples,d) = typecast(uint32(normaldata(i+d)),'int32');   %create a data struct where each channel has a seperate collum     
     end
 
-    data_current = data_current(1,:)/256;
+    data_current = data_current / 256;
     data_history = [data_history;data_current];
     count = count + 1;
     
@@ -81,7 +81,7 @@ while run
         output = [bandpass(data,0.3,3) bandpass(data,4,7) bandpass(data,8,13) bandpass(data,13,30)];
         
         % CSP提取EEG窗的特征
-        varance = var(cap*output,0,2);
+        varance = var(csp*output,0,2);
         feat = (log(varance/sum(varance)))'; 
         
         pyObj = py.onlineClassifier.OnlineClassifier(feat); % 声明onlineClassifier脚本的OnlineClassifier类，并传递feat给其实例
@@ -103,12 +103,13 @@ while run
     
     
 end
+data_history = (data_history(:,1:32))';
 
 % save('data_current.mat', 'data_current');
-% save('data_history.mat', 'data_history');
+save('data_history.mat', 'data_history');
 % save('count.mat','count');
-% save('feat.mat','feat');
-% save('out_store.mat','out_store');
+save('feat.mat','feat');
+save('out_store.mat','out_store');
 % save('time.mat','time');
 % save('count_win.mat','count_win');
 

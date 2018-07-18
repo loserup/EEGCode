@@ -86,16 +86,11 @@ def output(No_trail,WIN,THRED,thres,thres_inver):
             out_eeg_band1 = bandpass(test_eeg,upper=4,lower=7)
             out_eeg_band2 = bandpass(test_eeg,upper=8,lower=13)
             out_eeg_band3 = bandpass(test_eeg,upper=13,lower=30)
-#            test_eeg = np.hstack((out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3))
-#            Z = np.dot(csp, test_eeg)
-#            varances = list(np.var(Z, axis=1))
-#            test_feat = np.array([np.log(x/sum(varances)) for x in varances]) # 标准化
-#            test_feat = test_feat.reshape(1,len(csp)) # classifier.predict需要和fit时相同的数据结构，所以要reshape
-#            test_feat_all.append(test_feat)
-#            output_0.append(int(classifier.predict(test_feat)))
-            
             test_eeg = np.hstack((out_eeg_band0,out_eeg_band1,out_eeg_band2,out_eeg_band3))
-            test_feat = (np.log(np.var(np.dot(csp, test_eeg), axis=1))).reshape(1,len(csp)) # classifier.predict需要和fit时相同的数据结构，所以要reshape
+            Z = np.dot(csp, test_eeg)
+            varances = list(np.var(Z, axis=1))
+            test_feat = np.array([np.log(x/sum(varances)) for x in varances]) # 标准化
+            test_feat = test_feat.reshape(1,len(csp)) # classifier.predict需要和fit时相同的数据结构，所以要reshape
             test_feat_all.append(test_feat)
             output_0.append(int(classifier.predict(test_feat)))
             

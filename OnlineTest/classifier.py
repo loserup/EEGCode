@@ -71,6 +71,7 @@ print("\nHighest scoring parameter set:", classifier.best_params_)
 
 #joblib.dump(classifier, time.strftime('%Y_%m_%d_%H_%M_%S',time.localtime(time.time()))+"_SVM.m") # 按当前时间命名保存训练好的分类器
 joblib.dump(classifier, "SVM.m") # 保存训练好的分类器
+
 # In[]
 #max_accuracy = 0
 #count = 10.0 # 随机计算准确率的次数

@@ -11,11 +11,11 @@ Created on Tue Dec 12 11:07:25 2017
 % 通过CSP求区别有无意图的投影矩阵
 % 并通过CSP投影矩阵提取EEG窗方差特征
 """
-# In[1]:
+
 import scipy.io as sio
 import numpy as np
 import scipy.linalg as la # 线性代数库
-# In[2]:
+
 id_subject = 1 # 【受试者的编号】
 num_pair = 4 # 【从CSP投影矩阵里取得特征对数】
 
@@ -29,7 +29,7 @@ else:
                                     str(id_subject)+'_WinEEG.mat')
 
 input_eegwin = input_eegwin_dict['WinEEG']
-# In[3]:
+
 eegwin_0 = [] # 存放标记为-1的EEG窗
 eegwin_1 = [] # 存放标记为1的EEG窗
 for i in range(len(input_eegwin)):
@@ -40,12 +40,12 @@ for i in range(len(input_eegwin)):
         eegwin_1.append(input_eegwin[i][0])
         
 task = (eegwin_0, eegwin_1)
-# In[4]:
+
 # 获取EEG窗的标准化空间协方差矩阵
 def covarianceMatrix(A):
 	Ca = np.dot(A,np.transpose(A))/np.trace(np.dot(A,np.transpose(A)))
 	return Ca
-# In[5]:
+
 ### CSP算法
 filters = ()
 C_0 = covarianceMatrix(task[0][0])
@@ -86,27 +86,27 @@ U_0 = U_0[:,order]
 
 # 求得CSP投影矩阵W
 W = np.dot(np.transpose(U_0),P)
-# In[6]:
+
 csp = np.zeros([num_pair*2,np.shape(W)[0]]) # 提取特征的投影矩阵
 csp[0:num_pair,:] = W[0:num_pair,:] # 取投影矩阵前几行
 csp[num_pair:,:] = W[np.shape(W)[1]-num_pair:,:] # 对应取投影矩阵后几行
-# In[7]:
+
 # 利用投影矩阵提取EEG窗特征
 features = []
 for i in range(len(eegwin_0)):
     Z = np.dot(csp, eegwin_0[i])
     varances = list(np.log(np.var(Z, axis=1))) # axis=1即求每行的方差
-#    varances = [np.log(x/sum(varances)) for x in varances] # 方差标准化
+    varances = [np.log(x/sum(varances)) for x in varances] # 方差标准化
     varances.append(-1)
     features.append(varances)
 
 for i in range(len(eegwin_1)):  
     Z = np.dot(csp, eegwin_1[i])
-    varances = list(np.var(Z, axis=1))
-#    varances = [np.log(x/sum(varances)) for x in varances]
+    varances = list(np.log(np.var(Z, axis=1)))
+    varances = [np.log(x/sum(varances)) for x in varances]
     varances.append(1)
     features.append(varances)
-# In[8]:
+    
 if id_subject < 10:
     sio.savemat('E:\\EEGExoskeleton\\Data\\Subject_0'+str(id_subject)+\
                 '_Data\\Subject_0'+str(id_subject)+'_features.mat',\

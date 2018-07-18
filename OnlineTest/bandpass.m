@@ -10,7 +10,8 @@ Wn = [2*up/fs 2*low/fs];
 data_filtered = zeros(row, col);
 
 for i = 1 : row
-    data_filtered(i,:) = filter(b,a, data(i,:));
+    % data_filtered(i,:) = filter(b,a, data(i,:));
+    data_filtered(i,:) = filtfilt(b,a, data(i,:));
 end
 
 re = data_filtered;
