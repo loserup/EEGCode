@@ -12,16 +12,12 @@ Created on Sun Jan  7 21:21:17 2018
 % 数据其余列为特征值
 """
 # In[1]:
+from sklearn.svm import SVC
 import scipy.io as sio
+from sklearn.utils import shuffle
+from sklearn import cross_validation
 import numpy as np
-import scipy.signal as sis
-import matplotlib.pyplot as plt
-import copy
 
-from sklearn.cross_validation import train_test_split
-from sklearn import grid_search
-from sklearn.metrics import classification_report
-from sklearn import svm
 from sklearn.externals import joblib
 
 # In[2]:
@@ -30,61 +26,49 @@ if id_subject < 10:
     feats_mat = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0'+\
                             str(id_subject)+'_Data\\Subject_0'+\
                             str(id_subject)+'_features.mat')
-    eeg_mat_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0' +\
-                               str(id_subject) + '_Data\\Subject_0' +\
-                               str(id_subject) + '_CutedEEG.mat')
-    gait_mat_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0' +\
-                                str(id_subject) + '_Data\\Subject_0' +\
-                                str(id_subject) + '_FilteredMotion.mat')
-    csp = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0' +\
-                      str(id_subject) + '_Data\\Subject_0' +\
-                      str(id_subject) + '_csp.mat')['csp']
 else:
     feats_mat = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0'+\
                             str(id_subject)+'_Data\\Subject_'+\
                             str(id_subject)+'_features.mat')
-    eeg_mat_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0' +\
-                               str(id_subject) + '_Data\\Subject_' +\
-                               str(id_subject) + '_CutedEEG.mat')
-    gait_mat_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0' +\
-                                str(id_subject) + '_Data\\Subject_' +\
-                                str(id_subject) + '_FilteredMotion.mat')
-    csp = sio.loadmat('E:\\EEGExoskeleton\\Data\\Subject_0' +\
-                      str(id_subject) + '_Data\\Subject_' +\
-                      str(id_subject) + '_csp.mat')['csp']
 
-eeg_data = eeg_mat_data['CutedEEG']
-gait_data = gait_mat_data['FilteredMotion'][0] # 每个元素是受试者走的一次trail；每个trail记录双膝角度轨迹，依次是右膝和左膝
 feats_all = feats_mat['features']
-
-# In[]
-### 基于参数搜索的评估方法
-#param_fixed = {'kernel': 'rbf'} # 设置SVM参数
-parameter_grid = [  {'kernel': ['linear'], 'C': [10 ** x for x in range(-1, 4)]},
-                    {'kernel': ['poly'], 'degree': [2, 3]},
-                    {'kernel': ['rbf'], 'gamma': [0.01, 0.001], 'C': [10 ** x for x in range(-1, 4)]},
-                 ]
-
-X = feats_all[:,:-1]
-y = feats_all[:,-1]
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
-
-print("\n#### Searching optimal hyperparameters for precision")
-
-classifier = grid_search.GridSearchCV(svm.SVC(), 
-             parameter_grid, cv=5, scoring="accuracy")
-classifier.fit(X_train, y_train)
-#classifier.fit(X,y)
-
-print("\nScores across the parameter grid:")
-for params, avg_score, _ in classifier.grid_scores_:
-    print(params, '-->', round(avg_score, 3))
-
-print("\nHighest scoring parameter set:", classifier.best_params_)
-
-y_true, y_pred = y_test, classifier.predict(X_test)
-print("\nFull performance report:\n")
-print(classification_report(y_true, y_pred))
+accuracy_sum = 0
+max_accuracy = 0
+count = 10.0 # 随机计算准确率的次数
+# 随机打乱特征顺序
+print('\n')
+for i in range(int(count)):
+    feats, labels = shuffle(feats_all[:,:-1],feats_all[:,-1],\
+                            random_state=np.random.randint(0,100))
+    # 建立SVM模型
+    params = {'kernel':'rbf','probability':True, 'class_weight':'balanced'} # 类别0明显比其他类别数目多，但加了'class_weight':'balanced'平均各类权重准确率反而更低了
+    classifier_cur = SVC(**params)
+    classifier_cur.fit(feats,labels) # 训练SVM分类器
+    
+    accuracy = cross_validation.cross_val_score(classifier_cur, feats, labels,cv=3) # cv=5指五折交叉验证
+    """
+    f1 = cross_validation.cross_val_score(classifier_cur, feats, labels, \
+                                          scoring='f1_weighted', cv=3)
+    precision = cross_validation.cross_val_score(classifier_cur,feats,labels, \
+                                          scoring='precision_weighted', cv=3)
+    recall = cross_validation.cross_val_score(classifier_cur, feats, labels, \
+                                          scoring='recall_weighted', cv=3)
+    """
+    
+    if max_accuracy < round(100*accuracy.mean(),2): 
+        # 选取准确率最高的分类器做之后的分类工作
+        classifier = classifier_cur
+        max_accuracy = round(100*accuracy.mean(),2) # arrayA.mean()指数。组arrayA中所有元素的平均值
+        
+    #accuracy_sum += accuracy
+    # 评分估计的平均得分和95%置信区间
+    print('Accuracy: %0.4f (± %0.4f)' % (accuracy.mean(),accuracy.std()*2))
+    """
+    print('F1 of the classifier: '+str(round(100*f1.mean(),2))+'%')
+    print('Precision of the classifier: '+str(round(100*precision.mean(),2))+'%')
+    print('Recall of the classifier: '+str(round(100*recall.mean(),2))+'%')
+    """
+    print('\n')
 
 if id_subject < 10:
     joblib.dump(classifier, "Subject_0"+str(id_subject)+"_SVM.m")
