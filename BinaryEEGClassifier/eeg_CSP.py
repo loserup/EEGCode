@@ -96,14 +96,14 @@ features = []
 for i in range(len(eegwin_0)):
     Z = np.dot(csp, eegwin_0[i])
     varances = list(np.log(np.var(Z, axis=1))) # axis=1即求每行的方差
-    varances = [np.log(x/sum(varances)) for x in varances] # 方差标准化
+#    varances = [np.log(x/sum(varances)) for x in varances] # 方差标准化
     varances.append(-1)
     features.append(varances)
 
 for i in range(len(eegwin_1)):  
     Z = np.dot(csp, eegwin_1[i])
     varances = list(np.var(Z, axis=1))
-    varances = [np.log(x/sum(varances)) for x in varances]
+#    varances = [np.log(x/sum(varances)) for x in varances]
     varances.append(1)
     features.append(varances)
 # In[8]:
