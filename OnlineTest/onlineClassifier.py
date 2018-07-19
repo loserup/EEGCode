@@ -9,12 +9,13 @@ from sklearn.externals import joblib
 
 class OnlineClassifier():
     
-    def __init__(self, feat_input):
+    def __init__(self, data_history, count, win_width):
         """__init__: OnlineClassifier类的初始化
 
         Parameters:
         -----------     
-        - feat_input: MATLAB传来的特征数据
+        - data_history: MATLAB传来的历史脑电信号
+        - count: MATLAB传来的脑电信号采样数
         """        
         self.feat_input = np.mat(feat_input).reshape(1,8)
         self.classifier = joblib.load('SVM.m')

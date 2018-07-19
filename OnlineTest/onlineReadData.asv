@@ -77,7 +77,7 @@ while run
     count = count + 1;
     
     if count > win_len && mod(count,interval) == 0
-        pyObj = py.onlineClassifier.OnlineClassifier(data_history', count, win_len);
+        pyObj = py.onlineClassifier.OnlineClassifier(data_history');
         out_store = [out_store str2double(char(pyObj.outputCmd()))]
 %% 早期版本的在线滤波
 %  %         tic; % tic 搭配 toc 查询运算时间
