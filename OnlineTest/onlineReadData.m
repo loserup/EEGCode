@@ -3,6 +3,7 @@ function onlineReadData()
 close all
 clear all
 clc
+warning off
 
 % 在线实验参数设置
 % no_sub = 1; % 受试对象编号
@@ -70,7 +71,8 @@ while run
         data_current(1:Samples,d) = typecast(uint32(normaldata(i+d)),'int32');   %create a data struct where each channel has a seperate collum     
     end
 
-    data_current = data_current / 256;
+%     data_current = data_current / 256;
+    data_current = data_current; % 除与不除256，得到的特征是相同的
     data_history = [data_history;data_current];
     count = count + 1;
     

@@ -1,5 +1,6 @@
 % 将data以up和low为上下截止频率进行带通滤波
 function re = bandpass(data,up,low)
+warning off
 
 fs = 512; % EEG采集频率
 row = size(data,1); % EEG数据通道数

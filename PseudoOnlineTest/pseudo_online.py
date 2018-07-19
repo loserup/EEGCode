@@ -20,7 +20,7 @@ from sklearn.externals import joblib
 
 
 
-classifier = joblib.load("SVM.m")
+classifier = joblib.load("E:\\EEGExoskeleton\\Data\\TestData\\SVM_2.m")
 #eeg_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\TestData\\rawEEG_1.mat')['rawEEG']
 eeg_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\TestData\\data_history_2.mat')['data_history']
 csp = sio.loadmat('csp.mat')['csp']
@@ -30,7 +30,7 @@ csp = sio.loadmat('csp.mat')['csp']
 # In[4]:
 # 对EEG信号带通滤波
 fs = 512 # 【采样频率512Hz】
-win_width = 350 # 【窗宽度】384对应750ms窗长度
+win_width = 384 # 【窗宽度】384对应750ms窗长度
 def bandpass(data,upper,lower):
     Wn = [2 * upper / fs, 2 * lower / fs] # 截止频带0.1-1Hz or 8-30Hz
     b,a = sis.butter(4, Wn, 'bandpass')
