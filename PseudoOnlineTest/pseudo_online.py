@@ -20,9 +20,9 @@ from sklearn.externals import joblib
 
 
 
-classifier = joblib.load("E:\\EEGExoskeleton\\Data\\TestData\\SVM_2.m")
+classifier = joblib.load("E:\\EEGExoskeleton\\Data\\TestData\\SVM_3.m")
 #eeg_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\TestData\\rawEEG_1.mat')['rawEEG']
-eeg_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\TestData\\data_history_2.mat')['data_history']
+eeg_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\TestData\\data_history_3.mat')['data_history']
 csp = sio.loadmat('csp.mat')['csp']
     
 
@@ -59,7 +59,7 @@ def output(WIN,THRED,thres,thres_inver):
     for i in range(len(eeg_data[0])):
         if i < win_width: # 初始阶段没有完整的750ms窗，384对应750ms窗长度
             continue 
-        elif i % 26 != 0: # 每隔50ms取一次窗
+        elif i % 28 != 0: # 每隔50ms取一次窗
             continue
         else:
             test_eeg = eeg_data[:,(i-win_width):i]

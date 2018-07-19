@@ -11,7 +11,7 @@ win_len = 384; % 窗长，单位：采样点
 % csp_filename = ['E:\EEGExoskeleton\EEGProcessor\Subject_0' num2str(no_sub) '_Data\Subject_0' num2str(no_sub) '_csp.mat'];
 csp = load('csp.mat');
 csp = csp.csp; % 获取指定受试对象的CSP投影矩阵
-interval = 26; % 窗分类间隔：每采样26个点后进行一次取窗分类 % 384点为750ms，26个点为50ms
+interval = 28; % 窗分类间隔：每采样26个点后进行一次取窗分类 % 384点为750ms，26个点为50ms
 back = 20; % 回溯点数
 thre = 18; % 命令决策阈值 % 在回溯点数中有意图窗个数超过该阈值则输出有意图命令
 
@@ -74,7 +74,7 @@ while run
 %     data_current = data_current / 256;
     data_current = data_current; % 除与不除256，得到的特征是相同的
     data_history = [data_history;data_current];
-    count = count + 1;
+    count = count + 4; % EEG 512Hz的采样频率的话每次循环会读入4个点
     
     if count > win_len && mod(count,interval) == 0
 %         tic; % tic 搭配 toc 查询运算时间
@@ -110,7 +110,7 @@ data_history = (data_history(:,1:32))';
 % save('data_current.mat', 'data_current');
 save('data_history.mat', 'data_history');
 % save('count.mat','count');
-save('feat.mat','feat');
+% save('feat.mat','feat');
 save('out_store.mat','out_store');
 % save('time.mat','time');
 % save('count_win.mat','count_win');
