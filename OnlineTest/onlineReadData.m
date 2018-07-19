@@ -9,8 +9,8 @@ warning off
 % no_sub = 1; % 受试对象编号
 win_len = 384; % 窗长，单位：采样点
 % csp_filename = ['E:\EEGExoskeleton\EEGProcessor\Subject_0' num2str(no_sub) '_Data\Subject_0' num2str(no_sub) '_csp.mat'];
-% csp = load('csp.mat');
-% csp = csp.csp; % 获取指定受试对象的CSP投影矩阵
+csp = load('csp.mat');
+csp = csp.csp; % 获取指定受试对象的CSP投影矩阵
 interval = 26; % 窗分类间隔：每采样26个点后进行一次取窗分类 % 384点为750ms，26个点为50ms
 back = 20; % 回溯点数
 thre = 18; % 命令决策阈值 % 在回溯点数中有意图窗个数超过该阈值则输出有意图命令
@@ -77,22 +77,19 @@ while run
     count = count + 1;
     
     if count > win_len && mod(count,interval) == 0
-        pyObj = py.onlineClassifier.OnlineClassifier(data_history', count, win_len);
-        out_store = [out_store str2double(char(pyObj.outputCmd()))]
-%% 早期版本的在线滤波
-%  %         tic; % tic 搭配 toc 查询运算时间
-%         data = data_history';
-%         data = data(:,count-win_len+1:count);
-%         output = [bandpass(data,0.3,3) bandpass(data,4,7) bandpass(data,8,13) bandpass(data,13,30)];
-%         
-%         % CSP提取EEG窗的特征
-%         varance = var(csp*output,0,2);
-%         feat = (log(varance/sum(varance)))'; 
-%         
-%         pyObj = py.onlineClassifier.OnlineClassifier(feat); % 声明onlineClassifier脚本的OnlineClassifier类，并传递feat给其实例
-%         out_store = [out_store str2double(char(pyObj.outputCmd()))] % Python原始输入数据带属性，先转string再转数字去掉属性
-%         out_length = length(out_store);
- %%       
+%         tic; % tic 搭配 toc 查询运算时间
+        data = data_history';
+        data = data(:,count-win_len+1:count);
+        output = [bandpass(data,0.3,3) bandpass(data,4,7) bandpass(data,8,13) bandpass(data,13,30)];
+        
+        % CSP提取EEG窗的特征
+        varance = var(csp*output,0,2);
+        feat = (log(varance/sum(varance)))'; 
+        
+        pyObj = py.onlineClassifier.OnlineClassifier(feat); % 声明onlineClassifier脚本的OnlineClassifier类，并传递feat给其实例
+        out_store = [out_store str2double(char(pyObj.outputCmd()))] % Python原始输入数据带属性，先转string再转数字去掉属性
+        out_length = length(out_store);
+        
         % 回溯20个窗标签，有意图窗超过thre个则输出有意图指令
 %         if out_length > 20
 %             back_win = out_store(:,out_length-back+1:out_length);
