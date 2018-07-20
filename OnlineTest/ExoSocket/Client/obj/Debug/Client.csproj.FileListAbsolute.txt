@@ -1,0 +1,14 @@
+C:\Users\Long\Desktop\ExoSocket\ExoSocket\Client\obj\Debug\MainWindow.g.cs
+C:\Users\Long\Desktop\ExoSocket\ExoSocket\Client\obj\Debug\App.g.cs
+C:\Users\Long\Desktop\ExoSocket\ExoSocket\Client\obj\Debug\Client_MarkupCompile.cache
+C:\Users\Long\Desktop\ExoSocket\ExoSocket\Client\obj\Debug\Client_MarkupCompile.lref
+C:\Users\Long\Desktop\ExoSocket\ExoSocket\Client\bin\Debug\Client.exe.config
+C:\Users\Long\Desktop\ExoSocket\ExoSocket\Client\bin\Debug\Client.exe
+C:\Users\Long\Desktop\ExoSocket\ExoSocket\Client\bin\Debug\Client.pdb
+C:\Users\Long\Desktop\ExoSocket\ExoSocket\Client\obj\Debug\MainWindow.baml
+C:\Users\Long\Desktop\ExoSocket\ExoSocket\Client\obj\Debug\Client.g.resources
+C:\Users\Long\Desktop\ExoSocket\ExoSocket\Client\obj\Debug\Client.Properties.Resources.resources
+C:\Users\Long\Desktop\ExoSocket\ExoSocket\Client\obj\Debug\Client.csproj.GenerateResource.Cache
+C:\Users\Long\Desktop\ExoSocket\ExoSocket\Client\obj\Debug\Client.exe
+C:\Users\Long\Desktop\ExoSocket\ExoSocket\Client\obj\Debug\Client.pdb
+C:\Users\Long\Desktop\ExoSocket\ExoSocket\Client\obj\Debug\Client.csprojResolveAssemblyReference.cache
