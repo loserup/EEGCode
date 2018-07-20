@@ -39,12 +39,12 @@ tcpipClient = tcpip(ipadress, port, 'NetworkRole', 'client');
 set(tcpipClient,'InputBufferSize',words*9); % input buffersize is 3 times the tcp block size % 1 word = 3 bytes
 set(tcpipClient,'Timeout',5);
 % open tcp connection % 与外骨骼上位机的通信Socket
-tcpipClient2 = tcpip('172.20.10.132', port2, 'NetworkRole', 'client');
-set(tcpipClient2,'InputBufferSize',words*9); % input buffersize is 3 times the tcp block size % 1 word = 3 bytes
-set(tcpipClient2,'Timeout',5);
+% tcpipClient2 = tcpip('172.20.10.132', port2, 'NetworkRole', 'client');
+% set(tcpipClient2,'InputBufferSize',words*9); % input buffersize is 3 times the tcp block size % 1 word = 3 bytes
+% set(tcpipClient2,'Timeout',5);
 try
     fopen(tcpipClient);
-    fopen(tcpipClient2);
+%     fopen(tcpipClient2);
 catch
     disp('Actiview is unreachable please check if Actiview is running on the specified ip address and port number');
     run = false;
@@ -91,14 +91,14 @@ while run
         out_length = length(out_store);
         
         % 回溯20个窗标签，有意图窗超过thre个则输出有意图指令
-        if out_length > 20
-            back_win = out_store(:,out_length-back+1:out_length);
-            if sum(back_win(:)==1) > thre
-                fwrite(tcpipClient2,'1');
-            else
-                fwrite(tcpipClient2,'-1');
-            end
-        end        
+%         if out_length > 20
+%             back_win = out_store(:,out_length-back+1:out_length);
+%             if sum(back_win(:)==1) > thre
+%                 fwrite(tcpipClient2,'1');
+%             else
+%                 fwrite(tcpipClient2,'-1');
+%             end
+%         end        
         
 %        time = [time toc];
     end
@@ -119,7 +119,7 @@ save('out_store.mat','out_store');
 %关闭tcpip
 fclose(tcpipClient);
 delete(tcpipClient);
-fclose(tcpipClient2);
-delete(tcpipClient2);
+% fclose(tcpipClient2);
+% delete(tcpipClient2);
 
 end

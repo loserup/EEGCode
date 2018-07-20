@@ -12,8 +12,7 @@
 
 在线测试
 1、运行ActiView703-Lores.exe
-2、启动ExoSocket\Server\bin\Debug下的Server.exe，点击【启动服务器】按钮
-3、运行onlineReadData.m
+2、运行onlineReadData.m
 
 
 修改Log：
