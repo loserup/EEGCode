@@ -73,37 +73,16 @@ while run
     if count > win_len && mod(count,interval) == 0
         data = data_history';
         data = data(:,count-win_len+1:count);
-        output = [bandpass(data,0.3,3) bandpass(data,4,7) bandpass(data,8,13) bandpass(data,13,30)];
-        
-        % CSP提取EEG窗的特征
-        varance = var(csp*output,0,2);
-        feat = (log(varance/sum(varance)))'; 
-        
-        pyObj = py.onlineClassifier.OnlineClassifier(feat); % 声明onlineClassifier脚本的OnlineClassifier类，并传递feat给其实例
+        save('data.mat', 'data');
+        pyObj = py.onlineClassifier.OnlineClassifier(); 
+
         out_store = [out_store str2double(char(pyObj.outputCmd()))]; % Python原始输入数据带属性，先转string再转数字去掉属性
         out_length = length(out_store);
         
         if out_length > 20
             output_cmd = onlinefilters(out_store) % 对out_store进行二次滤波
-        end
-        
-%         pyFilters = py.outputfilter.OutputFilter(out_store, out_length, BACK, THRED, thres, thres_inver);
-%         if length(out_store) > BACK
-%             output = str2double(char(pyFilters.filters()))
-%         end
-        % 回溯20个窗标签，有意图窗超过thre个则输出有意图指令
-%         if out_length > 20
-%             back_win = out_store(:,out_length-back+1:out_length);
-%             if sum(back_win(:)==1) > thre
-%                 fwrite(tcpipClient2,'1');
-%             else
-%                 fwrite(tcpipClient2,'-1');
-%             end
-%         end        
-        
+        end        
     end
-    
-    
 end
 
 
