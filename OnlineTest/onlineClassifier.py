@@ -38,7 +38,7 @@ class OnlineClassifier():
         test_feat = np.array([np.log(x/sum(varances)) for x in varances]) # 标准化
         test_feat = test_feat.reshape(1,len(self.csp)) # classifier.predict需要和fit时相同的数据结构，所以要reshape
         
-        return int(self.classifier.predict(self.test_feat))
+        return int(self.classifier.predict(test_feat))
     
     def bandpass(self, data,upper,lower):
         Wn = [2 * upper / self.fs, 2 * lower / self.fs] # 截止频带0.1-1Hz or 8-30Hz

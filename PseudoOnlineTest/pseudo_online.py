@@ -23,7 +23,7 @@ from sklearn.externals import joblib
 classifier = joblib.load("E:\\EEGExoskeleton\\Data\\TestData\\SVM_3.m")
 #eeg_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\TestData\\rawEEG_1.mat')['rawEEG']
 eeg_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\TestData\\data_history_3.mat')['data_history']
-csp = sio.loadmat('csp.mat')['csp']
+csp = sio.loadmat('E:\\EEGExoskeleton\\Data\\TestData\\csp.mat')['csp']
     
 
 
