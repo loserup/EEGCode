@@ -68,29 +68,24 @@ while run
 
     data_current = data_current; % 除与不除256，得到的特征是相同的
     data_history = [data_history;data_current];
-    
-    data_history = (data_history(:,1:32))';
-    save('data_history.mat', 'data_history');
     count = count + 4; % EEG 512Hz的采样频率的话每次循环会读入4个点
     
-    pyObj = py.onlineClassifier.OnlineClassifier();
-    
-%     if count > win_len && mod(count,interval) == 0
-%         data = data_history';
-%         data = data(:,count-win_len+1:count);
-%         output = [bandpass(data,0.3,3) bandpass(data,4,7) bandpass(data,8,13) bandpass(data,13,30)];
-%         
-%         % CSP提取EEG窗的特征
-%         varance = var(csp*output,0,2);
-%         feat = (log(varance/sum(varance)))'; 
-%         
-%         pyObj = py.onlineClassifier.OnlineClassifier(feat); % 声明onlineClassifier脚本的OnlineClassifier类，并传递feat给其实例
-%         out_store = [out_store str2double(char(pyObj.outputCmd()))]; % Python原始输入数据带属性，先转string再转数字去掉属性
-%         out_length = length(out_store);
-%         
-%         if out_length > 20
-%             output_cmd = onlinefilters(out_store) % 对out_store进行二次滤波
-%         end
+    if count > win_len && mod(count,interval) == 0
+        data = data_history';
+        data = data(:,count-win_len+1:count);
+        output = [bandpass(data,0.3,3) bandpass(data,4,7) bandpass(data,8,13) bandpass(data,13,30)];
+        
+        % CSP提取EEG窗的特征
+        varance = var(csp*output,0,2);
+        feat = (log(varance/sum(varance)))'; 
+        
+        pyObj = py.onlineClassifier.OnlineClassifier(feat); % 声明onlineClassifier脚本的OnlineClassifier类，并传递feat给其实例
+        out_store = [out_store str2double(char(pyObj.outputCmd()))]; % Python原始输入数据带属性，先转string再转数字去掉属性
+        out_length = length(out_store);
+        
+        if out_length > 20
+            output_cmd = onlinefilters(out_store) % 对out_store进行二次滤波
+        end
         
 %         pyFilters = py.outputfilter.OutputFilter(out_store, out_length, BACK, THRED, thres, thres_inver);
 %         if length(out_store) > BACK
@@ -112,12 +107,14 @@ while run
 end
 
 
+data_history = (data_history(:,1:32))';
+
 % save('data_current.mat', 'data_current');
-% save('data_history.mat', 'data_history');
-% save('output_cmd.mat', 'output_cmd');
+save('data_history.mat', 'data_history');
+save('output_cmd.mat', 'output_cmd');
 % save('count.mat','count');
 % save('feat.mat','feat');
-% save('out_store.mat','out_store');
+save('out_store.mat','out_store');
 % save('time.mat','time');
 % save('count_win.mat','count_win');
 
