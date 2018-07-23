@@ -20,7 +20,7 @@ import scipy.signal as sis
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
-work_trial = 6 # 【设置有效的极值点数】即跨越时的极值点
+work_trial = 12 # 【设置有效的极值点数】即跨越时的极值点
 
 
 gait_data = sio.loadmat('FilteredMotion.mat')['FilteredMotion'][0]

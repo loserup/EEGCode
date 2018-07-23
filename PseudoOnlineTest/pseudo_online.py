@@ -20,9 +20,14 @@ from sklearn.externals import joblib
 
 
 
-classifier = joblib.load("E:\\EEGExoskeleton\\Data\\TestData\\SVM_3.m")
+classifier = joblib.load("E:\\EEGExoskeleton\\Data\\TestData\\SVM.m")
+
 #eeg_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\TestData\\rawEEG_1.mat')['rawEEG']
-eeg_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\TestData\\data_history_3.mat')['data_history']
+#eeg_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\TestData\\data_history_3.mat')['data_history']
+eeg_data = sio.loadmat('E:\\EEGExoskeleton\\Data\\TestData\\CutedEEG.mat')['CutedEEG'][0][0]
+
+gait = sio.loadmat('E:\\EEGExoskeleton\\Data\\TestData\\FilteredMotion.mat')['FilteredMotion'][0][0][0]
+
 csp = sio.loadmat('E:\\EEGExoskeleton\\Data\\TestData\\csp.mat')['csp']
     
 
@@ -142,16 +147,34 @@ output_0,output_1,output_2 = output(WIN,THRED,thres,thres_inver)
 test_feat_all = np.array(test_feat_all).reshape(len(test_feat_all),len(csp)) 
 
 
+# In[无步态参考]
+#plt.figure(figsize=[15,8]) 
+#axis = [j for j in range(len(output_0))]
+#plt.subplot(311)
+#plt.plot(axis, output_0)
+#
+#axis = [j for j in range(len(output_1))]
+#plt.subplot(312)
+#plt.plot(axis, output_1)
+#
+#axis = [j for j in range(len(output_2))]
+#plt.subplot(313)
+#plt.plot(axis, output_2)
 
+# In[有步态参考]
 plt.figure(figsize=[15,8]) 
 axis = [j for j in range(len(output_0))]
-plt.subplot(311)
+plt.subplot(411)
 plt.plot(axis, output_0)
 
 axis = [j for j in range(len(output_1))]
-plt.subplot(312)
+plt.subplot(412)
 plt.plot(axis, output_1)
 
 axis = [j for j in range(len(output_2))]
-plt.subplot(313)
+plt.subplot(413)
 plt.plot(axis, output_2)
+
+axis = [j for j in range(len(gait))]
+plt.subplot(414)
+plt.plot(axis, gait)

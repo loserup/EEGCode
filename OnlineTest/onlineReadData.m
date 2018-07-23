@@ -35,18 +35,25 @@ tcpipClient = tcpip(ipadress, port, 'NetworkRole', 'client');
 set(tcpipClient,'InputBufferSize',words*9); % input buffersize is 3 times the tcp block size % 1 word = 3 bytes
 set(tcpipClient,'Timeout',5);
 % open tcp connection % 与外骨骼上位机的通信Socket
-tcpipClient2 = tcpip('172.20.15.186', port2, 'NetworkRole', 'client');
-set(tcpipClient2,'InputBufferSize',words*9); % input buffersize is 3 times the tcp block size % 1 word = 3 bytes
-set(tcpipClient2,'Timeout',5);
+% tcpipClient2 = tcpip('172.20.15.186', port2, 'NetworkRole', 'client');
+% set(tcpipClient2,'InputBufferSize',words*9); % input buffersize is 3 times the tcp block size % 1 word = 3 bytes
+% set(tcpipClient2,'Timeout',5);
+
 try
     fopen(tcpipClient);
-    fopen(tcpipClient2);
+%     fopen(tcpipClient2);
 catch
     disp('Actiview is unreachable please check if Actiview is running on the specified ip address and port number');
     run = false;
 end
 
 while run
+    
+    tcpipClient2 = tcpip('172.20.15.186', port2, 'NetworkRole', 'client');
+    set(tcpipClient2,'InputBufferSize',words*9); % input buffersize is 3 times the tcp block size % 1 word = 3 bytes
+    set(tcpipClient2,'Timeout',5);
+    
+    fopen(tcpipClient2);
     
     % 读取每次tcpip传送的数值
     [rawData,temp,msg] = fread(tcpipClient,[3 words],'uint8');
@@ -77,31 +84,38 @@ while run
         save('data.mat', 'data');
         pyObj = py.onlineClassifier.OnlineClassifier(); 
 
-        out_store = [out_store str2double(char(pyObj.outputCmd()))]; % Python原始输入数据带属性，先转string再转数字去掉属性
+        out_store = [out_store str2double(char(pyObj.outputCmd()))] % Python原始输入数据带属性，先转string再转数字去掉属性
         out_length = length(out_store);
         
-        if out_length > 40
-            output_cmd = onlinefilters(out_store) % 对out_store进行二次滤波
-            
-            if length(find(output_cmd(end-19:end) == 1)) == 20
-                % 当输出命令最后20个全是1时给外骨骼传1命令
-                fwrite(tcpipClient2,'1');
-            else
-                fwrite(tcpipClient2,'-1');
-            end
-            
+        if out_store(end) == 1
+            fwrite(tcpipClient2,'1');
+        else
+            fwrite(tcpipClient2,'-1');
         end
         
-        
+%         if out_length > 40
+%             output_cmd = onlinefilters(out_store) % 对out_store进行二次滤波
+%            
+%             if length(find(output_cmd(end) == 1)) == 1
+%                 % 当输出命令最后20个全是1时给外骨骼传1命令
+%                 fwrite(tcpipClient2,'1');
+%             else
+%                 fwrite(tcpipClient2,'-1');
+%             end 
+%         end
         
     end
+    
+    fclose(tcpipClient2);
+    delete(tcpipClient2);
+    
 end
 
 
-data_history = (data_history(:,1:32))';
+% data_history = (data_history(:,1:32))';
 
 % save('data_current.mat', 'data_current');
-save('data_history.mat', 'data_history');
+% save('data_history.mat', 'data_history');
 save('output_cmd.mat', 'output_cmd');
 % save('count.mat','count');
 % save('feat.mat','feat');
