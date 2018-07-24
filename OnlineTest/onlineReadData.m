@@ -6,14 +6,14 @@ clc
 warning off
 
 % 在线实验参数设置
-win_len = 384; % 窗长，单位：采样点
+win_len = 384; % 窗长，单位：采样点;【必须是4的整数】
 csp = load('csp.mat');
 csp = csp.csp; % 获取指定受试对象的CSP投影矩阵
 interval = 28; % 窗分类间隔：每采样26个点后进行一次取窗分类 % 384点为750ms，26个点为50ms
 
 % 输出数据初始化
 global run; run = true; % 是否进行循环
-data_history = []; % 保留EEG历史信息，时间越长，数据量越大，以后需要添加清空远古历史的功能
+data = []; % 存放实时EEG
 count = 0; % 采样点的计数器
 out_store = []; % 记录输出指令
 output_cmd = []; % 二次滤波的输出指令
@@ -30,29 +30,15 @@ Samples = 4;               % set to the same value as in Actiview "TCP samples/c
 words = Channels*Samples;
 data_current = zeros(Samples, Channels); % 本次采样获取的EEG数据
 
-% open tcp connection % 与脑电采集服务器的通信Socket
-tcpipClient = tcpip(ipadress, port, 'NetworkRole', 'client');
-set(tcpipClient,'InputBufferSize',words*9); % input buffersize is 3 times the tcp block size % 1 word = 3 bytes
-set(tcpipClient,'Timeout',5);
-% open tcp connection % 与外骨骼上位机的通信Socket
-% tcpipClient2 = tcpip('172.20.15.186', port2, 'NetworkRole', 'client');
-% set(tcpipClient2,'InputBufferSize',words*9); % input buffersize is 3 times the tcp block size % 1 word = 3 bytes
-% set(tcpipClient2,'Timeout',5);
-
-try
-    fopen(tcpipClient);
-%     fopen(tcpipClient2);
-catch
-    disp('Actiview is unreachable please check if Actiview is running on the specified ip address and port number');
-    run = false;
-end
-
 while run
+    tcpipClient = tcpip(ipadress, port, 'NetworkRole', 'client');
+    set(tcpipClient,'InputBufferSize',words*9); % input buffersize is 3 times the tcp block size % 1 word = 3 bytes
+    set(tcpipClient,'Timeout',5);
+    fopen(tcpipClient);
     
     tcpipClient2 = tcpip('172.20.15.186', port2, 'NetworkRole', 'client');
     set(tcpipClient2,'InputBufferSize',words*9); % input buffersize is 3 times the tcp block size % 1 word = 3 bytes
-    set(tcpipClient2,'Timeout',5);
-    
+    set(tcpipClient2,'Timeout',5); 
     fopen(tcpipClient2);
     
     % 读取每次tcpip传送的数值
@@ -74,55 +60,54 @@ while run
         data_current(1:Samples,d) = typecast(uint32(normaldata(i+d)),'int32');   %create a data struct where each channel has a seperate collum     
     end
 
-    data_current = data_current; % 除与不除256，得到的特征是相同的
-    data_history = [data_history;data_current];
-    count = count + 4; % EEG 512Hz的采样频率的话每次循环会读入4个点
+    data_current_t = data_current'; % 除与不除256，得到的特征是相同的
     
-    if count > win_len && mod(count,interval) == 0
-        data = data_history';
-        data = data(:,count-win_len+1:count);
+    if length(data) ~= win_len
+        % 刚开始录入数据
+        data = [data data_current_t];
+    else
+        % 录入数据已达到设定窗长
+        % 将实时EEG窗做成FIFO队列使得该窗长永远为win_len
+        % 将前4列数据pop掉，在最后加入新的4列数据
+        data = cat(2, data(:,5:end), data_current_t); 
+        
         save('data.mat', 'data');
         pyObj = py.onlineClassifier.OnlineClassifier(); 
-
-        out_store = [out_store str2double(char(pyObj.outputCmd()))] % Python原始输入数据带属性，先转string再转数字去掉属性
-        out_length = length(out_store);
         
-        if out_store(end) == 1
-            fwrite(tcpipClient2,'1');
+        if length(out_store) ~= 60
+            % 输出命令序列未达到设置要求
+            out_store = [out_store str2double(char(pyObj.outputCmd()))];
         else
-            fwrite(tcpipClient2,'-1');
+            out_store = cat(2, out_store(2:end), str2double(char(pyObj.outputCmd())));
+            
+            output_cmd = onlinefilters(out_store) % 对out_store进行二次滤波
+            
+            if length(find(output_cmd(end) == 1)) == 1
+                %当输出命令最后20个全是1时给外骨骼传1命令
+                fwrite(tcpipClient2,'1');
+            else
+                fwrite(tcpipClient2,'-1');
+            end
+
         end
-        
-%         if out_length > 40
-%             output_cmd = onlinefilters(out_store) % 对out_store进行二次滤波
-%            
-%             if length(find(output_cmd(end) == 1)) == 1
-%                 % 当输出命令最后20个全是1时给外骨骼传1命令
-%                 fwrite(tcpipClient2,'1');
-%             else
-%                 fwrite(tcpipClient2,'-1');
-%             end 
-%         end
-        
     end
-    
+        
+
+    fclose(tcpipClient);
+    delete(tcpipClient);
     fclose(tcpipClient2);
     delete(tcpipClient2);
     
 end
 
-
-% data_history = (data_history(:,1:32))';
-
-% save('data_current.mat', 'data_current');
-% save('data_history.mat', 'data_history');
-save('output_cmd.mat', 'output_cmd');
+% save('data_current_t.mat', 'data_current_t');
+% save('data.mat', 'data');
+% save('output_cmd.mat', 'output_cmd');
 % save('count.mat','count');
 % save('feat.mat','feat');
-save('out_store.mat','out_store');
+% save('out_store.mat','out_store');
 % save('time.mat','time');
 % save('count_win.mat','count_win');
-
 
 %关闭tcpip
 fclose(tcpipClient);
