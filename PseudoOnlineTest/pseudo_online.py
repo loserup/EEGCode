@@ -146,7 +146,6 @@ output_0,output_1,output_2 = output(WIN,THRED,thres,thres_inver)
 
 test_feat_all = np.array(test_feat_all).reshape(len(test_feat_all),len(csp)) 
 
-
 # In[无步态参考]
 #plt.figure(figsize=[15,8]) 
 #axis = [j for j in range(len(output_0))]
@@ -178,3 +177,5 @@ plt.plot(axis, output_2)
 axis = [j for j in range(len(gait))]
 plt.subplot(414)
 plt.plot(axis, gait)
+
+#sio.savemat('output_2.mat', {'output_2' : output_2})
