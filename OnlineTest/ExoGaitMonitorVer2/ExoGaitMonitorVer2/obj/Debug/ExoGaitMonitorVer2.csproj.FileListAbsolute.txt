@@ -1,0 +1,277 @@
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe.config
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.pdb
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\CMO.dll
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\DynamicDataDisplay.dll
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.g.cs
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\App.g.cs
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_Content.g.cs
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.cache
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.lref
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\App.baml
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.baml
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.g.resources
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.Properties.Resources.resources
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csproj.GenerateResource.Cache
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.exe
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.pdb
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor3\ExoGaitMonitorVer4\ExoGaitMonitorVer5\bin\Debug\ExoGaitMonitorVer2.exe.config
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor3\ExoGaitMonitorVer4\ExoGaitMonitorVer5\obj\Debug\ExoGaitMonitorVer2.exe
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor3\ExoGaitMonitorVer4\ExoGaitMonitorVer5\obj\Debug\ExoGaitMonitorVer2.pdb
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor3\ExoGaitMonitorVer4\ExoGaitMonitorVer5\obj\Debug\ExoGaitMonitorVer2.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor3\ExoGaitMonitorVer4\ExoGaitMonitorVer5\obj\Debug\MainWindow.g.cs
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor3\ExoGaitMonitorVer4\ExoGaitMonitorVer5\obj\Debug\App.g.cs
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor3\ExoGaitMonitorVer4\ExoGaitMonitorVer5\obj\Debug\ExoGaitMonitorVer2_Content.g.cs
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor3\ExoGaitMonitorVer4\ExoGaitMonitorVer5\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor3\ExoGaitMonitorVer4\ExoGaitMonitorVer5\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.cache
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor3\ExoGaitMonitorVer4\ExoGaitMonitorVer5\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.lref
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor2\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe.config
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor2\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.exe
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor2\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.pdb
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor2\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor2\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.g.cs
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor2\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\App.g.cs
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor2\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_Content.g.cs
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor2\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor2\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.cache
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor2\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.lref
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor2\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor2\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.pdb
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor2\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\CMO.dll
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor2\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\DynamicDataDisplay.dll
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor2\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\App.baml
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor2\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.baml
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor2\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.g.resources
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor2\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.Properties.Resources.resources
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor2\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csproj.GenerateResource.Cache
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180316\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe.config
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180316\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.exe
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180316\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.pdb
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180316\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180316\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.pdb
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180316\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\CMO.dll
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180316\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\DynamicDataDisplay.dll
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180316\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.g.cs
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180316\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\App.g.cs
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180316\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_Content.g.cs
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180316\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180316\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.cache
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180316\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.lref
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180316\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\App.baml
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180316\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.baml
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180316\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.g.resources
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180316\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.Properties.Resources.resources
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180316\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csproj.GenerateResource.Cache
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180316\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe.config
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.exe
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.pdb
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.pdb
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\CMO.dll
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\DynamicDataDisplay.dll
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.g.cs
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\App.g.cs
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_Content.g.cs
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.cache
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.lref
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\App.baml
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.baml
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.g.resources
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.Properties.Resources.resources
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csproj.GenerateResource.Cache
+C:\Users\Administrator\Desktop\龙兴国\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csprojResolveAssemblyReference.cache
+G:\0424\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe.config
+G:\0424\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.exe
+G:\0424\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.pdb
+G:\0424\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.g.cs
+G:\0424\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\App.g.cs
+G:\0424\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_Content.g.cs
+G:\0424\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.cache
+G:\0424\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.lref
+G:\0424\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.baml
+G:\0424\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe
+G:\0424\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.pdb
+G:\0424\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\CMO.dll
+G:\0424\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\DynamicDataDisplay.dll
+G:\0424\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.g.resources
+G:\0424\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.Properties.Resources.resources
+G:\0424\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csproj.GenerateResource.Cache
+G:\0424anjian\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe.config
+G:\0424anjian\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.exe
+G:\0424anjian\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.pdb
+G:\0424anjian\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe
+G:\0424anjian\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.pdb
+G:\0424anjian\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\CMO.dll
+G:\0424anjian\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\DynamicDataDisplay.dll
+G:\0424anjian\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csprojResolveAssemblyReference.cache
+G:\0424anjian\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.g.cs
+G:\0424anjian\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\App.g.cs
+G:\0424anjian\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_Content.g.cs
+G:\0424anjian\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.cache
+G:\0424anjian\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.lref
+G:\0424anjian\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.baml
+G:\0424anjian\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.g.resources
+G:\0424anjian\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.Properties.Resources.resources
+G:\0424anjian\ExoGaitMonitor20180417\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csproj.GenerateResource.Cache
+E:\新式外骨骼所有程序\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe.config
+E:\新式外骨骼所有程序\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.exe
+E:\新式外骨骼所有程序\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.pdb
+E:\新式外骨骼所有程序\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe
+E:\新式外骨骼所有程序\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.pdb
+E:\新式外骨骼所有程序\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\CMO.dll
+E:\新式外骨骼所有程序\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\DynamicDataDisplay.dll
+E:\新式外骨骼所有程序\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csprojResolveAssemblyReference.cache
+E:\新式外骨骼所有程序\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.g.cs
+E:\新式外骨骼所有程序\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\App.g.cs
+E:\新式外骨骼所有程序\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_Content.g.cs
+E:\新式外骨骼所有程序\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.cache
+E:\新式外骨骼所有程序\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.lref
+E:\新式外骨骼所有程序\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.baml
+E:\新式外骨骼所有程序\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.g.resources
+E:\新式外骨骼所有程序\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.Properties.Resources.resources
+E:\新式外骨骼所有程序\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csproj.GenerateResource.Cache
+E:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe.config
+E:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.exe
+E:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.pdb
+E:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe
+E:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.pdb
+E:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\CMO.dll
+E:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\DynamicDataDisplay.dll
+E:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.g.cs
+E:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\App.g.cs
+E:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_Content.g.cs
+E:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.cache
+E:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.lref
+E:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.baml
+E:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.g.resources
+E:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.Properties.Resources.resources
+E:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csproj.GenerateResource.Cache
+E:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csprojResolveAssemblyReference.cache
+D:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe.config
+D:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.exe
+D:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.pdb
+D:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.g.cs
+D:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\App.g.cs
+D:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_Content.g.cs
+D:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.cache
+D:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.lref
+D:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe
+D:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.pdb
+D:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\CMO.dll
+D:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\DynamicDataDisplay.dll
+D:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.baml
+D:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.g.resources
+D:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.Properties.Resources.resources
+D:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csproj.GenerateResource.Cache
+D:\new exoskeleton all programs\ExoGaitMonitor20180417 按键 简化版\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csprojResolveAssemblyReference.cache
+D:\new exoskeleton all programs\Exo180613无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe.config
+D:\new exoskeleton all programs\Exo180613无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe
+D:\new exoskeleton all programs\Exo180613无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.pdb
+D:\new exoskeleton all programs\Exo180613无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\CMO.dll
+D:\new exoskeleton all programs\Exo180613无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\DynamicDataDisplay.dll
+D:\new exoskeleton all programs\Exo180613无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csprojResolveAssemblyReference.cache
+D:\new exoskeleton all programs\Exo180613无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.g.cs
+D:\new exoskeleton all programs\Exo180613无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\App.g.cs
+D:\new exoskeleton all programs\Exo180613无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_Content.g.cs
+D:\new exoskeleton all programs\Exo180613无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.cache
+D:\new exoskeleton all programs\Exo180613无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.lref
+D:\new exoskeleton all programs\Exo180613无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.baml
+D:\new exoskeleton all programs\Exo180613无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.g.resources
+D:\new exoskeleton all programs\Exo180613无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.Properties.Resources.resources
+D:\new exoskeleton all programs\Exo180613无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csproj.GenerateResource.Cache
+D:\new exoskeleton all programs\Exo180613无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.exe
+D:\new exoskeleton all programs\Exo180613无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.pdb
+G:\Exo180613无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe.config
+G:\Exo180613无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.exe
+G:\Exo180613无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.pdb
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe.config
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.exe
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.pdb
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.pdb
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\CMO.dll
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\DynamicDataDisplay.dll
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.g.cs
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\App.g.cs
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_Content.g.cs
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.cache
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.lref
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.baml
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.g.resources
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.Properties.Resources.resources
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csproj.GenerateResource.Cache
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csprojResolveAssemblyReference.cache
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe.config
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.exe
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.pdb
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.pdb
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\CMO.dll
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\DynamicDataDisplay.dll
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csprojResolveAssemblyReference.cache
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.g.cs
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\App.g.cs
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_Content.g.cs
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.cache
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.lref
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.baml
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.g.resources
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.Properties.Resources.resources
+C:\Users\zhineng\Desktop\Exo180613无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csproj.GenerateResource.Cache
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe.config
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.pdb
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\CMO.dll
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\DynamicDataDisplay.dll
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csprojResolveAssemblyReference.cache
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.g.cs
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\App.g.cs
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_Content.g.cs
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.cache
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.lref
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.baml
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.g.resources
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.Properties.Resources.resources
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csproj.GenerateResource.Cache
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.exe
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.pdb
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe.config
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.exe
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.pdb
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.g.cs
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\App.g.cs
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_Content.g.cs
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.cache
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.lref
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.baml
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.g.resources
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.pdb
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\CMO.dll
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\DynamicDataDisplay.dll
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.Properties.Resources.resources
+C:\Users\zhineng\Desktop\Exo180724无按键起坐行走简化版去框图 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csproj.GenerateResource.Cache
+C:\Users\zhineng\Desktop\大步改动Exo180724无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe.config
+C:\Users\zhineng\Desktop\大步改动Exo180724无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe
+C:\Users\zhineng\Desktop\大步改动Exo180724无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.pdb
+C:\Users\zhineng\Desktop\大步改动Exo180724无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\CMO.dll
+C:\Users\zhineng\Desktop\大步改动Exo180724无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\DynamicDataDisplay.dll
+C:\Users\zhineng\Desktop\大步改动Exo180724无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csprojResolveAssemblyReference.cache
+C:\Users\zhineng\Desktop\大步改动Exo180724无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.g.cs
+C:\Users\zhineng\Desktop\大步改动Exo180724无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\App.g.cs
+C:\Users\zhineng\Desktop\大步改动Exo180724无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_Content.g.cs
+C:\Users\zhineng\Desktop\大步改动Exo180724无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.cache
+C:\Users\zhineng\Desktop\大步改动Exo180724无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2_MarkupCompile.lref
+C:\Users\zhineng\Desktop\大步改动Exo180724无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\MainWindow.baml
+C:\Users\zhineng\Desktop\大步改动Exo180724无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.g.resources
+C:\Users\zhineng\Desktop\大步改动Exo180724无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.Properties.Resources.resources
+C:\Users\zhineng\Desktop\大步改动Exo180724无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.csproj.GenerateResource.Cache
+C:\Users\zhineng\Desktop\大步改动Exo180724无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.exe
+C:\Users\zhineng\Desktop\大步改动Exo180724无按键起坐行走简化版去框图 - 副本 - 副本\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.pdb
+C:\Users\Long\Desktop\大步改动Exo180724无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe.config
+C:\Users\Long\Desktop\大步改动Exo180724无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.exe
+C:\Users\Long\Desktop\大步改动Exo180724无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.pdb

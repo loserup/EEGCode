@@ -30,7 +30,11 @@ Samples = 4;               % set to the same value as in Actiview "TCP samples/c
 words = Channels*Samples;
 data_current = zeros(Samples, Channels); % 本次采样获取的EEG数据
 
+count = -1;
+
 while run
+%     tic;
+    
     tcpipClient = tcpip(ipadress, port, 'NetworkRole', 'client');
     set(tcpipClient,'InputBufferSize',words*9); % input buffersize is 3 times the tcp block size % 1 word = 3 bytes
     set(tcpipClient,'Timeout',5);
@@ -74,19 +78,47 @@ while run
         save('data.mat', 'data');
         pyObj = py.onlineClassifier.OnlineClassifier(); 
         
+%         out_store = [out_store str2double(char(pyObj.outputCmd()))];
+        
+%         if length(out_store) > 40
+        
         if length(out_store) ~= 60
             % 输出命令序列未达到设置要求
             out_store = [out_store str2double(char(pyObj.outputCmd()))];
         else
             out_store = cat(2, out_store(2:end), str2double(char(pyObj.outputCmd())));
             
-            output_cmd = onlinefilters(out_store) % 对out_store进行二次滤波
+%             output_cmd = onlinefilters(out_store); % 对out_store进行二次滤波
             
-            if length(find(output_cmd(end) == 1)) == 1
+%             % 空跑大小步测试
+%             if out_store(end) == 1 && count == 0
+%                 fwrite(tcpipClient2,'1');
+%                 fprintf('1\n');
+%                 count = 1;
+%             else if count >= 1 && count <=10 
+%                 fwrite(tcpipClient2,'-1');
+%                 fprintf('-1\n');
+%                 count = count + 1;
+%             else 
+%                 fwrite(tcpipClient2,'-1');
+%                 fprintf('-1\n');
+%                 count = 0;
+%             end
+        
+
+            if length(find(out_store(end-19:end) == 1)) >= 13
                 %当输出命令最后20个全是1时给外骨骼传1命令
+                count = 0;
                 fwrite(tcpipClient2,'1');
+                fprintf('1\n');
+%             elseif count >=0 && count < 5
+%                 fwrite(tcpipClient2,'1');
+%                 count = count + 1;
+%                 fprintf('1\n');
             else
+                count = -1;
                 fwrite(tcpipClient2,'-1');
+                fprintf('-1\n');
             end
 
         end
@@ -98,6 +130,7 @@ while run
     fclose(tcpipClient2);
     delete(tcpipClient2);
     
+%     toc
 end
 
 % save('data_current_t.mat', 'data_current_t');
@@ -105,7 +138,7 @@ end
 % save('output_cmd.mat', 'output_cmd');
 % save('count.mat','count');
 % save('feat.mat','feat');
-% save('out_store.mat','out_store');
+save('out_store.mat','out_store');
 % save('time.mat','time');
 % save('count_win.mat','count_win');
 
