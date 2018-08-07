@@ -1,0 +1,6 @@
+E:\EEGExoskeleton\新按键同步\SyncKey\SyncKey\SyncKey\bin\x64\Debug\SyncKey.exe.config
+E:\EEGExoskeleton\新按键同步\SyncKey\SyncKey\SyncKey\bin\x64\Debug\SyncKey.exe
+E:\EEGExoskeleton\新按键同步\SyncKey\SyncKey\SyncKey\bin\x64\Debug\SyncKey.pdb
+E:\EEGExoskeleton\新按键同步\SyncKey\SyncKey\SyncKey\obj\x64\Debug\SyncKey.exe
+E:\EEGExoskeleton\新按键同步\SyncKey\SyncKey\SyncKey\obj\x64\Debug\SyncKey.pdb
+E:\EEGExoskeleton\新按键同步\SyncKey\SyncKey\SyncKey\obj\x64\Debug\SyncKey.csprojResolveAssemblyReference.cache

@@ -19,12 +19,11 @@
 1、回归原点后，点击侦听等待脑电matlab脚本onlineReadData.m运行与其通信
 
 
-文件夹MouseKeyboardLibrary
+文件夹SyncKey
 采集训练原始数据时用于脑电信号的打标
 1、动作捕捉软件点击录制后会弹出确认的对话框
 2、脑电开始记录数据
-3、打开路径\MouseKeyboardLibrary\SampleApplication\bin\Debug下的SampleApplication.exe
-4、点击开始按钮
+3、打开路径\SyncKey\SyncKey\SyncKey\bin\Debug下的SyncKey.exe
 5、点击动作捕捉软件的OK按钮，开始记录步态数据，观察脑电下方是否打上开始标记（脑电设备需要插上并口）
 6、采集完成后（期间鼠标不允许有任何点击操作），点击动作捕捉软件停止录制按钮，观察脑电下方是否打上结束标记
 7、脑电记录pause按钮，并停止脑电，保存脑电信号
