@@ -4,3 +4,9 @@ E:\EEGExoskeleton\新按键同步\SyncKey\SyncKey\SyncKey\bin\x64\Debug\SyncKey.
 E:\EEGExoskeleton\新按键同步\SyncKey\SyncKey\SyncKey\obj\x64\Debug\SyncKey.exe
 E:\EEGExoskeleton\新按键同步\SyncKey\SyncKey\SyncKey\obj\x64\Debug\SyncKey.pdb
 E:\EEGExoskeleton\新按键同步\SyncKey\SyncKey\SyncKey\obj\x64\Debug\SyncKey.csprojResolveAssemblyReference.cache
+E:\EEGExoskeleton\EEGCode\OnlineTest\SyncKey\SyncKey\SyncKey\bin\x64\Debug\SyncKey.exe.config
+E:\EEGExoskeleton\EEGCode\OnlineTest\SyncKey\SyncKey\SyncKey\obj\x64\Debug\SyncKey.exe
+E:\EEGExoskeleton\EEGCode\OnlineTest\SyncKey\SyncKey\SyncKey\obj\x64\Debug\SyncKey.pdb
+E:\EEGExoskeleton\EEGCode\OnlineTest\SyncKey\SyncKey\SyncKey\bin\x64\Debug\SyncKey.exe
+E:\EEGExoskeleton\EEGCode\OnlineTest\SyncKey\SyncKey\SyncKey\bin\x64\Debug\SyncKey.pdb
+E:\EEGExoskeleton\EEGCode\OnlineTest\SyncKey\SyncKey\SyncKey\obj\x64\Debug\SyncKey.csprojResolveAssemblyReference.cache
