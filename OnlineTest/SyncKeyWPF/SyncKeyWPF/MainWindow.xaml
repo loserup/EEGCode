@@ -1,0 +1,15 @@
+﻿<Window x:Class="SyncKeyWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SyncKeyWPF"
+        mc:Ignorable="d"
+        Title="EEG打标控件" Height="270" Width="450"  Icon="Images/SyncKey.ico" 
+        MinHeight="270" MinWidth="450" MaxHeight="270" MaxWidth="450">
+    <Grid>
+        <Button x:Name="button_start" Content="开始" Margin="56,21,246,148" Click="button_start_Click"/>
+        <Button x:Name="button_end" Content="结束"  Margin="246,21,56,148" IsEnabled="False" Click="button_end_Click"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="56,106,0,0" Width="330" Height="120" FontSize="15"><Run Text="                             "/><Run Text="使用说明："/><LineBreak/><Run/><LineBreak/><Run Text="1、脑电开始记录EEG数据后，点击"/><Run Text="【"/><Run Text="开始"/><Run Text="】"/><Run Text="按钮"/><LineBreak/><Run Text="2、点击动作捕捉录制OK按钮"/><LineBreak/><Run Text="3、动作数据记录完成，点击动捕结束录制按钮"/><LineBreak/><Run Text="4、"/><Run Text="点击【结束】按钮，准备下一轮实验"/></TextBlock>
+    </Grid>
+</Window>

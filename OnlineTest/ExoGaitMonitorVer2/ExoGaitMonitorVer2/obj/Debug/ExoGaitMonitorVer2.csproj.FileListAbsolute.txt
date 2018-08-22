@@ -275,3 +275,6 @@ C:\Users\zhineng\Desktop\大步改动Exo180724无按键起坐行走简化版去�
 C:\Users\Long\Desktop\大步改动Exo180724无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe.config
 C:\Users\Long\Desktop\大步改动Exo180724无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.exe
 C:\Users\Long\Desktop\大步改动Exo180724无按键起坐行走简化版去框图\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.pdb
+E:\EEGExoskeleton\EEGCode\OnlineTest\ExoGaitMonitorVer2\ExoGaitMonitorVer2\bin\Debug\ExoGaitMonitorVer2.exe.config
+E:\EEGExoskeleton\EEGCode\OnlineTest\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.exe
+E:\EEGExoskeleton\EEGCode\OnlineTest\ExoGaitMonitorVer2\ExoGaitMonitorVer2\obj\Debug\ExoGaitMonitorVer2.pdb

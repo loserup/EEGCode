@@ -22,8 +22,8 @@ namespace ExoGaitMonitorVer2
     /// </summary>
     public partial class MainWindow : Window
     {
-           
-          #region 声明
+
+        #region 声明
         //主界面窗口
 
         //CMO
@@ -33,19 +33,19 @@ namespace ExoGaitMonitorVer2
         private Manumotive manumotive = new Manumotive();
 
         //传感器
-       
-  
+
+
         private int PositionState = 0;
-        private int Dete =2;
-        private int ss=0;
+        private int Dete = 2;
+        private int ss = 0;
 
         //PVT模式
         private PVT pvt = new PVT();
 
-      //Stand up
-     private Standup2 stand2 = new Standup2();
-         
-       Arduino arduino = new Arduino();
+        //Stand up
+        private Standup2 stand2 = new Standup2();
+
+        Arduino arduino = new Arduino();
 
         DispatcherTimer Detection = new DispatcherTimer();
         public delegate void showData(string msg);//通信窗口输出
@@ -68,7 +68,7 @@ namespace ExoGaitMonitorVer2
                 motors.motors_Init();
                 //cp.plotStart(motors, statusBar, statusInfoTextBlock);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 MessageBox.Show("驱动器初始化失败");
                 statusBar.Background = new SolidColorBrush(Color.FromArgb(255, 230, 20, 20));
@@ -81,7 +81,7 @@ namespace ExoGaitMonitorVer2
 
         private void Select()
         {
-            while(true )
+            while (true)
             {
                 if (PositionState == 0 && Dete == -1 && ss == 0)
                 {
@@ -143,7 +143,7 @@ namespace ExoGaitMonitorVer2
                     Dete = 2;
                     ss = 10;
                 }
-                if (ss!=0)
+                if (ss != 0)
                 {
                     Detection.Stop();
                     switch (ss)
@@ -154,7 +154,7 @@ namespace ExoGaitMonitorVer2
                             {
                                 pvt.StartPVT(motors, "..\\..\\InputData\\左脚起始步低.txt", ProportionValue, 115, TimeValue);
                             }
-                           catch(Exception e)
+                            catch (Exception e)
                             {
                                 MessageBox.Show(e.ToString());
                             }
@@ -165,7 +165,7 @@ namespace ExoGaitMonitorVer2
                             {
                                 pvt.StartPVT(motors, "..\\..\\InputData\\左脚起始步高.txt", ProportionValue, 115, MiddleGaitTime);
                             }
-                          catch(Exception e)
+                            catch (Exception e)
                             {
                                 MessageBox.Show(e.ToString());
                             }
@@ -198,7 +198,7 @@ namespace ExoGaitMonitorVer2
                             {
                                 pvt.StartPVT(motors, "..\\..\\InputData\\左脚在前高到右脚前伸低.txt", ProportionValue, 115, MiddleGaitTime);
                             }
-                            catch(Exception e)
+                            catch (Exception e)
                             {
                                 MessageBox.Show(e.ToString());
                             }
@@ -214,7 +214,7 @@ namespace ExoGaitMonitorVer2
                             {
                                 MessageBox.Show(e.ToString());
                             }
-                          break;
+                            break;
                         case 7:
                             //MessageBox.Show("7");
                             try
@@ -244,7 +244,7 @@ namespace ExoGaitMonitorVer2
                             {
                                 pvt.StartPVT(motors, "..\\..\\InputData\\右脚在前高到左脚前伸低.txt", ProportionValue, 115, MiddleGaitTime);
                             }
-                            catch(Exception e)
+                            catch (Exception e)
                             {
                                 MessageBox.Show(e.ToString());
                             }
@@ -292,18 +292,18 @@ namespace ExoGaitMonitorVer2
                 }
                 Thread.Sleep(100);
             }
-            
+
 
 
         }
-    
-      private void Window_Closed(object sender, EventArgs e)
+
+        private void Window_Closed(object sender, EventArgs e)
         {
             //server.Stop();
         }
 
-       #endregion
-     #region 手动操作设置 Manumotive
+        #endregion
+        #region 手动操作设置 Manumotive
 
         private void angleSetButton_Click(object sender, RoutedEventArgs e)//点击【执行命令】按钮时执行
         {
@@ -322,7 +322,7 @@ namespace ExoGaitMonitorVer2
 
             motors.ampObj[i].PositionActual = 0;
 
-            manumotive.angleSetStart(motors, Convert.ToDouble(angleSetTextBox.Text), Convert.ToInt16(motorNumberTextBox.Text), statusBar, statusInfoTextBlock, 
+            manumotive.angleSetStart(motors, Convert.ToDouble(angleSetTextBox.Text), Convert.ToInt16(motorNumberTextBox.Text), statusBar, statusInfoTextBlock,
                                      angleSetButton, emergencyStopButton, getZeroPointButton, zeroPointSetButton, PVT_Button, angleSetTextBox, motorNumberTextBox);
         }
 
@@ -339,7 +339,7 @@ namespace ExoGaitMonitorVer2
             motors.ampObj[i].HaltMove();
             manumotive.angleSetStop();
         }
-       private void zeroPointSetButton_Click(object sender, RoutedEventArgs e)//点击【设置原点】按钮时执行
+        private void zeroPointSetButton_Click(object sender, RoutedEventArgs e)//点击【设置原点】按钮时执行
         {
             motors.ampObj[0].PositionActual = 1330.683488;
             motors.ampObj[1].PositionActual = -665.3417438;
@@ -363,7 +363,7 @@ namespace ExoGaitMonitorVer2
             zeroPointSetButton.IsEnabled = false;
             PositionState = 0;
 
-            manumotive.getZeroPointStart(motors, statusBar, statusInfoTextBlock, angleSetButton, emergencyStopButton, getZeroPointButton, 
+            manumotive.getZeroPointStart(motors, statusBar, statusInfoTextBlock, angleSetButton, emergencyStopButton, getZeroPointButton,
                                           zeroPointSetButton, PVT_Button, angleSetTextBox, motorNumberTextBox);
         }
 
@@ -375,26 +375,26 @@ namespace ExoGaitMonitorVer2
             double positon = motors.ampObj[3].PositionActual;
             if (bt.Content.ToString() == "PVT Mode")
             {
-               
+
                 angleSetButton.IsEnabled = false;
                 getZeroPointButton.IsEnabled = false;
-               
+
 
                 statusBar.Background = new SolidColorBrush(Color.FromArgb(255, 230, 20, 20));
                 statusInfoTextBlock.Text = "PVT模式";
                 bt.Content = "Stop";
-                if(positon<100000)
+                if (positon < 100000)
                 {
                     try
                     {
-                        pvt.StartPVT(motors, "..\\..\\InputData\\6步新.txt",360,45,15);
+                        pvt.StartPVT(motors, "..\\..\\InputData\\6步新.txt", 360, 45, 15);
                     }
-                   catch(Exception)
+                    catch (Exception)
                     {
                         MessageBox.Show(e.ToString());
                     }
                 }
-               
+
             }
 
             else
@@ -410,17 +410,17 @@ namespace ExoGaitMonitorVer2
             }
         }
 
-       private void Sit_button_Click(object sender, RoutedEventArgs e)
+        private void Sit_button_Click(object sender, RoutedEventArgs e)
         {
             Button bt = sender as Button;
             double positon = motors.ampObj[3].PositionActual;
-            if(bt.Content.ToString()=="Sit Down")
+            if (bt.Content.ToString() == "Sit Down")
             {
                 PVT_Button.IsEnabled = false;
                 Stand_up_Button.IsEnabled = false;
                 angleSetButton.IsEnabled = false;
                 getZeroPointButton.IsEnabled = false;
-               
+
                 statusBar.Background = new SolidColorBrush(Color.FromArgb(255, 230, 20, 20));
                 statusInfoTextBlock.Text = "坐下模式";
                 bt.Content = "Stop";
@@ -430,10 +430,10 @@ namespace ExoGaitMonitorVer2
                     {
                         pvt.start_Sitdown2(motors);
                     }
-                    catch(Exception)
+                    catch (Exception)
                     { MessageBox.Show(e.ToString()); }
                 }
-               
+
             }
             else
             {
@@ -454,33 +454,33 @@ namespace ExoGaitMonitorVer2
         {
             Button bt = sender as Button;
             double positon = motors.ampObj[3].PositionActual;
-            if (bt.Content.ToString()=="Stand Up")
+            if (bt.Content.ToString() == "Stand Up")
             {
                 PVT_Button.IsEnabled = false;
                 angleSetButton.IsEnabled = false;
-                 Sit_button.IsEnabled = false;
+                Sit_button.IsEnabled = false;
 
                 statusBar.Background = new SolidColorBrush(Color.FromArgb(255, 230, 20, 20));
                 statusInfoTextBlock.Text = "起立模式";
                 bt.Content = "Stop";
-                if(positon>1000000)
+                if (positon > 1000000)
                 {
                     try
                     {
                         stand2.start_Standup2(motors);
                     }
-                    catch(Exception)
+                    catch (Exception)
                     {
                         MessageBox.Show(e.ToString());
                     }
                 }
-                
+
             }
             else
             {
                 PVT_Button.IsEnabled = true;
                 angleSetButton.IsEnabled = true;
-               
+
                 Sit_button.IsEnabled = true;
 
                 //motors.Linkage.HaltMove();
@@ -513,7 +513,7 @@ namespace ExoGaitMonitorVer2
 
         private void switch_Click(object sender, RoutedEventArgs e)
         {
-            if(IPAdressTextBox.Text.Trim()==string.Empty)
+            if (IPAdressTextBox.Text.Trim() == string.Empty)
             {
                 ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "请填入服务器IP地址\n");
                 return;
@@ -557,13 +557,13 @@ namespace ExoGaitMonitorVer2
             server.Start();//启动监听
 
             ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "服务端开启侦听....\n");
-            
+
             client = server.AcceptTcpClient();
             ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "有客户端请求连接，连接已建立！");//AcceptTcpClient 是同步方法，会阻塞进程，得到连接对象后才会执行这一步
             //获取流
             NetworkStream reciveStream = client.GetStream();
-            
-            
+
+
             do
             {
                 //获取连接的客户d端的对象
@@ -595,9 +595,9 @@ namespace ExoGaitMonitorVer2
                     string msg = Encoding.Default.GetString(buffer, 0, bufferSize);
                     ComWinTextBox.Dispatcher.Invoke(new showData(ComWinTextBox.AppendText), "\n客户端曰：" +
                         Encoding.Default.GetString(buffer, 0, msgSize));
-                    string de= Encoding.Default.GetString(buffer, 0, msgSize);
+                    string de = Encoding.Default.GetString(buffer, 0, msgSize);
                     Dete = Convert.ToInt16(de);
-                    
+
                 }
                 catch
                 {
@@ -607,6 +607,6 @@ namespace ExoGaitMonitorVer2
             } while (true);
             Thread.Sleep(100);
         }
-        
-        }
+
+    }
 }
