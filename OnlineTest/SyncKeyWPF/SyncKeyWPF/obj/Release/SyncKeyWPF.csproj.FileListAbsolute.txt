@@ -1,0 +1,13 @@
+E:\EEGExoskeleton\EEGCode\OnlineTest\SyncKeyWPF\SyncKeyWPF\bin\Release\SyncKeyWPF.exe.config
+E:\EEGExoskeleton\EEGCode\OnlineTest\SyncKeyWPF\SyncKeyWPF\bin\Release\SyncKeyWPF.exe
+E:\EEGExoskeleton\EEGCode\OnlineTest\SyncKeyWPF\SyncKeyWPF\bin\Release\SyncKeyWPF.pdb
+E:\EEGExoskeleton\EEGCode\OnlineTest\SyncKeyWPF\SyncKeyWPF\obj\Release\MainWindow.g.cs
+E:\EEGExoskeleton\EEGCode\OnlineTest\SyncKeyWPF\SyncKeyWPF\obj\Release\App.g.cs
+E:\EEGExoskeleton\EEGCode\OnlineTest\SyncKeyWPF\SyncKeyWPF\obj\Release\SyncKeyWPF_MarkupCompile.cache
+E:\EEGExoskeleton\EEGCode\OnlineTest\SyncKeyWPF\SyncKeyWPF\obj\Release\SyncKeyWPF_MarkupCompile.lref
+E:\EEGExoskeleton\EEGCode\OnlineTest\SyncKeyWPF\SyncKeyWPF\obj\Release\MainWindow.baml
+E:\EEGExoskeleton\EEGCode\OnlineTest\SyncKeyWPF\SyncKeyWPF\obj\Release\SyncKeyWPF.g.resources
+E:\EEGExoskeleton\EEGCode\OnlineTest\SyncKeyWPF\SyncKeyWPF\obj\Release\SyncKeyWPF.Properties.Resources.resources
+E:\EEGExoskeleton\EEGCode\OnlineTest\SyncKeyWPF\SyncKeyWPF\obj\Release\SyncKeyWPF.csproj.GenerateResource.Cache
+E:\EEGExoskeleton\EEGCode\OnlineTest\SyncKeyWPF\SyncKeyWPF\obj\Release\SyncKeyWPF.exe
+E:\EEGExoskeleton\EEGCode\OnlineTest\SyncKeyWPF\SyncKeyWPF\obj\Release\SyncKeyWPF.pdb

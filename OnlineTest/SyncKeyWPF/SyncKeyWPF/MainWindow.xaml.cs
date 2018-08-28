@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Runtime.InteropServices;
 using System.Windows.Threading;
+using System.Threading;
 
 namespace SyncKeyWPF
 {
@@ -42,6 +43,18 @@ namespace SyncKeyWPF
         [DllImport("user32.dll")]
         private static extern short GetAsyncKeyState(int vKey);
 
+        [DllImport("user32.dll")]
+        private static extern bool AttachThreadInput(IntPtr idAttach, IntPtr idAttachTo, bool fAttach);
+
+        [DllImport("Kernel32.dll")]
+        private static extern IntPtr GetCurrentThreadId();
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, IntPtr lpdwProcessId);
+
+        [DllImport("user32.dll")]
+        private static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, uint uFlags);
+
         // 虚拟按键码：https://docs.microsoft.com/zh-cn/windows/desktop/inputdev/virtual-key-codes
         private const int VK_LBUTTON = 0x01; // 鼠标左键
         private const int VK_F3 = 0x72; // F3键-脑电软件打标快捷键
@@ -52,24 +65,32 @@ namespace SyncKeyWPF
         private const int WM_KEYUP = 0x0101;
 
         private int counter = 0; //按键次数计数器，限制只能按两次
+        private int trial_num = 0; //记录实验组数
 
-        private DispatcherTimer thread; //本控件监视鼠标左键是否按下的线程，由点击【开始】按钮启动
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            PromptTextBox.AppendText("请按下【开始】按钮，准备打标\n");
+        }
+
+        private void PromptTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            PromptTextBox.ScrollToEnd(); //当通信窗口内容有变化时保持滚动条在最下面
+        }
 
         private void button_start_Click(object sender, RoutedEventArgs e)
         {
-            button_end.IsEnabled = true;
             button_start.IsEnabled = false;
+            button_end.IsEnabled = true;
 
-            thread = new DispatcherTimer();
-            thread.Tick += new EventHandler(thread_Tick); //Tick是超过计时器间隔时发生事件，此处为Tick增加了一个叫ShowCurTimer的取当前时间并扫描串口的委托
-            thread.Interval = TimeSpan.FromMilliseconds(10);
+            PromptTextBox.AppendText("\n已按下【开始】按钮，之后两次点击鼠标左键将会打标\n");
+            Thread thread = new Thread(thread_Tick);
             thread.Start();
         }
 
-        private void thread_Tick(object sender, EventArgs e)
+        private void thread_Tick()
         {
-            ////这里是当需要针对某个应用的时候可以先获取这个应用的句柄，接着就可以对这个应用发送想要的键盘操作
             IntPtr getwnd = FindWindow(null, "ActiView703-Lores.vi"); // 捕捉脑电软件进程
+            pressed = false;
 
             while (counter < 2)
             {
@@ -78,32 +99,36 @@ namespace SyncKeyWPF
                     pressed = true;
                     if ((GetAsyncKeyState(VK_LBUTTON) & 0x8000) == 0) //鼠标左键按键抬起
                     {
-                        //Console.Write("1111\n");
-                        if (!SetForegroundWindow(getwnd))
+                        while (true)
                         {
-                            // 若未找到进程则退出
-                            //Console.Write("-1\n");
-                            return;
+                            if (!SetForegroundWindow(getwnd))
+                            {
+                                continue; //保证已设置好当前窗口为脑电软件时再往下执行
+                            }
+                            while (GetForegroundWindow() != getwnd) { } // while循环保证脑电软件变成当前窗口时再往下执行
+                            break;
                         }
-                        while (GetForegroundWindow() != getwnd) { } // while循环保证脑电软件变成当前窗口时再往下执行
+                        counter++;
                         SendMessage(getwnd, WM_KEYDOWN, VK_F3, 0);
                         pressed = false;
-                        counter += 1;
                     }
                 }
-                //System.Threading.Thread.Sleep(20);
             }
         }
 
         private void button_end_Click(object sender, RoutedEventArgs e)
         {
+            trial_num++;
             counter = 0;
-
-            thread.Stop();
-            thread.Tick -= new EventHandler(thread_Tick);
-
-            button_end.IsEnabled = false;
+            PromptTextBox.AppendText("\n已完成【" + trial_num.ToString() + "】组实验\n");
+            PromptTextBox.AppendText("请按下【开始】按钮，准备第【" + (trial_num+1).ToString() + "】组实验打标\n");
             button_start.IsEnabled = true;
+            button_end.IsEnabled = false;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }
