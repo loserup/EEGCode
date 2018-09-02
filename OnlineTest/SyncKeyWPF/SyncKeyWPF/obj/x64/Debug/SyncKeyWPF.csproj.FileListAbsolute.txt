@@ -11,4 +11,16 @@ E:\EEGExoskeleton\EEGCode\OnlineTest\SyncKeyWPF\SyncKeyWPF\obj\x64\Debug\SyncKey
 E:\EEGExoskeleton\EEGCode\OnlineTest\SyncKeyWPF\SyncKeyWPF\obj\x64\Debug\SyncKeyWPF.csproj.GenerateResource.Cache
 E:\EEGExoskeleton\EEGCode\OnlineTest\SyncKeyWPF\SyncKeyWPF\obj\x64\Debug\SyncKeyWPF.exe
 E:\EEGExoskeleton\EEGCode\OnlineTest\SyncKeyWPF\SyncKeyWPF\obj\x64\Debug\SyncKeyWPF.pdb
-E:\EEGExoskeleton\EEGCode\OnlineTest\SyncKeyWPF\SyncKeyWPF\obj\x64\Debug\SyncKeyWPF.csprojResolveAssemblyReference.cache
+D:\Year-2018\2018年脑电实验测试代码\脑电诺亦腾同步程序\SyncKeyWPF\SyncKeyWPF\bin\x64\Debug\SyncKeyWPF.exe.config
+D:\Year-2018\2018年脑电实验测试代码\脑电诺亦腾同步程序\SyncKeyWPF\SyncKeyWPF\obj\x64\Debug\SyncKeyWPF.exe
+D:\Year-2018\2018年脑电实验测试代码\脑电诺亦腾同步程序\SyncKeyWPF\SyncKeyWPF\obj\x64\Debug\SyncKeyWPF.pdb
+D:\Year-2018\2018年脑电实验测试代码\脑电诺亦腾同步程序\SyncKeyWPF\SyncKeyWPF\bin\x64\Debug\SyncKeyWPF.exe
+D:\Year-2018\2018年脑电实验测试代码\脑电诺亦腾同步程序\SyncKeyWPF\SyncKeyWPF\bin\x64\Debug\SyncKeyWPF.pdb
+D:\Year-2018\2018年脑电实验测试代码\脑电诺亦腾同步程序\SyncKeyWPF\SyncKeyWPF\obj\x64\Debug\MainWindow.g.cs
+D:\Year-2018\2018年脑电实验测试代码\脑电诺亦腾同步程序\SyncKeyWPF\SyncKeyWPF\obj\x64\Debug\App.g.cs
+D:\Year-2018\2018年脑电实验测试代码\脑电诺亦腾同步程序\SyncKeyWPF\SyncKeyWPF\obj\x64\Debug\SyncKeyWPF_MarkupCompile.cache
+D:\Year-2018\2018年脑电实验测试代码\脑电诺亦腾同步程序\SyncKeyWPF\SyncKeyWPF\obj\x64\Debug\SyncKeyWPF_MarkupCompile.lref
+D:\Year-2018\2018年脑电实验测试代码\脑电诺亦腾同步程序\SyncKeyWPF\SyncKeyWPF\obj\x64\Debug\MainWindow.baml
+D:\Year-2018\2018年脑电实验测试代码\脑电诺亦腾同步程序\SyncKeyWPF\SyncKeyWPF\obj\x64\Debug\SyncKeyWPF.g.resources
+D:\Year-2018\2018年脑电实验测试代码\脑电诺亦腾同步程序\SyncKeyWPF\SyncKeyWPF\obj\x64\Debug\SyncKeyWPF.Properties.Resources.resources
+D:\Year-2018\2018年脑电实验测试代码\脑电诺亦腾同步程序\SyncKeyWPF\SyncKeyWPF\obj\x64\Debug\SyncKeyWPF.csproj.GenerateResource.Cache

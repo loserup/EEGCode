@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Runtime.InteropServices;
 using System.Windows.Threading;
 using System.Threading;
+using System.Diagnostics;
 
 namespace SyncKeyWPF
 {
@@ -26,6 +27,7 @@ namespace SyncKeyWPF
         public MainWindow()
         {
             InitializeComponent();
+            time = new string[2];
         }
 
         [DllImport("user32.dll", EntryPoint = "SendMessage")]
@@ -55,6 +57,7 @@ namespace SyncKeyWPF
         [DllImport("user32.dll")]
         private static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, uint uFlags);
 
+
         // 虚拟按键码：https://docs.microsoft.com/zh-cn/windows/desktop/inputdev/virtual-key-codes
         private const int VK_LBUTTON = 0x01; // 鼠标左键
         private const int VK_F3 = 0x72; // F3键-脑电软件打标快捷键
@@ -65,8 +68,8 @@ namespace SyncKeyWPF
         private const int WM_KEYUP = 0x0101;
 
         private int counter = 0; //按键次数计数器，限制只能按两次
-        private int trial_num = 0; //记录实验组数
-
+        
+        private string[] time;
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             PromptTextBox.AppendText("请按下【开始】按钮，准备打标\n");
@@ -89,7 +92,9 @@ namespace SyncKeyWPF
 
         private void thread_Tick()
         {
+            Stopwatch watch = new Stopwatch();
             IntPtr getwnd = FindWindow(null, "ActiView703-Lores.vi"); // 捕捉脑电软件进程
+            //IntPtr getwndc = FindWindow(null, "EEG打标控件"); // 捕捉脑电软件进程
             pressed = false;
 
             while (counter < 2)
@@ -99,18 +104,26 @@ namespace SyncKeyWPF
                     pressed = true;
                     if ((GetAsyncKeyState(VK_LBUTTON) & 0x8000) == 0) //鼠标左键按键抬起
                     {
-                        while (true)
+                        watch.Start();
+                        IntPtr hForeWnd = GetForegroundWindow();
+                        IntPtr dwCurID = GetCurrentThreadId();
+                        IntPtr dwForeID = GetWindowThreadProcessId(hForeWnd, IntPtr.Zero);
+                        AttachThreadInput(dwCurID, dwForeID, true);
+                        SetWindowPos(getwnd, (IntPtr)(-1),0,0,0,0, 0x0001| 0x0002);
+                        SetWindowPos(getwnd, (IntPtr)(-2), 0, 0, 0, 0, 0x0001 | 0x0002);
+                        if (!SetForegroundWindow(getwnd))
                         {
-                            if (!SetForegroundWindow(getwnd))
-                            {
-                                continue; //保证已设置好当前窗口为脑电软件时再往下执行
-                            }
-                            while (GetForegroundWindow() != getwnd) { } // while循环保证脑电软件变成当前窗口时再往下执行
-                            break;
+                            MessageBox.Show("SetForegroundWindow失败！");
+                            //continue; //保证已设置好当前窗口为脑电软件时再往下执行
                         }
+                        AttachThreadInput(dwCurID, dwForeID, false);
+                        //while (GetForegroundWindow() != getwnd) { } // while循环保证脑电软件变成当前窗口时再往下执行
                         counter++;
                         SendMessage(getwnd, WM_KEYDOWN, VK_F3, 0);
                         pressed = false;
+                        watch.Stop();
+                        time[counter-1] = watch.ElapsedMilliseconds.ToString();
+                        watch.Reset();
                     }
                 }
             }
@@ -118,10 +131,8 @@ namespace SyncKeyWPF
 
         private void button_end_Click(object sender, RoutedEventArgs e)
         {
-            trial_num++;
             counter = 0;
-            PromptTextBox.AppendText("\n已完成【" + trial_num.ToString() + "】组实验\n");
-            PromptTextBox.AppendText("请按下【开始】按钮，准备第【" + (trial_num+1).ToString() + "】组实验打标\n");
+            PromptTextBox.AppendText("\n请按下【开始】按钮，准备打标\n"+time[0]+"ms--"+time[1]+"ms\n");
             button_start.IsEnabled = true;
             button_end.IsEnabled = false;
         }
