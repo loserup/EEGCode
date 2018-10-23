@@ -137,7 +137,7 @@ def find_valley_point(dataset, peakind_sorted):
         for valley in valleyind:
             if valleyind[index+1] > peak:
                 valleyind_sorted.append(valley)
-                break # 找到这个极大值点前的极值点即可开始找下一个极大值点的极小值点了
+                break # 找到这个极大值点前的极值点即可开始找下一个极大值点前的极小值点了
             else:
                 index += 1
                 continue
