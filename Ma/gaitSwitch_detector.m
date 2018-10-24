@@ -104,18 +104,18 @@ for cell_no = 1:length(filteredGait.filteredMotion)
     index = horzcat(index, length(leftIndMin)); % 认为最后一个谷值点是正常行走切换至静止的位置
     leftIndMin = leftIndMin(index);
     
-    % 画图检查峰谷值点查找是否正确
-    figure
-    hold on
-    plot(rightKnee)
-    plot(rightIndMax,rightKnee(rightIndMax),'k*')
-    plot(rightIndMin,rightKnee(rightIndMin),'r^') 
-   
-    figure
-    hold on
-    plot(leftKnee)
-    plot(leftIndMax,leftKnee(leftIndMax),'k*')
-    plot(leftIndMin,leftKnee(leftIndMin),'r^') 
+    %% 画图检查峰谷值点查找是否正确
+%     figure
+%     hold on
+%     plot(rightKnee)
+%     plot(rightIndMax,rightKnee(rightIndMax),'k*')
+%     plot(rightIndMin,rightKnee(rightIndMin),'r^') 
+%    
+%     figure
+%     hold on
+%     plot(leftKnee)
+%     plot(leftIndMax,leftKnee(leftIndMax),'k*')
+%     plot(leftIndMin,leftKnee(leftIndMin),'r^') 
 
     %% 保存步态切换索引位置
     if rightIndMin(1) < leftIndMin(1)
