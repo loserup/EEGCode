@@ -1,4 +1,4 @@
-% 将原始步态数据进行低通滤波
+% 第1步：将原始步态数据进行低通滤波
 
 rawGait = load('E:\EEGExoskeleton\Dataset\Ma\20180829\RawMotion.mat');
 

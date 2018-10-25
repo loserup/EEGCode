@@ -1,4 +1,4 @@
-% 基于低通滤波后的步态数据寻找步态模式切换的位置索引·
+% 第2步：基于低通滤波后的步态数据寻找步态模式切换的位置索引·
 
 filteredGait = load('E:\EEGExoskeleton\Dataset\Ma\20180829\filteredMotion.mat');
 

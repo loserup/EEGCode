@@ -1,4 +1,4 @@
-% 将EEG信号剪裁至于步态信号同步
+% 第3步：将EEG信号剪裁至与步态信号同步
 
 rawEEG = load('E:\EEGExoskeleton\Dataset\Ma\20180829\RawEEG.mat');
 rawEEG = rawEEG.rawEEG;
